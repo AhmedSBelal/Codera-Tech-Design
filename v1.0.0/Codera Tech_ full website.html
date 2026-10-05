@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Codera Tech | أكاديمية قدرة تك</title>
+<meta name="description" content="Codera Tech academy">
+<meta name="theme-color" content="#0074D9">
+<link rel="canonical" href="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Readex+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   CODERA DESIGN SYSTEM
+   Codera Blue = brand actions. Deep navy = depth. Amber = progress / success only.
+   ===================================================================== */
+:root{
+  --font:"Readex Pro","Segoe UI",Tahoma,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --brand:#0074D9;           /* hsl(207.93 100% 42.55%) */
+  --grow:#FFB43A;
+  --maxw:1240px; --gut:clamp(20px,5vw,64px); --r:6px; --ease:cubic-bezier(.2,.7,.2,1);
+  --hh:calc(72px + env(safe-area-inset-top,0px));
+  padding-bottom:env(safe-area-inset-bottom,0px);
+
+  /* signature interaction state (set by JS) */
+  --d:0;--chrome:0;--frac:1;--prev:0;--site:0;--tabs:0;--url:0;--term:0;--t1:0;--t2:0;--t3:0;
+}
+:root,:root[data-theme="light"]{
+  --paper:#F6F8FB;--paper-2:#E8EDF4;--paper-fg:#0E1B2A;--paper-accent:#0063B8;
+  --ink:#0D1A2A;--ink-fg:#EAF0F8;--ink-accent:#6DB6FF;--deep:#081321;
+  --a-prop:#9A4D00;--a-str:#0F7B5F;--a-err:#C4262E;--z-prop:#FFC878;--z-str:#7FE0B8;--z-err:#FF8A8A;
+  color-scheme:light;
+}
+:root[data-theme="dark"]{
+  --paper:#101F33;--paper-2:#0B1829;--paper-fg:#E8EEF6;--paper-accent:#6DB6FF;
+  --ink:#060E18;--ink-fg:#EAF0F8;--ink-accent:#6DB6FF;--deep:#03080F;
+  --a-prop:#FFC878;--a-str:#7FE0B8;--a-err:#FF8A8A;
+  color-scheme:dark;
+}
+:root{
+  /* the signature page blends blank paper (d=0) into deep navy (d=1) */
+  --a-bg:var(--paper);--a-fg:var(--paper-fg);--a-accent:var(--paper-accent);
+  --z-bg:var(--ink);--z-fg:var(--ink-fg);--z-accent:var(--ink-accent);
+  --bg:color-mix(in oklab,var(--z-bg) calc(var(--d) * 100%),var(--a-bg));
+  --fg:color-mix(in oklab,var(--z-fg) calc(var(--d) * 100%),var(--a-fg));
+  --accent:color-mix(in oklab,var(--z-accent) calc(var(--d) * 100%),var(--a-accent));
+  --prop:color-mix(in oklab,var(--z-prop) calc(var(--d) * 100%),var(--a-prop));
+  --str:color-mix(in oklab,var(--z-str) calc(var(--d) * 100%),var(--a-str));
+  --err:color-mix(in oklab,var(--z-err) calc(var(--d) * 100%),var(--a-err));
+  --muted:color-mix(in oklab,var(--fg) 64%,var(--bg));
+  --line:color-mix(in oklab,var(--fg) 16%,var(--bg));
+  --win:color-mix(in oklab,var(--fg) 5%,var(--bg));
+}
+
+/* ---- tones: every chapter picks one, so rhythm is controlled by content, not by CSS order ---- */
+.tone-paper{--bg:var(--paper);--fg:var(--paper-fg);--accent:var(--paper-accent)}
+.tone-paper2{--bg:var(--paper-2);--fg:var(--paper-fg);--accent:var(--paper-accent)}
+.tone-ink{--bg:var(--ink);--fg:var(--ink-fg);--accent:var(--ink-accent)}
+.tone-deep{--bg:var(--deep);--fg:var(--ink-fg);--accent:var(--ink-accent)}
+.tone-blue{--bg:var(--brand);--fg:#fff;--accent:#fff}
+.tone-paper,.tone-paper2,.tone-ink,.tone-deep,.tone-blue{
+  background:var(--bg);color:var(--fg);
+  --muted:color-mix(in oklab,var(--fg) 68%,var(--bg));
+  --line:color-mix(in oklab,var(--fg) 16%,var(--bg));
+  --win:color-mix(in oklab,var(--fg) 5%,var(--bg));
+}
+.tone-blue{--muted:rgba(255,255,255,.86);--line:rgba(255,255,255,.28)}
+
+/* ---- base ---- */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:var(--hh);-webkit-text-size-adjust:100%;background:var(--bg)}
+html.lock{overflow:hidden}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);line-height:1.75;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4,p,ul,ol,figure,dl,dd{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:inherit}
+img,svg,video{max-width:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:fixed;inset-block-start:8px;inset-inline-start:8px;z-index:300;transform:translateY(-220%);background:var(--brand);color:#fff;padding:10px 16px;border-radius:8px;text-decoration:none}
+.skip:focus{transform:none}
+main:focus{outline:none}
+
+.wrap{width:100%;max-width:calc(var(--maxw) + var(--gut) * 2);margin-inline:auto;padding-inline:var(--gut)}
+.sec{padding-block:clamp(72px,10vw,140px)}
+.sec-tight{padding-block:clamp(32px,5vw,64px) clamp(64px,8vw,120px)}
+.sec-h{display:grid;gap:16px;max-width:46rem}
+.sec-h-row{display:flex;justify-content:space-between;align-items:end;gap:24px;max-width:none}
+.sec-more{margin-top:48px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+
+/* ---- type ---- */
+.display{font-weight:600;font-size:clamp(2.4rem,6vw,5.2rem);line-height:1.25;text-wrap:balance}
+.h2{font-weight:600;font-size:clamp(1.9rem,4vw,3.3rem);line-height:1.3;text-wrap:balance}
+.h3{font-weight:600;font-size:clamp(1.25rem,2vw,1.65rem);line-height:1.45}
+.h4{font-weight:600;font-size:1rem;margin-bottom:6px}
+.lead{font-size:clamp(1.05rem,1.5vw,1.25rem);line-height:1.95;color:var(--muted);max-width:38em}
+.statement{font-size:clamp(1.3rem,2.6vw,2.1rem);line-height:1.7;font-weight:300;max-width:30em}
+.muted{color:var(--muted)}
+.mono{font-family:var(--mono);direction:ltr;unicode-bidi:isolate}
+[lang="en"] .display,[lang="en"] .h2,[lang="en"] .h3,[lang="en"] .statement{line-height:1.15;letter-spacing:-.012em}
+[lang="en"] .statement{line-height:1.45}
+[lang="en"] .lead{line-height:1.65}
+
+/* ---- icons ---- */
+.i{width:1.2em;height:1.2em;flex:none}
+[dir="rtl"] .i-arrow,[dir="rtl"] .i-next,[dir="rtl"] .i-prev{transform:scaleX(-1)}
+
+/* ---- buttons ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6em;min-height:48px;padding:0 1.5em;border-radius:999px;border:1.5px solid transparent;
+  font:500 1rem/1.2 var(--font);text-decoration:none;cursor:pointer;transition:transform .2s var(--ease),background-color .2s,border-color .2s}
+.btn:hover{transform:translateY(-1px)}
+.btn:disabled,.btn[aria-disabled="true"]{opacity:.5;cursor:not-allowed;transform:none}
+.btn-solid{background:var(--brand);color:#fff}
+.btn-solid:hover{background:color-mix(in oklab,var(--brand) 86%,#000)}
+.tone-blue .btn-solid{background:#fff;color:#004E94}
+.btn-ghost{background:transparent;color:var(--fg);border-color:color-mix(in oklab,var(--fg) 32%,transparent)}
+.btn-ghost:hover{border-color:var(--fg)}
+.btn-wa{background:#128C4A;color:#fff}
+.btn-wa:hover{background:#0F7A41}
+.btn.sm{min-height:40px;padding:0 1.15em;font-size:.92rem}
+.btn.lg{min-height:56px;padding:0 1.9em;font-size:1.05rem}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;gap:.4em;min-width:44px;min-height:44px;padding:0 8px;border:0;border-radius:10px;background:transparent;color:inherit;cursor:pointer;transition:background-color .2s}
+.icon-btn:hover{background:color-mix(in oklab,currentColor 10%,transparent)}
+.icon-btn:disabled{opacity:.4;cursor:not-allowed}
+.link-arrow{display:inline-flex;align-items:center;gap:.5em;font-weight:500;text-decoration:none;border-bottom:1.5px solid currentColor;padding-bottom:2px}
+.link-arrow .i{transition:transform .2s var(--ease)}
+.link-arrow:hover .i,a:hover>.link-arrow .i{transform:translateX(4px)}
+[dir="rtl"] .link-arrow:hover .i,[dir="rtl"] a:hover>.link-arrow .i{transform:scaleX(-1) translateX(4px)}
+.linkbtn{background:none;border:0;padding:0;font-weight:600;color:var(--accent);text-decoration:underline;text-underline-offset:4px;cursor:pointer}
+.chip{display:inline-flex;align-items:center;gap:.5em;min-height:40px;padding:0 1em;border-radius:999px;border:1.5px solid var(--line);background:transparent;cursor:pointer;font-size:.92rem;transition:background-color .2s,border-color .2s}
+.chip:hover{border-color:var(--fg)}
+.chip[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+
+/* ---- small pieces ---- */
+.dot{width:9px;height:9px;border-radius:50%;background:var(--c,var(--brand));flex:none;display:inline-block}
+.dot.sq{border-radius:2px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-block:12px}
+.tag{display:inline-flex;align-items:center;gap:.45em;padding:.2em .75em;border-radius:999px;border:1px solid var(--line);font-size:.82rem;line-height:1.6;color:var(--muted);background:transparent}
+.demo{display:inline-block;margin-inline-start:.6em;padding:0 .5em;border:1px dashed var(--muted);border-radius:4px;font:400 .68rem/1.7 var(--mono);color:var(--muted);vertical-align:middle;font-weight:400}
+.crumbs{display:flex;flex-wrap:wrap;gap:.6em;font-size:.82rem;color:var(--muted);margin-bottom:20px}
+.crumbs a{text-decoration:none}.crumbs a:hover{text-decoration:underline}
+.checks{display:grid;gap:12px}.checks li{display:flex;gap:12px;align-items:flex-start}.checks .i{color:var(--accent);margin-top:.3em}
+.social{display:flex;flex-wrap:wrap;gap:8px}
+.social a{display:inline-grid;place-items:center;width:44px;height:44px;border:1px solid var(--line);border-radius:10px;transition:background-color .2s,border-color .2s}
+.social a:hover{border-color:var(--fg);background:color-mix(in oklab,var(--fg) 8%,transparent)}
+.social-lg a{width:56px;height:56px}.social-lg .i{width:1.5em;height:1.5em}
+.caret{display:inline-block;width:.5em;height:1.1em;margin-inline-start:3px;vertical-align:-.2em;background:var(--accent);animation:blink 1.05s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* media placeholder: designed to be replaced, never to pass as a real photo */
+.ph{position:relative;display:grid;place-items:center;overflow:hidden;border-radius:var(--r);color:var(--muted);isolation:isolate;
+  background:color-mix(in oklab,var(--fg) 8%,var(--bg))}
+.ph::before{content:"";position:absolute;inset:0;z-index:-1;background:repeating-linear-gradient(135deg,transparent 0 11px,color-mix(in oklab,var(--fg) 7%,transparent) 11px 12px)}
+.ph .i{width:34px;height:34px;opacity:.5}
+.ph-l{position:absolute;inset-inline-start:12px;inset-block-end:9px;inset-inline-end:12px;font:400 .7rem/1.4 var(--sans,var(--font));opacity:.85}
+.ph img,.ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph-wide{width:100%}
+.ph-on-blue{background:rgba(255,255,255,.14);color:rgba(255,255,255,.9)}
+.ph-on-blue::before{background:repeating-linear-gradient(135deg,transparent 0 11px,rgba(255,255,255,.12) 11px 12px)}
+
+.empty{display:grid;gap:14px;justify-items:start;padding:clamp(28px,5vw,64px);border:1.5px dashed var(--line);border-radius:12px}
+.empty-big{justify-items:center;text-align:center;margin-inline:auto;max-width:44rem}
+.empty-ic{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:color-mix(in oklab,var(--accent) 14%,transparent);color:var(--accent)}
+.empty-ic .i{width:26px;height:26px}
+
+/* reveal: used sparingly, once, never looped */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease);transition-delay:calc(var(--i,0) * 90ms)}
+.rv.in{opacity:1;transform:none}
+
+/* ---- forms ---- */
+.field{display:grid;gap:6px}
+.field>label,.lbl{font-weight:500;font-size:.95rem}
+.in{width:100%;min-height:50px;padding:.65em 1em;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--fg);transition:border-color .15s,box-shadow .15s}
+.in:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in oklab,var(--accent) 25%,transparent)}
+.in[aria-invalid="true"]{border-color:#D6453D}
+textarea.in{min-height:100px;resize:vertical}
+.err-msg{color:#C93A32;font-size:.86rem;min-height:1.3em}
+.tone-ink .err-msg,.tone-deep .err-msg{color:#FF8F86}
+.choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.choice{position:relative;display:block}
+.choice input{position:absolute;inset:0;opacity:0;cursor:pointer;margin:0}
+.choice span{display:flex;align-items:center;justify-content:center;min-height:50px;padding:.5em 1em;border:1.5px solid var(--line);border-radius:10px;text-align:center;transition:border-color .15s,background-color .15s}
+.choice input:checked+span{border-color:var(--accent);background:color-mix(in oklab,var(--accent) 12%,transparent);font-weight:500}
+.choice input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.check{display:flex;gap:10px;align-items:center;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--brand)}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+legend{padding:0;margin-bottom:18px;width:100%}
+
+/* ---- navigation ---- */
+.nav{position:fixed;inset:0 0 auto 0;z-index:60;--navh:var(--hh);height:var(--navh);padding-top:env(safe-area-inset-top,0px);color:var(--fg);transition:background-color .25s,box-shadow .25s,height .25s}
+.nav.compact{--navh:calc(60px + env(safe-area-inset-top,0px))}
+.nav.solid{background:var(--bg);box-shadow:0 1px 0 var(--line)}
+.nav-in{height:100%;max-width:1440px;margin-inline:auto;padding-inline:var(--gut);display:flex;align-items:center;gap:18px}
+.brand{display:inline-flex;align-items:center;gap:.3em;text-decoration:none;font-size:1.15rem;direction:ltr;color:inherit;flex:none}
+.brand b{font-weight:600}.brand span:not(.brand-mark){font-weight:300}
+.brand-mark{display:inline-grid;place-items:center;width:30px;height:30px;margin-inline-end:8px;border-radius:7px;background:var(--brand);color:#fff;font:500 .68rem/1 var(--mono)}
+.cel-badge{display:inline-flex;align-items:center;padding:.1em .8em;border:1px solid var(--line);border-radius:999px;font-size:.8rem;white-space:nowrap}
+.cel-badge::before{content:"";width:6px;height:6px;border-radius:50%;background:#F5C969;margin-inline-end:.55em}
+.nav-links{display:flex;justify-content:center;flex:1;gap:2px}
+.nav-links a{padding:.45em .8em;font-size:.94rem;text-decoration:none;border-radius:8px;opacity:.85;transition:opacity .2s,background-color .2s}
+.nav-links a:hover{opacity:1;background:color-mix(in oklab,currentColor 8%,transparent)}
+.nav-links a[aria-current="page"]{opacity:1;box-shadow:inset 0 -2px 0 var(--accent)}
+.nav-tools{display:flex;align-items:center;gap:6px;margin-inline-start:auto;flex:none}
+.lang-btn{padding-inline:10px}.lang-btn span{font-size:.85rem;font-weight:500}
+.nav-burger{display:none}
+@media (max-width:1119px){
+  .nav-links,.nav-tools .lang-btn,.nav-tools [data-theme-toggle]{display:none}
+  .nav-burger{display:inline-flex}
+}
+@media (max-width:420px){.nav-in{gap:10px}.nav-cta{padding:0 .9em;font-size:.86rem}.cel-badge{display:none}}
+
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:16px;background:rgba(4,10,18,.64)}
+.menu-modal{place-items:stretch;padding:0;background:var(--ink)}
+.menu-in{min-height:100%;display:flex;flex-direction:column;gap:24px;padding:calc(env(safe-area-inset-top,0px) + 14px) var(--gut) calc(env(safe-area-inset-bottom,0px) + 24px)}
+.menu-top{display:flex;justify-content:space-between;align-items:center;min-height:56px}
+.menu-links{display:grid;margin-block:auto}
+.menu-links a{padding:.35em 0;font-size:clamp(1.6rem,6.5vw,2.3rem);font-weight:500;text-decoration:none;border-bottom:1px solid var(--line)}
+.menu-links a[aria-current="page"]{color:var(--accent)}
+.menu-foot{display:grid;gap:16px}
+
+.sticky-cta{display:none;position:fixed;inset-inline:16px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:45;transform:translateY(160%);transition:transform .3s var(--ease)}
+.sticky-cta .btn{width:100%;box-shadow:0 10px 28px rgba(0,0,0,.3)}
+@media (max-width:860px){.sticky-cta{display:block}.sticky-cta.on{transform:none}}
+
+/* ---- footer ---- */
+.foot{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:40px;padding-block:72px calc(40px + env(safe-area-inset-bottom,0px))}
+.foot-brand{display:grid;gap:14px;align-content:start}
+.foot-tag{color:var(--accent);font-size:.85rem}
+.foot-col{display:grid;gap:10px;align-content:start}
+.foot-col a{text-decoration:none;opacity:.85}.foot-col a:hover{opacity:1;text-decoration:underline}
+.foot-col .social a{opacity:1}
+.foot-legal{grid-column:1/-1;padding-top:28px;border-top:1px solid var(--line);color:var(--muted);font-size:.86rem}
+.cel-pick{display:grid;gap:6px;margin-top:12px;font-size:.78rem;color:var(--muted)}
+.cel-pick .in{min-height:40px;padding:.3em .7em}
+@media (max-width:860px){.foot{grid-template-columns:1fr 1fr;padding-bottom:96px}.foot-brand{grid-column:1/-1}}
+
+/* ---- celebration layer: optional, subtle, never replaces the brand ---- */
+.cel{position:absolute;top:calc(var(--hh) - 6px);inset-inline-end:clamp(12px,5vw,72px);width:clamp(90px,12vw,160px);color:#F5C969;opacity:.88;pointer-events:none;z-index:5}
+.cel svg{display:block;width:100%;height:auto}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}
+.confetti i{position:absolute;top:-14px;width:8px;height:14px;opacity:0;animation:fall 2.8s ease-in forwards}
+@keyframes fall{0%{opacity:1;transform:translate(0,0) rotate(0)}100%{opacity:0;transform:translate(var(--x),105vh) rotate(calc(var(--r) + 540deg))}}
+
+/* ---- booking dialog ---- */
+.sheet{position:relative;width:min(620px,100%);max-height:calc(100vh - 32px);max-height:calc(100svh - 32px);overflow:auto;border-radius:16px;padding:clamp(24px,4vw,40px);background:var(--bg);color:var(--fg)}
+.sheet-x{position:absolute;inset-block-start:10px;inset-inline-end:10px}
+.bk-prog{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:18px 44px 8px 0;margin-inline:0 44px}
+.bk-prog span{height:4px;border-radius:2px;background:var(--line);overflow:hidden}
+.bk-prog i{display:block;height:100%;background:var(--grow);transform:scaleX(0);transform-origin:100% 50%;transition:transform .35s var(--ease)}
+[dir="ltr"] .bk-prog i{transform-origin:0 50%}
+.bk-count{font-size:.8rem;color:var(--muted);margin-bottom:18px}
+.bk-step{display:grid;gap:16px}
+.bk-step[hidden]{display:none}
+.bk-nav{display:flex;justify-content:space-between;gap:12px;margin-top:24px}
+.bk-nav .btn-solid{margin-inline-start:auto}
+.bk-fail{margin-top:8px}
+.bk-done{display:grid;gap:18px;justify-items:start;outline:none}
+.done-ic{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:var(--grow);color:#2A1A00}
+.done-ic .i{width:30px;height:30px;stroke-width:2.4}
+.demo-note{font-size:.76rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:12px}
+@media (max-width:640px){.modal:not(.menu-modal){place-items:end stretch;padding:0}.sheet{border-radius:18px 18px 0 0;max-height:94vh;max-height:94svh;width:100%}}
+
+/* ---- guide cover (typographic, CSS only; real covers replace it) ---- */
+.cover{position:relative;display:flex;flex-direction:column;justify-content:space-between;aspect-ratio:3/4;width:100%;padding:9cqw;overflow:hidden;border-radius:4px}
+.cover-img{padding:0;object-fit:cover}
+.cv-blue{background:#0074D9;color:#fff}
+.cv-ink{background:#0D1A2A;color:#EAF0F8;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.cv-slate{background:#2E4A66;color:#fff}
+.cv-brand,.cv-tag{position:relative;font-size:4.2cqw;opacity:.85}
+.cv-glyph{position:absolute;inset-inline-end:-3cqw;top:18cqw;font:500 44cqw/1 var(--mono);opacity:.14;direction:ltr}
+.cv-title{position:relative;font-size:12cqw;line-height:1.25;font-weight:600}
+.cover::after{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:3.4cqw;background:linear-gradient(90deg,rgba(0,0,0,.3),rgba(255,255,255,.08) 60%,transparent)}
+[dir="rtl"] .cover::after{background:linear-gradient(270deg,rgba(0,0,0,.3),rgba(255,255,255,.08) 60%,transparent)}
+
+/* ---- document reader ---- */
+#reader{padding:0;background:rgba(4,10,18,.86)}
+.rd-shell{width:min(1100px,100%);height:min(96vh,920px);height:min(96svh,920px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;border-radius:14px;overflow:hidden}
+.rd-bar{display:flex;align-items:center;gap:12px;padding:8px 12px;border-bottom:1px solid var(--line)}
+.rd-title{flex:1;font-size:1.05rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rd-tools{display:flex;align-items:center;gap:2px}
+.rd-z{min-width:3.4em;text-align:center;font-size:.8rem}
+.rd-stage{overflow:auto;display:flex;justify-content:safe center;align-items:flex-start;padding:28px;background:color-mix(in oklab,var(--bg) 82%,#000)}
+.rd-stage:focus{outline:none}
+.rd-page{flex:none;container-type:inline-size;width:calc(min(520px,84vw) * var(--z,1));aspect-ratio:3/4;background:#fff;color:#14202e;border-radius:4px;box-shadow:0 18px 50px rgba(0,0,0,.45);overflow:hidden;transition:width .2s var(--ease)}
+.rd-page img{width:100%;height:100%;object-fit:contain;display:block}
+.rd-page .cover{height:100%;aspect-ratio:auto;border-radius:0}
+.rd-toc,.rd-sec{height:100%;padding:11cqw;display:grid;align-content:start;gap:6cqw}
+.rd-toc h3{font-size:7cqw}.rd-toc ol{display:grid;gap:3cqw;list-style:decimal;padding-inline-start:6cqw;font-size:4.6cqw}
+.rd-sec{align-content:center}.rd-sec .mono{color:#0074D9;font-size:5cqw}.rd-sec h3{font-size:9cqw;line-height:1.3}.rd-sec p{font-size:3.8cqw;color:#5A6B7D;line-height:1.9}
+.rd-nav{display:flex;justify-content:center;align-items:center;gap:20px;padding:8px;border-top:1px solid var(--line)}
+.rd-nav .mono{min-width:5em;text-align:center;font-size:.85rem}
+/* =====================================================================
+   SIGNATURE INTERACTION (scoped to .sig; visuals unchanged from the approved prototype)
+   ===================================================================== */
+.sig{position:relative;height:560vh;height:560svh}
+.sig .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.sig .grid{height:100%;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,4vw,72px);align-items:center;padding:var(--hh) var(--gut) 92px;max-width:1440px;margin-inline:auto}
+.sig .copy{display:grid}
+.sig .ch{grid-area:1/1;align-self:center;will-change:opacity,transform}
+.sig .ch h1,.sig .ch h2{margin:0 0 .45em;font-weight:600;font-size:clamp(2.3rem,4.9vw,4.5rem);line-height:1.3;text-wrap:balance}
+[lang="en"] .sig .ch h1,[lang="en"] .sig .ch h2{line-height:1.12;letter-spacing:-.015em}
+.sig .ch p{max-width:26em;font-size:clamp(1.05rem,1.5vw,1.3rem);line-height:1.95;color:var(--muted)}
+.sig .cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+.sig .visual{display:flex;flex-direction:column;justify-content:center;gap:18px;min-height:0}
+.sig .win{position:relative;display:flex;flex-direction:column;direction:ltr;height:min(62vh,560px);height:min(62svh,560px);
+  border:1px solid color-mix(in oklab,var(--line) calc(var(--chrome) * 100%),transparent);
+  background:color-mix(in oklab,var(--win) calc(var(--chrome) * 100%),transparent);border-radius:16px;overflow:hidden;container-type:inline-size}
+.sig .bar{position:relative;flex:none;height:calc(38px * var(--chrome));opacity:var(--chrome);border-bottom:1px solid var(--line);overflow:hidden}
+.sig .tabs{position:absolute;inset:0 auto 0 8px;display:flex;align-items:flex-end;gap:2px;opacity:calc(1 - var(--url))}
+.sig .tab{display:inline-block;overflow:hidden;white-space:nowrap;font:400 12px/1 var(--mono);padding:9px 12px;border-radius:8px 8px 0 0;color:var(--muted)}
+.sig .tab.on{color:var(--fg);background:var(--bg)}
+.sig .tab.more:nth-child(2){max-width:calc(9em * var(--tabs));opacity:var(--tabs);padding-inline:calc(12px * var(--tabs))}
+.sig .tab.more:nth-child(3){max-width:calc(7em * var(--tabs));opacity:var(--tabs);padding-inline:calc(12px * var(--tabs))}
+.sig .url{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(58%,330px);height:24px;border-radius:999px;background:color-mix(in oklab,var(--fg) 8%,transparent);display:grid;place-items:center;font:400 12px/1 var(--mono);color:var(--fg);opacity:var(--url)}
+.sig .pub{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:6px;font-size:12px;color:var(--fg);opacity:0}
+.sig .pub::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--grow)}
+.sig .body{flex:1;display:flex;min-height:0}
+.sig .pane{position:relative;flex:0 0 calc(var(--frac) * 100%);overflow:hidden;-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 22px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 22px),transparent)}
+.sig .lines{position:absolute;left:0;top:0;will-change:transform;font-family:var(--mono)}
+.sig .ln{display:none;white-space:pre;line-height:1.75}
+.sig .no{display:inline-block;width:calc(2.2em * var(--chrome));margin-right:calc(.7em * var(--chrome));overflow:hidden;text-align:right;color:var(--muted);opacity:.7;user-select:none}
+.sig .t{color:var(--accent)}.sig .k{color:var(--prop)}.sig .s{color:var(--str)}.sig .x{color:var(--fg)}.sig .p{color:var(--muted)}
+.sig .err{text-decoration:underline wavy var(--err);text-decoration-thickness:1.5px;text-underline-offset:.22em}
+.sig .hint{position:absolute;left:14px;right:14px;bottom:12px;direction:rtl;text-align:right;font-size:12.5px;line-height:1.6;padding:8px 12px;border-radius:10px;opacity:0;transition:opacity .35s ease;background:color-mix(in oklab,var(--fg) 7%,transparent);color:var(--fg)}
+.sig .hint.err{opacity:1;box-shadow:inset -3px 0 0 var(--err);text-decoration:none}
+.sig .hint.ok{opacity:1;box-shadow:inset -3px 0 0 var(--str)}
+[dir="ltr"] .sig .hint{direction:ltr;text-align:left}
+[dir="ltr"] .sig .hint.err{box-shadow:inset 3px 0 0 var(--err)}
+[dir="ltr"] .sig .hint.ok{box-shadow:inset 3px 0 0 var(--str)}
+.sig .preview{position:relative;flex:1 1 0;min-width:0;opacity:var(--prev);border-left:1px solid color-mix(in oklab,var(--line) calc(var(--prev) * 100%),transparent)}
+.sig .page{position:absolute;inset:12px;background:#fff;color:#14202e;border-radius:10px;overflow:hidden;container-type:size}
+.sig .raw,.sig .site{position:absolute;inset:0}
+.sig .raw{padding:6cqw 7cqw;font-family:"Times New Roman",Times,serif;color:#111;opacity:calc(1 - var(--site));line-height:1.3}
+.sig .raw h1{margin:0 0 .5em;font-size:9cqw;line-height:1.15;font-weight:700;transition:color .5s ease}
+.sig .raw.fixed h1{color:#0074d9}
+.sig .raw ul{margin:0;padding-left:1.4em;list-style:disc;font-size:5.2cqw;line-height:1.5;opacity:0;transition:opacity .4s ease}
+.sig .raw.on ul{opacity:1}
+.sig .site{opacity:var(--site);padding:5cqw 6cqw;direction:rtl;font-family:var(--font);line-height:1.5}
+[dir="ltr"] .sig .site{direction:ltr}
+.sig .s-nav{display:flex;align-items:center;gap:3cqw;font-size:max(11px,2.7cqw);color:#4a5a6c}
+.sig .s-nav b{margin-inline-end:auto;color:#14202e;font-weight:600;font-size:max(12px,3cqw)}
+.sig .site h3{margin:5cqw 0 1cqw;font-size:max(18px,6.6cqw);line-height:1.3;font-weight:600}
+.sig .site p{margin:0 0 4cqw;font-size:max(11px,3cqw);color:#4a5a6c}
+.sig .s-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5cqw}
+.sig .s-tile{opacity:var(--v);transform:translateY(calc((1 - var(--v)) * 14px));display:grid;gap:1.6cqw;font-size:max(10px,2.5cqw);color:#14202e}
+.sig .art{aspect-ratio:1/.8;border-radius:1.6cqw;padding:2cqw;display:grid;gap:1cqw}
+.sig .a1{background:#E1F0FF;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr}
+.sig .a1 i{border-radius:.8cqw;background:#0074d9;opacity:.9}.sig .a1 i:first-child{grid-column:1/-1}
+.sig .a2{background:#FFF1D6;align-content:center}
+.sig .a2 i{display:block;height:3.2cqw;border-radius:1cqw;background:#14202e;opacity:.78}
+.sig .a2 i:nth-child(1){width:90%}.sig .a2 i:nth-child(2){width:62%}.sig .a2 i:nth-child(3){width:76%}
+.sig .a3{background:#E2F5EC;position:relative}.sig .a3 i{position:absolute;border-radius:1.4cqw}
+.sig .a3 i:nth-child(1){inset:18% 38% 22% 14%;background:#FFB43A}.sig .a3 i:nth-child(2){inset:30% 12% 12% 40%;background:#0074d9;opacity:.92}
+.sig .term{flex:none;height:calc(56px * var(--term));overflow:hidden;display:flex;align-items:center;gap:.6em;padding:0 16px;border-top:1px solid var(--line);background:color-mix(in oklab,var(--bg) 78%,#000);font:400 13px/1 var(--mono);color:var(--fg);white-space:nowrap}
+.sig .term .pr{color:var(--grow)}
+.sig .term .ok{margin-left:auto;opacity:0;font-family:var(--font);font-size:13px;color:var(--str);direction:rtl}
+[dir="ltr"] .sig .term .ok{direction:ltr}
+.sig .chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;min-height:3.2rem;align-content:flex-start}
+.sig .chips li{opacity:0;padding:.42em .95em;border-radius:999px;font-size:.88rem;line-height:1.4;border:1px solid var(--line);color:var(--fg)}
+.sig .chips li.tech{font-family:var(--mono);font-size:.82rem;direction:ltr}
+.sig .chips li.soft{background:color-mix(in oklab,var(--accent) 16%,transparent);border-color:transparent}
+.sig .rail{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom,0px));width:min(620px,calc(100% - 40px));display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.sig .rail button{appearance:none;background:none;border:0;padding:0;cursor:pointer;text-align:start;color:var(--muted);font:400 .8rem/1.4 var(--font)}
+.sig .seg{display:block;height:3px;border-radius:2px;background:var(--line);overflow:hidden;margin-bottom:8px}
+.sig .fill{display:block;height:100%;background:var(--grow);transform:scaleX(0);transform-origin:100% 50%}
+[dir="ltr"] .sig .fill{transform-origin:0 50%}
+.sig .rail button[aria-current="step"]{color:var(--fg)}
+@media (max-width:860px){
+  .sig .grid{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);align-items:start;gap:14px;padding:calc(var(--hh) + 6px) 20px 76px}
+  .sig .ch h1,.sig .ch h2{font-size:clamp(1.9rem,8.2vw,2.5rem);margin-bottom:.3em}
+  .sig .ch p{font-size:1rem;line-height:1.8}
+  .sig .cta{margin-top:1.1rem}
+  .sig .btn.lg{min-height:46px;padding:0 1.3em;font-size:.95rem}
+  .sig .visual{gap:10px;align-self:stretch}
+  .sig .win{height:min(42vh,360px);height:min(42svh,360px)}
+  .sig .chips{min-height:2.6rem;gap:6px}.sig .chips li{font-size:.78rem;padding:.3em .75em}
+  .sig .rail .lb{visibility:hidden}.sig .rail button[aria-current="step"] .lb{visibility:visible}
+}
+
+/* =====================================================================
+   HOMEPAGE CHAPTERS
+   ===================================================================== */
+/* 02 why */
+.why-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:clamp(32px,6vw,96px);align-items:start}
+.why-copy{display:grid;gap:28px}
+.why-list{margin-top:12px}
+.why-list li{display:grid;grid-template-columns:minmax(0,11rem) 1fr;gap:20px;padding:18px 0;border-top:1px solid var(--line)}
+.why-list strong{font-weight:500}.why-list span{color:var(--muted)}
+.why-media{grid-column:1/-1;margin-top:clamp(16px,3vw,40px)}
+.diff{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--win)}
+.diff-cap{display:flex;align-items:center;gap:8px;padding:12px 16px;font-size:.8rem;color:var(--muted);border-bottom:1px solid var(--line)}
+.dpair{border-top:1px solid var(--line)}.diff-cap+.dpair{border-top:0}
+.dl{display:grid;grid-template-columns:2.2rem 1fr;align-items:baseline;padding:10px 16px;font-size:1rem}
+.dl b{font:500 1rem var(--mono);text-align:center}
+.del{color:var(--muted);background:color-mix(in oklab,#E5484D 8%,transparent)}
+.del>span{text-decoration:line-through;text-decoration-color:color-mix(in oklab,var(--fg) 40%,transparent)}
+.add{background:color-mix(in oklab,var(--accent) 12%,transparent)}.add b{color:var(--accent)}
+.diff-light{max-width:44rem}
+
+/* 03 path */
+.cat-filter{display:flex;flex-wrap:wrap;gap:8px;margin:44px 0 36px}
+.stages{display:grid;grid-template-columns:repeat(var(--n),minmax(210px,1fr));overflow-x:auto;padding-bottom:12px;scroll-snap-type:x proximity;margin-top:24px}
+.cat-filter+.stages{margin-top:0}
+.stage{position:relative;--off:calc((var(--n) - 1 - var(--i)) * 34px);padding-top:calc(30px + var(--off));padding-inline-end:24px;scroll-snap-align:start}
+.stage::before{content:"";position:absolute;inset-inline:0;top:calc(var(--off) + 8px);height:2px;background:var(--line)}
+.stage::after{content:"";position:absolute;inset-inline-end:0;top:calc(var(--off) - 26px);height:34px;width:2px;background:var(--line)}
+.stage:last-child::after{display:none}
+.st-pin{position:absolute;top:var(--off);inset-inline-start:0;width:18px;height:18px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.st-name{font-size:1.5rem;font-weight:600;line-height:1.3}
+.st-desc{color:var(--muted);font-size:.9rem;line-height:1.7;margin-top:2px}
+.nodes{display:grid;gap:8px;margin-top:18px}
+.node a{display:flex;align-items:center;gap:.65em;padding:.6em .85em;border:1px solid var(--line);border-radius:8px;text-decoration:none;background:var(--bg);transition:border-color .2s,transform .2s var(--ease)}
+.node a:hover{border-color:var(--accent);transform:translateY(-2px)}
+.node.extra a{border-style:dashed}
+.node .i{margin-inline-start:auto;opacity:.6}
+.node{transition:opacity .25s}.node.dim{opacity:.22}
+.path-cta{margin-top:48px;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between}
+@media (max-width:860px){
+  .stages{display:block;overflow:visible}
+  .stage{--off:0px;padding:0 0 32px;padding-inline-start:36px}
+  .stage::before{inset-inline:auto;inset-inline-start:8px;top:20px;bottom:-4px;width:2px;height:auto}
+  .stage::after{display:none}
+  .st-pin{top:2px}
+}
+
+/* 04 doing */
+.steps{position:relative;display:grid;gap:clamp(56px,9vw,120px);margin-top:72px;padding-inline-start:clamp(28px,5vw,64px)}
+.steps-line{position:absolute;inset-block:0;inset-inline-start:0;width:3px;background:rgba(255,255,255,.24);border-radius:2px}
+.steps-line i{display:block;width:100%;height:calc(var(--p,0) * 100%);background:var(--grow);border-radius:2px}
+.step{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,5vw,72px);align-items:center}
+.step.flip .step-txt{order:2}
+.step-t{font-size:clamp(2.2rem,5vw,4rem);font-weight:600;line-height:1.25;margin-bottom:.2em}
+.step p{max-width:26em;color:rgba(255,255,255,.9);font-size:1.1rem}
+.step-code{display:inline-block;margin-top:18px;padding:.3em .8em;border-radius:6px;background:rgba(255,255,255,.16);font-size:.9rem}
+
+/* 05 people */
+.people-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(32px,5vw,80px);align-items:start;margin-top:56px}
+.feat{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(20px,3vw,40px);text-decoration:none;align-items:end}
+.feat-pic .ph{width:100%}
+.feat-name{font-size:clamp(2rem,4vw,3.3rem);line-height:1.25;font-weight:600;margin:.15em 0 .3em}
+.role{font-size:.9rem;color:var(--muted)}
+.minis{display:grid;gap:20px}
+.mini{display:grid;grid-template-columns:84px 1fr;gap:16px;align-items:center;text-decoration:none;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.mini-pic .ph{aspect-ratio:1/1}
+.mini-tx{display:grid;gap:2px}.mini-tx small{color:var(--muted)}.mini-tx .tags{margin-block:6px 0}
+.teaches{font-size:.92rem}.teaches a{text-underline-offset:3px}
+
+/* 06 community */
+.mosaic{columns:3 280px;column-gap:16px;margin-top:56px}
+.m{break-inside:avoid;margin:0 0 16px}
+.m .ph{aspect-ratio:4/5}.m:nth-child(3n+2) .ph{aspect-ratio:1/1}.m:nth-child(3n) .ph{aspect-ratio:4/3}.m:nth-child(1) .ph{aspect-ratio:3/4}
+.m figcaption{display:grid;padding:10px 2px 0}.m figcaption b{font-size:.82rem;color:var(--accent);font-weight:500}.m figcaption span{font-weight:600;font-size:1.1rem}
+
+/* 07 stories */
+.stories-body{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,4fr);gap:clamp(24px,4vw,56px);margin-top:48px;align-items:start}
+.film{position:relative}.film .ph{aspect-ratio:16/9}
+.film video{width:100%;aspect-ratio:16/9;border-radius:6px;background:#000;display:block}
+.play{position:absolute;inset:0;margin:auto;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:var(--brand);color:#fff;pointer-events:none}
+.play .i{width:30px;height:30px}
+.film-meta{display:grid;gap:8px;margin-top:20px}
+.quote{font-size:clamp(1.3rem,2.4vw,2rem);line-height:1.6;font-weight:300}
+.quote.is-empty{color:var(--muted);font-style:italic}
+.who b{font-weight:600}.prog a{color:var(--accent)}.ach{color:var(--muted)}
+.story-list{display:grid;gap:10px}
+.story-btn{width:100%;display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center;text-align:start;background:transparent;border:1px solid var(--line);border-radius:8px;padding:10px;cursor:pointer;transition:border-color .2s,background-color .2s}
+.story-btn[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in oklab,var(--accent) 10%,transparent)}
+.story-th .ph{aspect-ratio:16/10}
+.story-tx{display:grid}.story-tx small{color:var(--muted)}
+
+/* 08 library */
+.shelf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(28px,4vw,64px);align-items:end;margin-top:56px}
+.book{display:grid;gap:24px;align-content:end}
+.book:nth-child(2){padding-bottom:clamp(0px,3vw,40px)}
+.book-cover{display:block;container-type:inline-size;width:min(100%,280px);margin-inline:auto;filter:drop-shadow(0 20px 26px rgba(8,19,33,.28));
+  transform:perspective(900px) rotateY(var(--tilt,8deg));transition:transform .4s var(--ease)}
+[dir="ltr"] .book-cover{--tilt:-8deg}
+.book-cover:hover,.book-cover:focus-visible{transform:perspective(900px) rotateY(0)}
+.book-info{display:grid;gap:10px;justify-items:start}
+.book-info h3 a{text-decoration:none}.book-info p{color:var(--muted)}
+.meta{font-size:.78rem}
+.book-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.shelf-page{margin-top:0}
+@media (max-width:860px){
+  .shelf{grid-template-columns:1fr;gap:40px}
+  .book{grid-template-columns:132px 1fr;gap:20px;align-items:center}.book-cover{width:132px;margin:0}.book:nth-child(2){padding-bottom:0}
+}
+
+/* 09 events list (also used by Events pages) */
+.ev-list{display:grid;margin-top:40px}
+.ev-list li:last-child .ev-row{border-bottom:1px solid var(--line)}
+.ev-row{display:grid;grid-template-columns:96px minmax(0,1fr) 40px;gap:clamp(16px,3vw,40px);align-items:center;padding:28px 0;border-top:1px solid var(--line);text-decoration:none;transition:padding .25s var(--ease)}
+.ev-row:hover{padding-inline-start:12px}
+.ev-row time{display:grid;text-align:center;line-height:1.1}.ev-row time b{font-size:3rem;font-weight:600}.ev-row time span{color:var(--muted);font-size:.9rem}
+.ev-main{display:grid;gap:4px;justify-items:start}.ev-main p{color:var(--muted)}
+.ev-row.is-past{opacity:.72}
+.ev-go{display:grid;place-items:center}
+@media (max-width:640px){.ev-row{grid-template-columns:64px minmax(0,1fr)}.ev-row time b{font-size:2.2rem}.ev-go{display:none}}
+
+/* 10 final */
+.final-in{display:grid;gap:44px;justify-items:start}
+.final-t{max-width:16em}
+.fl-pre{display:block;font-size:.4em;font-weight:300;line-height:1.7;color:var(--muted);margin-bottom:.9em}
+.fl{display:inline-block;margin-inline-end:.7em}
+.fl-main{display:block}
+.hello{display:grid;gap:12px;width:min(780px,100%)}
+.hello-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:16px;align-items:stretch}
+.hello-code{margin:0;padding:.9em 1.1em;border-radius:10px;background:color-mix(in oklab,var(--fg) 7%,var(--bg));border:1px solid var(--line);font-size:clamp(.95rem,1.8vw,1.15rem);display:flex;align-items:center;flex-wrap:wrap;overflow-x:auto;white-space:pre-wrap}
+.hello-code .t{color:var(--accent)}
+.final-cta{display:flex;flex-wrap:wrap;gap:12px}
+
+/* =====================================================================
+   INNER PAGES
+   ===================================================================== */
+.phero{padding-top:calc(var(--hh) + clamp(40px,7vw,96px));padding-bottom:clamp(40px,6vw,80px)}
+.phero .display{margin-block:.15em .3em}
+.cta-band-in{display:flex;flex-wrap:wrap;gap:28px;justify-content:space-between;align-items:center}
+.cta-band{padding-block:clamp(56px,8vw,96px)}
+
+/* about */
+.ab-row{display:grid;grid-template-columns:minmax(160px,3fr) minmax(0,9fr);gap:clamp(24px,5vw,80px);padding-block:clamp(40px,6vw,80px);border-top:1px solid var(--line)}
+.ab-row:first-child{border-top:0}
+.ab-label{position:sticky;top:calc(var(--hh) + 24px);align-self:start}
+.ab-body{display:grid;gap:24px;align-content:start}
+.phil li{display:grid;grid-template-columns:3rem minmax(0,1fr);gap:16px;padding:20px 0;border-top:1px solid var(--line)}
+.phil li:first-child{border-top:0;padding-top:0}.phil .mono{color:var(--accent)}.phil p{color:var(--muted)}
+.how li{display:grid;grid-template-columns:minmax(0,10rem) 1fr;gap:20px;padding:16px 0;border-top:1px solid var(--line)}
+.how li:first-child{border-top:0}.how b{font-weight:600}.how span{color:var(--muted)}
+.locs li{display:flex;gap:16px;align-items:flex-start}.loc-pin{display:grid;place-items:center;width:48px;height:48px;border-radius:50%;background:color-mix(in oklab,var(--accent) 12%,transparent);color:var(--accent);flex:none}
+.locs p{color:var(--muted);margin-bottom:8px}
+@media (max-width:860px){.ab-row{grid-template-columns:1fr;gap:16px}.ab-label{position:static}.how li{grid-template-columns:1fr;gap:4px}}
+
+/* courses */
+.filters{display:grid;gap:14px;margin-bottom:36px}
+.fgroup{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.fgroup .lbl{margin-inline-end:8px;color:var(--muted)}
+.crow a{display:grid;grid-template-columns:3rem minmax(0,1fr) auto 2rem;gap:20px;align-items:center;padding:26px 0;border-top:1px solid var(--line);text-decoration:none;transition:padding .25s var(--ease)}
+.crows li:last-child a{border-bottom:1px solid var(--line)}
+.crow a:hover{padding-inline-start:12px}
+.crow-i{color:var(--muted);font-size:.85rem}
+.crow-t{display:block;font-size:clamp(1.4rem,2.6vw,2.2rem);font-weight:600;line-height:1.35}
+.crow.is-feat .crow-t{font-size:clamp(1.7rem,3.4vw,2.8rem)}
+.crow-s{display:block;color:var(--muted);margin-top:4px}
+.crow-meta{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:860px){.crow a{grid-template-columns:2rem minmax(0,1fr) 1.5rem;gap:12px}.crow-meta{grid-column:2/3;grid-row:2;justify-content:flex-start}.crow-go{grid-row:1;grid-column:3}}
+
+/* course detail */
+.c-hero-grid{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:48px;align-items:center}
+.c-hero .row{margin-top:28px}
+.c-file{border:1px solid var(--line);border-radius:10px;overflow:hidden;color:var(--muted);font-size:.85rem}
+.c-file code{display:block;padding:44px 20px;color:var(--c,var(--accent))}
+.c-file-bar{display:flex;gap:6px;padding:10px 14px;border-bottom:1px solid var(--line)}
+.c-file-bar i{width:9px;height:9px;border-radius:50%;background:var(--line)}
+.facts{display:flex;flex-wrap:wrap;gap:12px 44px;margin-top:40px;padding-top:24px;border-top:1px solid var(--line)}
+.facts dt{font-size:.82rem;color:var(--muted)}.facts dd{font-weight:600}
+.facts-col{display:grid;gap:18px;border:0;margin:0 0 20px;padding:0}
+.c-body{padding-block:clamp(40px,6vw,80px)}
+.c-cols,.ev-cols{display:grid;grid-template-columns:minmax(0,8fr) minmax(0,3.6fr);gap:56px;align-items:start}
+.c-main{display:grid;gap:0}
+.c-side{position:sticky;top:calc(var(--hh) + 24px);display:grid;gap:16px}
+.side-card{padding:24px;border:1px solid var(--line);border-radius:10px;background:var(--bg);display:grid;gap:14px;align-content:start}
+.side-people{display:grid;gap:12px}.side-people a{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;text-decoration:none}
+.side-people .ph{aspect-ratio:1/1}.side-people .ph .i{width:20px;height:20px}
+.cblock{display:grid;gap:16px;margin-top:48px}.cblock:first-child{margin-top:0}
+.next-list a{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-top:1px solid var(--line);text-decoration:none;font-weight:500;transition:padding .2s var(--ease)}
+.next-list a:hover{padding-inline-start:10px}
+.next-list li:last-child a{border-bottom:1px solid var(--line)}
+.faq{border-top:1px solid var(--line);padding:14px 0}.faq summary{cursor:pointer;font-weight:500}.faq p{color:var(--muted);margin-top:8px}
+@media (max-width:860px){.c-hero-grid,.c-cols,.ev-cols{grid-template-columns:1fr;gap:32px}.c-file{display:none}.c-side{position:static}}
+
+/* services */
+.svc-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:clamp(32px,4vw,56px) 24px}
+.svc{display:grid;gap:12px;align-content:start;padding-top:24px;border-top:2px solid var(--fg)}
+.svc p{color:var(--muted);max-width:30em}
+.svc-feature{grid-column:1/-1}.svc-feature p{font-size:1.2rem;max-width:34em}
+.svc-pair{grid-column:span 6}.svc-offset{grid-column:span 6;margin-top:56px}.svc-wide{grid-column:span 8}
+.svc-i{color:var(--accent);font-size:.85rem}
+.svc-c{display:flex;flex-wrap:wrap;gap:4px;font-size:.92rem}.svc-c a{text-underline-offset:3px}
+@media (max-width:860px){.svc-pair,.svc-offset,.svc-wide{grid-column:1/-1;margin-top:0}}
+
+/* instructors */
+.ins-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:56px 28px;align-items:end}
+.ins-0{grid-column:span 5}.ins-1{grid-column:span 4}.ins-2{grid-column:span 3}
+.ins a{display:grid;gap:16px;text-decoration:none}
+.ins-name{font-size:1.4rem;font-weight:600;line-height:1.35}.ins-role{color:var(--muted)}.ins-tx{display:grid;gap:2px}
+@media (max-width:860px){.ins-0,.ins-1,.ins-2{grid-column:1/-1}}
+.prof{padding-top:calc(var(--hh) + 32px);padding-bottom:clamp(56px,8vw,100px)}
+.prof-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,96px);align-items:start}
+.prof-pic{position:sticky;top:calc(var(--hh) + 24px)}.prof-pic .ph{width:100%}
+.prof-main{display:grid;gap:12px;align-content:start}
+@media (max-width:860px){.prof-grid{grid-template-columns:1fr}.prof-pic{position:static}}
+
+/* events pages */
+.ev-feat{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,5vw,64px);align-items:end;text-decoration:none}
+.ev-feat-tx{display:grid;gap:10px;justify-items:start}.ev-date{color:var(--muted)}
+.ev-h{margin:64px 0 0}
+.ev-hero{display:flex;justify-content:space-between;align-items:end;gap:32px;flex-wrap:wrap}
+.ev-big{display:grid;line-height:1}.ev-big b{font-size:clamp(4rem,10vw,8rem);font-weight:600;line-height:.95}.ev-big span{color:var(--muted)}
+.ev-desc{margin-top:32px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:24px}.gallery .ph{aspect-ratio:1/1}
+@media (max-width:860px){.ev-feat{grid-template-columns:1fr}}
+
+/* guides pages */
+.gd{padding-top:calc(var(--hh) + 40px);padding-bottom:clamp(56px,8vw,100px)}
+.gd-grid{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(32px,6vw,96px);align-items:center}
+.gd-cover{container-type:inline-size;width:min(100%,360px);margin-inline:auto;filter:drop-shadow(0 28px 36px rgba(8,19,33,.3))}
+.gd-main{display:grid;gap:14px;justify-items:start}.gd-main .row{margin-top:8px}
+@media (max-width:860px){.gd-grid{grid-template-columns:1fr}.gd-cover{width:min(70%,280px)}}
+
+/* contact */
+.ct-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;align-items:start}
+.wa-big{grid-column:1/-1;display:flex;align-items:center;gap:20px;padding:clamp(24px,4vw,48px);background:#128C4A;color:#fff;border-radius:12px;text-decoration:none;font-size:clamp(1.3rem,3vw,2.2rem);font-weight:600;transition:background-color .2s}
+.wa-big:hover{background:#0F7A41}
+.wa-big small{display:block;font-size:.9rem;font-weight:400;opacity:.9}
+.wa-ic .i{width:52px;height:52px}.wa-go{margin-inline-start:auto}.wa-go .i{width:32px;height:32px}
+.ct-list{display:grid;gap:18px}.ct-list li{display:flex;gap:12px;align-items:flex-start}.ct-list .i{margin-top:.35em;color:var(--accent)}
+.ct-list a:not(.link-arrow){text-underline-offset:4px}
+.ct-form{display:grid;gap:14px;padding:28px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.ct-social{grid-column:1/-1;display:grid;gap:14px}
+@media (max-width:860px){.ct-grid{grid-template-columns:1fr}}
+
+/* narrow screens: keep every chapter readable */
+@media (max-width:860px){
+  .why-grid,.people-grid,.stories-body,.step,.feat{grid-template-columns:1fr}
+  .step.flip .step-txt{order:0}
+  .why-list li{grid-template-columns:1fr;gap:4px}
+  .hello-row{grid-template-columns:1fr}
+  .mosaic{columns:2 150px}
+}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  .caret{animation:none}
+  .btn,.node a,.book-cover,.ev-row,.crow a,.next-list a,.rd-page,.chip{transition:none}
+  .sig .raw h1,.sig .raw ul,.sig .hint{transition:none}
+  .sig .s-tile{transform:none}
+  .confetti{display:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#app"></a>
+<div class="cel" id="cel" aria-hidden="true"></div>
+<div class="confetti" id="confetti" aria-hidden="true"></div>
+<header class="nav" id="nav"></header>
+<main id="app" tabindex="-1"></main>
+<footer id="footer" class="tone-deep"></footer>
+<div class="sticky-cta" id="sticky"></div>
+<div class="modal menu-modal" id="menu" hidden></div>
+<div class="modal" id="book-modal" hidden></div>
+<div class="modal" id="reader" hidden></div>
+<div class="sr-only" id="live" role="status" aria-live="polite"></div>
+<script>
+/* =====================================================================
+   CODERA TECH — CONTENT LAYER (CMS-ready)
+   Everything the public site renders comes from this object.
+   Each list supports: visible (bool), order (number), ar/en strings,
+   optional media (photo / cover / video) and optional fields.
+   Items flagged demo:true are placeholders. They show a small "demo"
+   tag while settings.demo is true, and should be replaced from the dashboard.
+   ===================================================================== */
+const D = (ar, en) => ({ ar, en });
+const day = n => { const d = new Date(); d.setDate(d.getDate() + n); d.setHours(17, 0, 0, 0); return d.toISOString(); };
+
+const CMS = {
+  settings: {
+    demo: true,                         // show "demo" tags on placeholder content
+    siteUrl: '',                        // e.g. https://codera.tech (used for canonical / og)
+    urlPattern: '/{lang}{path}',        // how real localized URLs will look once routing is server-side
+    brand: 'Codera Tech',
+    name: D('أكاديمية قدرة تك', 'Codera Tech Academy'),
+    tagline: 'Your Gateway to Tech Mastery!',
+    logo: null,                         // image url when available
+    booking: { endpoint: null }         // POST target for booking requests. null = frontend-only mode
+  },
+
+  contact: {
+    phones: ['01004728742', '01006809413'],
+    email: 'coderatechacademy@gmail.com',
+    address: D('دمنهور - إيتاي البارود، مصر', 'Damanhour - Itay El Baroud, Egypt'),
+    whatsapp: 'https://wa.me/201004728742',
+    mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Damanhour+Itay+El+Baroud+Egypt',
+    social: [
+      { id: 'instagram', label: 'Instagram', url: 'https://www.instagram.com/coderatechacademy' },
+      { id: 'facebook',  label: 'Facebook',  url: 'https://tr.ee/y3LD8mqbVX' },
+      { id: 'tiktok',    label: 'TikTok',    url: 'https://www.tiktok.com/@coderatechacademy' },
+      { id: 'x',         label: 'X',         url: 'https://x.com/coderatechacademy' },
+      { id: 'linktree',  label: 'Linktree',  url: 'https://linktr.ee/coderatech' }
+    ]
+  },
+
+  nav: [
+    { id: 'home',        path: '/',            label: D('الرئيسية', 'Home') },
+    { id: 'about',       path: '/about',       label: D('من نحن', 'About') },
+    { id: 'courses',     path: '/courses',     label: D('الكورسات', 'Courses'), needs: 'courses' },
+    { id: 'services',    path: '/services',    label: D('الخدمات', 'Services'), needs: 'services' },
+    { id: 'instructors', path: '/instructors', label: D('المدرّبون', 'Instructors'), needs: 'instructors' },
+    { id: 'events',      path: '/events',      label: D('الفعاليات', 'Events') },
+    { id: 'guides',      path: '/guides',      label: D('الأدلة', 'Guides'), needs: 'guides' },
+    { id: 'contact',     path: '/contact',     label: D('تواصل', 'Contact') }
+  ],
+
+  /* Homepage chapters: order + visibility are dashboard-controlled */
+  sections: [
+    { id: 'signature', visible: true, order: 1 },
+    { id: 'why',       visible: true, order: 2 },
+    { id: 'path',      visible: true, order: 3 },
+    { id: 'doing',     visible: true, order: 4 },
+    { id: 'people',    visible: true, order: 5 },
+    { id: 'community', visible: true, order: 6 },
+    { id: 'stories',   visible: true, order: 7 },
+    { id: 'library',   visible: true, order: 8 },
+    { id: 'happening', visible: true, order: 9, empty: 'state' },   // 'state' = show "something exciting is coming", 'hide' = remove
+    { id: 'final',     visible: true, order: 10 }
+  ],
+
+  celebration: { active: null, text: null },   // 'ramadan' | 'eid-fitr' | 'eid-adha' | 'anniversary' | 'graduation' | 'back-to-school' | 'custom'
+
+  copy: {
+    path: {
+      title: D('تحب تتعلّم إيه؟ فيه طريق ليك.', 'What do you want to learn? There is a path for you.'),
+      lead: D('مفيش مسار واحد ثابت. اختر نقطة البداية المناسبة، وكمّل في المجال اللي يشدّك.',
+              'There is no single fixed route. Pick the starting point that fits you, then carry on in the direction that pulls you.')
+    },
+    doing: {
+      title: D('بنتعلّم وإحنا بنشتغل.', 'We learn by doing the work.'),
+      lead: D('نفس فكرة أول سطر كود: تعلّم، تمرّن، ابنِ، وطوّر.', 'The same idea as that first line of code: learn, practice, build, improve.'),
+      steps: [
+        { key: 'learn',    t: D('تعلّم', 'Learn'),    d: D('فكرة واحدة في كل مرة، بشرح واضح من مدرّب أمامك.', 'One idea at a time, explained clearly by a mentor in the room.'), media: D('صورة: مدرّب يشرح داخل الفصل', 'Photo: an instructor explaining in class'), img: null },
+        { key: 'practice', t: D('تمرّن', 'Practice'), d: D('تمرين مباشر على كل فكرة، لأن الكود لا يُتعلَّم بالمشاهدة فقط.', 'A hands-on exercise for every idea, because code is not learned by watching alone.'), media: D('صورة: طلاب يكتبون الكود', 'Photo: students writing code'), img: null },
+        { key: 'build',    t: D('ابنِ', 'Build'),     d: D('مشروع صغير يجمع ما تعلّمته، ويكبر معك مع الوقت.', 'A small project that pulls together what you learned, and grows with you.'), media: D('صورة: مشروع طالب على الشاشة', 'Photo: a student project on screen'), img: null },
+        { key: 'improve',  t: D('طوّر', 'Improve'),   d: D('ملاحظات من المدرّب، تعديل، ثم نسخة أفضل.', 'Feedback from your instructor, a revision, then a better version.'), media: D('صورة: مراجعة مشروع مع المدرّب', 'Photo: reviewing a project with the instructor'), img: null }
+      ]
+    },
+    people: {
+      title: D('إنت مش لوحدك.', 'You do not learn alone.'),
+      lead: D('مدرّبون بيمشوا معاك خطوة بخطوة، من أول سطر لحد مشروعك الأول.', 'Mentors who walk beside you, from the first line to your first project.')
+    },
+    community: {
+      title: D('مش بتشتري كورس.. بتنضم لمجتمع.', 'You are not buying a course. You are joining a community.'),
+      lead: D('ورش، مسابقات، أنشطة، وتخرّج. لحظات بتتعلّم فيها وبتتعرّف على ناس شبهك.', 'Workshops, competitions, activities and graduation. Moments where you learn and meet people like you.')
+    },
+    stories: {
+      title: D('قصص ناس جرّبوا الرحلة.', 'Stories from people who took the journey.'),
+      lead: D('بصوتهم هم، مش بصوتنا.', 'In their voice, not ours.')
+    },
+    library: {
+      title: D('تعلّمك مبيقفش عند باب الفصل.', 'Your learning does not stop at the classroom.'),
+      lead: D('أدلة مصمّمة باحتراف تشرح طريقتنا في التعلّم والتدريس والإدارة. اقرأها هنا أو نزّلها.', 'Professionally designed guides on how we learn, teach and run our branches. Read them here or download them.')
+    },
+    happening: {
+      title: D('إيه اللي بيحصل في Codera؟', 'What is happening at Codera'),
+      emptyTitle: D('حاجة حلوة جاية قريب.', 'Something exciting is coming.'),
+      emptyText: D('بنجهّز فعاليات وورش جديدة. تابعنا على السوشيال ميديا لتكون أول من يعرف.', 'We are preparing new events and workshops. Follow us on social media to be the first to know.')
+    }
+  },
+
+  why: {
+    title: D('مش بنعلّمك تكتب Code بس.', 'We do not just teach you to write code.'),
+    lead: D('بنعلّمك تفكّر، وتحل المشاكل، وتكمّل تتعلّم. الكود هو الوسيلة، مش الهدف.',
+            'We teach you to think, to solve problems and to keep learning. Code is the tool, not the goal.'),
+    points: [
+      { t: D('تعلّم عملي', 'Practical learning'), d: D('نتعلّم بالتطبيق: كل فكرة لها تمرين، وكل مرحلة لها مشروع.', 'We learn by applying: every idea has an exercise, every stage has a project.') },
+      { t: D('مهارات تقنية وشخصية', 'Technical and soft skills'), d: D('نبني الكود، ونبني معه التواصل والعمل في فريق.', 'We build code, and alongside it communication and teamwork.') },
+      { t: D('حل المشكلات', 'Problem solving'), d: D('نبدأ من مشكلة حقيقية ونفكّر في حلّها خطوة بخطوة.', 'We start from a real problem and think our way to a solution, step by step.') },
+      { t: D('تعلّم مستمر', 'Continuous learning'), d: D('التعلّم لا ينتهي بآخر محاضرة؛ هناك ملاحظات ودعم ومراجع تكمل معك.', 'Learning does not end with the last lecture; feedback, support and references carry on with you.') }
+    ],
+    diff: [
+      [D('حفظ الأكواد عن ظهر قلب', 'Memorizing code by heart'), D('فهم الفكرة وتطبيقها', 'Understanding the idea and applying it')],
+      [D('شرح نظري فقط', 'Theory only'), D('تمرين وبناء بيدك', 'Practice and building with your own hands')],
+      [D('مهارة تقنية وحدها', 'Technical skill alone'), D('مهارات تقنية + مهارات شخصية', 'Technical skills + soft skills')],
+      [D('تعلّم ينتهي مع آخر محاضرة', 'Learning that ends with the last lecture'), D('تعلّم مستمر', 'Learning that continues')],
+      [D('تتعلّم وحدك', 'Learning alone'), D('بيئة داعمة ومدرّب بجانبك', 'A supportive place and a mentor beside you')]
+    ],
+    media: D('صورة: لحظة تعلّم حقيقية داخل Codera', 'Photo: a real learning moment inside Codera'), img: null
+  },
+
+  categories: [
+    { id: 'programming', label: D('البرمجة', 'Programming'), color: '#0074D9' },
+    { id: 'kids',        label: D('أطفال ومبتدئون', 'Kids & beginners'), color: '#19A99B' },
+    { id: 'web',         label: D('الويب', 'Web'), color: '#7C6CF0' },
+    { id: 'pro',         label: D('مهارات احترافية', 'Professional'), color: '#5B7A99' }
+  ],
+
+  /* The ecosystem is a *visual* path, not a fixed curriculum. Courses pick a stage; stages with no courses disappear. */
+  stages: [
+    { id: 'start',      label: D('ابدأ', 'Start'),           desc: D('أول لقاء مع الحاسوب والبرمجة.', 'Your first meeting with computers and code.') },
+    { id: 'foundation', label: D('أساس', 'Foundation'),      desc: D('أساسات اللغات والويب.', 'The foundations of languages and the web.') },
+    { id: 'build',      label: D('ابنِ', 'Build'),           desc: D('ابنِ مواقع وتطبيقات حقيقية.', 'Build real websites and applications.') },
+    { id: 'specialize', label: D('تخصّص', 'Specialize'),     desc: D('اختر مجالًا وتعمّق فيه.', 'Choose a field and go deeper.') },
+    { id: 'grow',       label: D('انطلق', 'Grow'),           desc: D('ورش، مشاريع، وفعاليات تكمل معك.', 'Workshops, projects and events that keep you growing.'),
+      extras: [{ label: D('ورش وفعاليات', 'Workshops & events'), href: '/events' }, { label: D('أدلة ومراجع', 'Guides & resources'), href: '/guides' }] }
+  ],
+
+  courses: [
+    { slug: 'computer-basics',   cat: 'kids',        stage: 'start',      level: 'beginner', title: D('أساسيات الحاسوب', 'Computer Basics'),
+      summary: D('الخطوة الأولى لفهم الحاسوب واستخدامه بثقة.', 'The first step to understanding and using a computer with confidence.'),
+      leadsTo: ['web-basics', 'python-fundamentals'] },
+    { slug: 'scratch',           cat: 'kids',        stage: 'start',      level: 'beginner', title: D('Scratch', 'Scratch'),
+      summary: D('برمجة بالبلوكات المرئية: طريقة ممتعة لفهم منطق البرمجة قبل كتابة الكود.', 'Programming with visual blocks: a playful way to grasp coding logic before writing code.'),
+      leadsTo: ['python-fundamentals', 'web-basics'] },
+    { slug: 'icdl',              cat: 'pro',         stage: 'start',      title: D('المهارات الرقمية (ICDL)', 'Digital Skills (ICDL)'),
+      summary: D('مهارات رقمية أساسية للدراسة والعمل.', 'Core digital skills for study and work.'), leadsTo: [] },
+    { slug: 'cpp-fundamentals',  cat: 'programming', stage: 'foundation', level: 'beginner', featured: true, title: D('أساسيات C++', 'C++ Fundamentals'),
+      summary: D('أساسيات لغة C++ وبناء منطق البرمجة وحل المشكلات.', 'The fundamentals of C++, programming logic and problem solving.'),
+      leadsTo: ['python-fundamentals', 'backend'] },
+    { slug: 'python-fundamentals', cat: 'programming', stage: 'foundation', level: 'beginner', featured: true, title: D('أساسيات Python', 'Python Fundamentals'),
+      summary: D('أساسيات لغة Python: لغة سهلة القراءة تُستخدم في مجالات كثيرة.', 'The fundamentals of Python: a readable language used across many fields.'),
+      leadsTo: ['data-analysis', 'ai', 'backend'] },
+    { slug: 'web-basics',        cat: 'web',         stage: 'foundation', level: 'beginner', title: D('أساسيات الويب', 'Web Basics'),
+      summary: D('كيف تعمل المواقع، وأولى صفحاتك بـ HTML و CSS.', 'How websites work, and your first pages in HTML and CSS.'),
+      leadsTo: ['frontend', 'backend'] },
+    { slug: 'frontend',          cat: 'web',         stage: 'build',      title: D('تطوير الواجهات (Frontend)', 'Frontend Development'),
+      summary: D('بناء واجهات المواقع التي يراها المستخدم ويتفاعل معها.', 'Building the interfaces people see and interact with.'), leadsTo: ['backend'] },
+    { slug: 'backend',           cat: 'web',         stage: 'build',      title: D('تطوير الخلفية (Backend)', 'Backend Development'),
+      summary: D('بناء الجزء الخفي من المواقع: المنطق والبيانات والخوادم.', 'Building the hidden half of websites: logic, data and servers.'), leadsTo: [] },
+    { slug: 'data-analysis',     cat: 'pro',         stage: 'specialize', title: D('تحليل البيانات', 'Data Analysis'),
+      summary: D('قراءة البيانات وتحليلها لاستخراج أفكار وقرارات.', 'Reading and analyzing data to draw out ideas and decisions.'), leadsTo: ['ai'] },
+    { slug: 'ai',                cat: 'pro',         stage: 'specialize', title: D('الذكاء الاصطناعي', 'Artificial Intelligence'),
+      summary: D('فهم أساسيات الذكاء الاصطناعي وكيف يُستخدم في الواقع.', 'Understanding the basics of AI and how it is used in the real world.'), leadsTo: [] }
+  ],
+
+  services: [
+    { slug: 'programming', title: D('تعليم البرمجة', 'Programming education'), summary: D('من أول سطر كود إلى بناء مشاريع حقيقية، بلغات ومستويات متعددة.', 'From the first line of code to real projects, across several languages and levels.'), courses: ['cpp-fundamentals', 'python-fundamentals'] },
+    { slug: 'web',         title: D('تعليم تطوير الويب', 'Web development education'), summary: D('أساسيات الويب، ثم الواجهات، ثم الخلفية.', 'Web basics, then frontend, then backend.'), courses: ['web-basics', 'frontend', 'backend'] },
+    { slug: 'ai',          title: D('تعليم الذكاء الاصطناعي', 'AI education'), summary: D('فهم الذكاء الاصطناعي واستخدامه بوعي.', 'Understanding AI and using it with awareness.'), courses: ['ai'] },
+    { slug: 'data',        title: D('تعليم تحليل البيانات', 'Data analysis education'), summary: D('تحويل البيانات إلى معنى وقرارات.', 'Turning data into meaning and decisions.'), courses: ['data-analysis'] },
+    { slug: 'digital',     title: D('المهارات الرقمية', 'Digital skills'), summary: D('مهارات أساسية لاستخدام الحاسوب في الدراسة والعمل.', 'Core skills for using computers in study and work.'), courses: ['icdl', 'computer-basics'] },
+    { slug: 'kids',        title: D('تكنولوجيا للأطفال', 'Kids technology education'), summary: D('أول خطواتهم في البرمجة والحاسوب بطريقة ممتعة.', 'Their first steps into coding and computers, in a playful way.'), courses: ['scratch', 'computer-basics'] },
+    { slug: 'workshops',   title: D('ورش العمل', 'Workshops'), summary: D('لقاءات عملية قصيرة حول موضوع واحد.', 'Short hands-on sessions on a single topic.'), href: '/events' },
+    { slug: 'events',      title: D('الفعاليات', 'Events'), summary: D('مسابقات وأنشطة ولحظات مجتمع تجمع الطلاب والمدرّبين.', 'Competitions, activities and community moments that bring students and instructors together.'), href: '/events' },
+    { slug: 'training',    title: D('البرامج التدريبية', 'Training programs'), summary: D('برامج تدريبية منظّمة حسب احتياج المتدرّب.', 'Structured training programs shaped around the learner’s needs.') }
+  ],
+
+  instructors: [
+    { slug: 'programming-instructor', demo: true, featured: true, order: 1,
+      name: D('مدرّب أساسيات البرمجة', 'Programming fundamentals instructor'), role: D('مدرّب', 'Instructor'), photo: null,
+      expertise: [D('C++', 'C++'), D('Python', 'Python'), D('حل المشكلات', 'Problem solving')],
+      courses: ['cpp-fundamentals', 'python-fundamentals'],
+      bio: D('هنا تظهر نبذة المدرّب: خبرته، وطريقته في الشرح، وما يحب أن يراه في طلابه.', 'The instructor’s bio appears here: their experience, how they teach, and what they hope to see in their students.'), social: [] },
+    { slug: 'web-instructor', demo: true, order: 2,
+      name: D('مدرّب تطوير الويب', 'Web development instructor'), role: D('مدرّب', 'Instructor'), photo: null,
+      expertise: [D('HTML و CSS', 'HTML & CSS'), D('JavaScript', 'JavaScript')],
+      courses: ['web-basics', 'frontend', 'backend'],
+      bio: D('هنا تظهر نبذة المدرّب.', 'The instructor’s bio appears here.'), social: [] },
+    { slug: 'data-ai-instructor', demo: true, order: 3,
+      name: D('مدرّب البيانات والذكاء الاصطناعي', 'Data & AI instructor'), role: D('مدرّب', 'Instructor'), photo: null,
+      expertise: [D('تحليل البيانات', 'Data analysis'), D('الذكاء الاصطناعي', 'AI')],
+      courses: ['data-analysis', 'ai'],
+      bio: D('هنا تظهر نبذة المدرّب.', 'The instructor’s bio appears here.'), social: [] }
+  ],
+
+  events: [
+    { slug: 'first-website-workshop', demo: true, featured: true, type: D('ورشة عمل', 'Workshop'), date: day(18),
+      title: D('ورشة: أول موقع لك', 'Workshop: your first website'), location: D('دمنهور - إيتاي البارود', 'Damanhour - Itay El Baroud'),
+      summary: D('جلسة عملية قصيرة تبني فيها صفحتك الأولى من الصفر.', 'A short hands-on session where you build your first page from scratch.'),
+      description: D('تفاصيل الفعالية تُضاف من لوحة التحكم: البرنامج، والمدرّب، والمتطلبات.', 'Event details are added from the dashboard: agenda, instructor and requirements.'), cover: null, gallery: [] },
+    { slug: 'coding-competition', demo: true, type: D('مسابقة', 'Competition'), date: day(42),
+      title: D('مسابقة البرمجة', 'Coding competition'), location: D('دمنهور - إيتاي البارود', 'Damanhour - Itay El Baroud'),
+      summary: D('تحدّيات برمجية للطلاب في أجواء حماسية.', 'Coding challenges for students in an energetic atmosphere.'),
+      description: D('تفاصيل الفعالية تُضاف من لوحة التحكم.', 'Event details are added from the dashboard.'), cover: null, gallery: [] },
+    { slug: 'graduation-ceremony', demo: true, type: D('تخرّج', 'Graduation'), date: day(-45),
+      title: D('حفل التخرّج', 'Graduation ceremony'), location: D('دمنهور - إيتاي البارود', 'Damanhour - Itay El Baroud'),
+      summary: D('لحظة تكريم الطلاب بعد إنهاء رحلتهم.', 'A moment to honor students who completed their journey.'),
+      description: D('تفاصيل الفعالية وصورها تُضاف من لوحة التحكم.', 'Event details and photos are added from the dashboard.'), cover: null, gallery: [] },
+    { slug: 'scratch-kids-workshop', demo: true, type: D('ورشة عمل', 'Workshop'), date: day(-120),
+      title: D('ورشة Scratch للأطفال', 'Scratch workshop for kids'), location: D('دمنهور - إيتاي البارود', 'Damanhour - Itay El Baroud'),
+      summary: D('ورشة ممتعة لأول لقاء مع البرمجة.', 'A playful workshop for a first meeting with coding.'),
+      description: D('تفاصيل الفعالية تُضاف من لوحة التحكم.', 'Event details are added from the dashboard.'), cover: null, gallery: [] }
+  ],
+
+  moments: [
+    { type: D('ورش عمل', 'Workshops'), title: D('نتعلّم بإيدينا', 'Learning with our hands'), media: D('صورة: ورشة عمل', 'Photo: a workshop'), img: null },
+    { type: D('مسابقات', 'Competitions'), title: D('تحدّي وحماس', 'Challenge and excitement'), media: D('صورة: مسابقة', 'Photo: a competition'), img: null },
+    { type: D('أنشطة الطلاب', 'Student activities'), title: D('وقت مع بعض', 'Time together'), media: D('صورة: نشاط طلابي', 'Photo: a student activity'), img: null },
+    { type: D('تخرّج', 'Graduation'), title: D('نهاية رحلة وبداية أخرى', 'One journey ends, another begins'), media: D('صورة: حفل التخرّج', 'Photo: graduation'), img: null },
+    { type: D('فعاليات', 'Events'), title: D('لقاءات تقنية', 'Tech gatherings'), media: D('صورة: فعالية', 'Photo: an event'), img: null },
+    { type: D('لحظات المجتمع', 'Community moments'), title: D('ناس شبهك', 'People like you'), media: D('صورة: لحظة من المجتمع', 'Photo: a community moment'), img: null }
+  ],
+
+  stories: [
+    { slug: 'story-1', demo: true, name: null, course: 'python-fundamentals', quote: null, video: null, image: null, achievement: null },
+    { slug: 'story-2', demo: true, name: null, course: 'web-basics', quote: null, video: null, image: null, achievement: null },
+    { slug: 'story-3', demo: true, name: null, course: 'scratch', quote: null, video: null, image: null, achievement: null }
+  ],
+
+  guides: [
+    { slug: 'student-guide', tone: 'blue', category: D('للطلاب', 'For students'),
+      title: D('دليل الطالب', 'Student Guide'),
+      description: D('يوضّح فلسفة Codera التعليمية، ومسؤوليات الطالب، والدعم والتغذية الراجعة المستمرة.', 'Explains Codera’s learning philosophy, student responsibilities, support and continuous feedback.'),
+      outline: [D('فلسفة التعلّم', 'Learning philosophy'), D('مسؤوليات الطالب', 'Student responsibilities'), D('الدعم والتغذية الراجعة', 'Support and feedback')],
+      cover: null, file: null, pages: null, pageCount: null, language: null },
+    { slug: 'instructor-guide', tone: 'ink', category: D('للمدرّبين', 'For instructors'),
+      title: D('دليل المدرّب', 'Instructor Guide'),
+      description: D('يوضّح فلسفة التدريس والمعايير والممارسات المهنية.', 'Sets out the teaching philosophy, standards and professional practices.'),
+      outline: [D('فلسفة التدريس', 'Teaching philosophy'), D('المعايير', 'Standards'), D('الممارسات المهنية', 'Professional practices')],
+      cover: null, file: null, pages: null, pageCount: null, language: null },
+    { slug: 'branch-manager-guide', tone: 'slate', category: D('لمديري الفروع', 'For branch managers'),
+      title: D('دليل مدير الفرع', 'Branch Manager Guide'),
+      description: D('يوضّح القيادة والعمليات والجودة وإدارة الفرع.', 'Covers leadership, operations, quality and branch management.'),
+      outline: [D('القيادة', 'Leadership'), D('العمليات', 'Operations'), D('الجودة', 'Quality'), D('إدارة الفرع', 'Branch management')],
+      cover: null, file: null, pages: null, pageCount: null, language: null }
+  ],
+
+  about: {
+    who: D('Codera Tech (أكاديمية قدرة تك) أكاديمية لتعليم البرمجة والمهارات التقنية في دمنهور. نؤمن أن التقنية تُتعلَّم بالممارسة، وأن المتعلّم يحتاج مدرّبًا ومجتمعًا بجانبه.',
+           'Codera Tech (Qodra Tech Academy) is an academy for programming and technology skills in Damanhour. We believe technology is learned by practice, and that learners need a mentor and a community beside them.'),
+    vision: D('أن نكون البوابة التي يبدأ منها كل من يريد إتقان التقنية.', 'To be the gateway where everyone who wants to master technology begins.'), visionDemo: true,
+    mission: D('تعليم عملي للتقنية يجمع المهارات التقنية والشخصية، في بيئة داعمة تشجّع على التجربة والتعلّم المستمر.', 'Practical technology education that joins technical and soft skills, in a supportive place that encourages trying things and continuous learning.'), missionDemo: true,
+    philosophy: [
+      { t: D('تعلّم بالتطبيق', 'Learning by applying'), d: D('نتعلّم من خلال الممارسة والمشاريع، لا من الحفظ.', 'We learn through practice and projects, not memorization.') },
+      { t: D('دمج المهارات الشخصية', 'Integrating soft skills'), d: D('التواصل والعمل في فريق جزء من التعلّم، لا إضافة عليه.', 'Communication and teamwork are part of learning, not an add-on.') },
+      { t: D('تعلّم مستمر', 'Continuous learning'), d: D('ملاحظات ودعم مستمران، وتعلّم لا ينتهي بنهاية الكورس.', 'Ongoing feedback and support, and learning that does not end with the course.') }
+    ]
+  },
+
+  branches: [{ id: 'damanhour', label: D('دمنهور - إيتاي البارود', 'Damanhour - Itay El Baroud') }],
+  modes: [{ id: 'in-person', label: D('حضوري', 'In person') }, { id: 'online', label: D('أونلاين', 'Online') }],
+  levels: { beginner: D('مبتدئ', 'Beginner'), intermediate: D('متوسط', 'Intermediate'), advanced: D('متقدم', 'Advanced') }
+};
+/* =====================================================================
+   CORE: language, theme, helpers, icons, placeholders, SEO
+   ===================================================================== */
+let LANG = 'ar';
+let THEME = 'light';
+const S = { draftName: '', cat: 'all', level: 'all', story: 0, evTab: 'all' };   // small UI state
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const L = (a, e) => (LANG === 'ar' ? a : e);                                  // translate inline
+const t = v => (v == null ? '' : typeof v === 'object' ? (v[LANG] ?? v.ar ?? v.en ?? '') : v);   // translate a CMS field
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const T = v => esc(t(v));
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const ss = (a, b, x) => { const k = clamp((x - a) / (b - a)); return k * k * (3 - 2 * k); };
+const prog = (a, b, x) => clamp((x - a) / (b - a));
+const lerp = (a, b, k) => a + (b - a) * k;
+const href = p => '#' + p;
+const BOOK = () => L('احجز مكانك', 'Book your seat');
+
+/* visible + ordered list (dashboard controls both) */
+const vis = list => (list || []).filter(x => x.visible !== false)
+  .map((x, i) => [x, i]).sort((p, q) => ((p[0].order ?? p[1]) - (q[0].order ?? q[1])) || (p[1] - q[1])).map(p => p[0]);
+
+const course = slug => CMS.courses.find(c => c.slug === slug && c.visible !== false);
+const category = id => CMS.categories.find(c => c.id === id);
+const fmtDate = (iso, o) => new Intl.DateTimeFormat(LANG === 'ar' ? 'ar-EG' : 'en-GB', o).format(new Date(iso));
+const isPast = e => new Date(e.date).getTime() < Date.now();
+const phoneIntl = p => '+2' + p;           // 01004728742 -> +201004728742
+const store = {
+  get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage unavailable */ } }
+};
+
+/* ---------- icons ---------- */
+const ICONS = {
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>', next: '<path d="M9 5l7 7-7 7"/>', prev: '<path d="M15 5l-7 7 7 7"/>',
+  menu: '<path d="M4 7h16M4 12h16M4 17h16"/>', close: '<path d="M6 6l12 12M18 6L6 18"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/>',
+  moon: '<path d="M20 14.5A8 8 0 0 1 9.5 4 8 8 0 1 0 20 14.5z"/>',
+  globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>',
+  phone: '<path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  pin: '<path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+  whatsapp: '<path d="M4 20l1.3-4.2A8 8 0 1 1 8.4 18.8L4 20z"/><path d="M9 9c0 3 3 6 6 6l1-1.5-2-1-1 .7c-1-.4-1.8-1.2-2.2-2.2l.7-1-1-2L9 9z"/>',
+  instagram: '<rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17" cy="7" r=".6"/>',
+  facebook: '<path d="M14 8h2.5V4.5H14A3.5 3.5 0 0 0 10.5 8v2H8v3.5h2.5V20H14v-6.5h2.5l.5-3.5H14V8.6c0-.4.2-.6.6-.6z"/>',
+  tiktok: '<path d="M14 4v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c.3 2.3 1.9 3.9 4.5 4.1"/>',
+  x: '<path d="M5 4l14 16M19 4L5 20"/>',
+  linktree: '<path d="M12 3v18M6 8l6-5 6 5M5 13h14M7 18h10"/>',
+  download: '<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>',
+  eye: '<path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  zin: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M11 8v6M8 11h6"/>', zout: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4M8 11h6"/>',
+  full: '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7"/>',
+  play: '<path d="M8 5v14l11-7z" fill="currentColor"/>',
+  cal: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  user: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/>',
+  book: '<path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4z"/><path d="M5 17a3 3 0 0 1 3-3h10"/>',
+  image: '<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M4 18l5-5 4 4 3-3 4 4"/>',
+  film: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor"/>',
+  code: '<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>',
+  star: '<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>'
+};
+const ico = (n, c = '') => `<svg class="i i-${n} ${c}" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICONS[n] || ''}</svg>`;
+
+/* ---------- small UI helpers ---------- */
+const demoTag = o => (CMS.settings.demo && o && o.demo
+  ? `<span class="demo" title="${esc(L('محتوى تجريبي يُستبدل من لوحة التحكم', 'Placeholder content, replaced from the dashboard'))}">${L('تجريبي', 'demo')}</span>` : '');
+
+/* Media placeholder: real <img> when a url exists, otherwise a designed slot that is clearly meant to be replaced */
+const ph = (label, o = {}) => `<div class="ph ${o.cls || ''}"${o.ratio ? ` style="aspect-ratio:${o.ratio}"` : ''}>${
+  o.img ? `<img src="${esc(o.img)}" alt="${esc(o.alt || '')}" loading="lazy" decoding="async">`
+        : `${ico(o.icon || 'image')}<span class="ph-l">${esc(label || '')}</span>`}</div>`;
+
+const sec = (id, tone, inner, cls = '') =>
+  `<section id="${id}" class="sec tone-${tone} ${cls}" aria-labelledby="${id}-t">${inner}</section>`;
+
+const tagList = (arr, cls = '') => arr && arr.length ? `<ul class="tags ${cls}">${arr.map(x => `<li class="tag">${T(x)}</li>`).join('')}</ul>` : '';
+const catTag = id => { const c = category(id); return c ? `<span class="tag" style="--c:${c.color}"><i class="dot"></i>${T(c.label)}</span>` : ''; };
+const socialIcons = cls => `<ul class="social ${cls || ''}">${CMS.contact.social.map(s =>
+  `<li><a href="${esc(s.url)}" target="_blank" rel="noopener" aria-label="${esc(s.label)}">${ico(s.id)}</a></li>`).join('')}</ul>`;
+
+/* ---------- SEO ---------- */
+function setMeta(m) {
+  const full = m.home ? `${CMS.settings.brand} | ${t(CMS.settings.name)}` : `${m.title} | ${CMS.settings.brand}`;
+  document.title = full;
+  const desc = m.desc || L('Codera Tech أكاديمية لتعليم البرمجة والمهارات التقنية في دمنهور. تعلّم، تمرّن، ابنِ، وطوّر.', 'Codera Tech is an academy for programming and technology skills in Damanhour. Learn, practice, build, improve.');
+  const base = (CMS.settings.siteUrl || (location.origin + location.pathname)).replace(/\/$/, '');
+  const urlFor = lang => base + CMS.settings.urlPattern.replace('{lang}', lang).replace('{path}', m.path === '/' ? '' : m.path);
+  const setM = (sel, attr, val, create) => {
+    let el = $(sel);
+    if (!el && create) { el = document.createElement(create.tag); Object.entries(create.attrs).forEach(([k, v]) => el.setAttribute(k, v)); document.head.appendChild(el); }
+    if (el) el.setAttribute(attr, val);
+  };
+  setM('meta[name="description"]', 'content', desc, { tag: 'meta', attrs: { name: 'description' } });
+  setM('meta[property="og:title"]', 'content', full, { tag: 'meta', attrs: { property: 'og:title' } });
+  setM('meta[property="og:description"]', 'content', desc, { tag: 'meta', attrs: { property: 'og:description' } });
+  setM('meta[property="og:type"]', 'content', m.ogType || 'website', { tag: 'meta', attrs: { property: 'og:type' } });
+  setM('meta[property="og:url"]', 'content', urlFor(LANG), { tag: 'meta', attrs: { property: 'og:url' } });
+  setM('meta[property="og:locale"]', 'content', LANG === 'ar' ? 'ar_EG' : 'en_US', { tag: 'meta', attrs: { property: 'og:locale' } });
+  if (m.image) setM('meta[property="og:image"]', 'content', m.image, { tag: 'meta', attrs: { property: 'og:image' } });
+  setM('link[rel="canonical"]', 'href', urlFor(LANG), { tag: 'link', attrs: { rel: 'canonical' } });
+  ['ar', 'en'].forEach(l => setM(`link[hreflang="${l}"]`, 'href', urlFor(l), { tag: 'link', attrs: { rel: 'alternate', hreflang: l } }));
+  let ld = $('#ld'); if (!ld) { ld = document.createElement('script'); ld.type = 'application/ld+json'; ld.id = 'ld'; document.head.appendChild(ld); }
+  ld.textContent = JSON.stringify(m.jsonld || orgLD());
+}
+function orgLD() {
+  const c = CMS.contact;
+  return { '@context': 'https://schema.org', '@type': 'EducationalOrganization', name: `${CMS.settings.brand} (${t(CMS.settings.name)})`,
+    slogan: CMS.settings.tagline, email: c.email, telephone: c.phones.map(phoneIntl), address: { '@type': 'PostalAddress', streetAddress: t(c.address) },
+    sameAs: c.social.map(s => s.url) };
+}
+
+/* announce route changes to screen readers */
+const announce = msg => { const el = $('#live'); if (el) { el.textContent = ''; setTimeout(() => { el.textContent = msg; }, 30); } };
+
+/* ---------- focus trap + modal stack ---------- */
+const focusables = root => $$('a[href],button:not([disabled]),input:not([disabled]):not([type=hidden]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])', root).filter(el => el.offsetParent !== null || el === document.activeElement);
+function openModal(el, { onClose, labelledby } = {}) {
+  const opener = document.activeElement;
+  el.hidden = false; document.documentElement.classList.add('lock');
+  const onKey = e => {
+    if (e.key === 'Escape') { e.stopPropagation(); close(); return; }
+    if (e.key !== 'Tab') return;
+    const f = focusables(el); if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+  function close() {
+    el.hidden = true; document.removeEventListener('keydown', onKey, true);
+    if (!$$('.modal').some(m => !m.hidden)) document.documentElement.classList.remove('lock');
+    onClose && onClose(); opener && opener.focus && opener.focus();
+  }
+  document.addEventListener('keydown', onKey, true);
+  requestAnimationFrame(() => { const f = el.querySelector('[data-autofocus]') || focusables(el)[0]; f && f.focus(); });
+  return close;
+}
+/* =====================================================================
+   CHAPTER 01 — THE SIGNATURE INTERACTION
+   One object grows as the visitor scrolls: <h1>Hello, Codera</h1>
+   First step -> Practice -> Project -> Professional skill.
+   Logic is the approved prototype; changes are limited to bilingual copy,
+   Codera Blue, mounting/unmounting, and real booking buttons.
+   ===================================================================== */
+function sigHTML() {
+  return `
+<section class="track sig" id="sig" aria-label="${L('رحلة التعلم في Codera Tech', 'The Codera Tech learning journey')}">
+  <p class="sr-only">${L('عرض متحرك مرتبط بالتمرير: سطر HTML واحد يتحول إلى صفحة تدريب، ثم إلى مشروع كامل، ثم إلى موقع منشور مع مهارات تقنية وشخصية.',
+    'A scroll-linked animation: a single line of HTML becomes a practice page, then a full project, then a published website with technical and soft skills.')}</p>
+  <div class="stage">
+    <div class="grid">
+      <div class="copy">
+        <article class="ch">
+          <h1>${L('ابدأ بسطر واحد.', 'Start with one line.')}</h1>
+          <p>${L('لا تحتاج أن تعرف كل شيء. تحتاج فقط أن تبدأ.', 'You do not need to know everything. You only need to begin.')}</p>
+          <div class="cta">
+            <button class="btn btn-solid lg" type="button" data-book>${BOOK()}</button>
+            <button class="btn btn-ghost lg" type="button" data-go="1">${L('اكتشف رحلتك', 'Discover your journey')}</button>
+          </div>
+        </article>
+        <article class="ch">
+          <h2>${L('اكتب. أخطئ. أصلح.', 'Write. Slip. Fix.')}</h2>
+          <p>${L('نتعلم بالتطبيق. الخطأ جزء من التعلّم، وكل خطأ تصلحه بنفسك يثبّت الفكرة.', 'We learn by doing. A mistake is part of learning, and every bug you fix yourself makes the idea stick.')}</p>
+        </article>
+        <article class="ch">
+          <h2>${L('سطورك تصبح مشروعًا.', 'Your lines become a project.')}</h2>
+          <p>${L('من أول سطر إلى صفحة كاملة تعرضها وتفخر بها.', 'From the first line to a whole page you can show and be proud of.')}</p>
+        </article>
+        <article class="ch">
+          <h2>${L('ثم تصبح مهارة تحملها معك.', 'Then it becomes a skill you carry.')}</h2>
+          <p>${L('مهارات تقنية ومهارات شخصية، تبنيها خطوة بخطوة مع مدربين يرافقونك.', 'Technical and soft skills, built step by step with mentors who walk beside you.')}</p>
+          <div class="cta"><button class="btn btn-solid lg" type="button" data-book>${BOOK()}</button></div>
+        </article>
+      </div>
+
+      <div class="visual" aria-hidden="true">
+        <div class="win">
+          <div class="bar">
+            <div class="tabs"><span class="tab on">index.html</span><span class="tab more">style.css</span><span class="tab more">app.js</span></div>
+            <div class="url">my-portfolio.dev</div>
+            <div class="pub">${L('منشور', 'Published')}</div>
+          </div>
+          <div class="body">
+            <div class="pane"><div class="lines"></div><div class="hint"></div></div>
+            <div class="preview"><div class="page">
+              <div class="raw" dir="ltr"><h1>Hello, Codera</h1><ul><li>HTML</li><li>CSS</li></ul></div>
+              <div class="site">
+                <div class="s-nav"><b>${L('ملف أعمالي', 'My portfolio')}</b><span>${L('المشاريع', 'Projects')}</span><span>${L('تواصل', 'Contact')}</span></div>
+                <h3>${L('أبني ما أتعلمه.', 'I build what I learn.')}</h3>
+                <p>${L('ثلاثة مشاريع من رحلتي.', 'Three projects from my journey.')}</p>
+                <div class="s-grid">
+                  <div class="s-tile" style="--v:var(--t1)"><div class="art a1"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span>${L('حاسبة', 'Calculator')}</span></div>
+                  <div class="s-tile" style="--v:var(--t2)"><div class="art a2"><i></i><i></i><i></i></div><span>${L('قائمة مهام', 'To-do list')}</span></div>
+                  <div class="s-tile" style="--v:var(--t3)"><div class="art a3"><i></i><i></i></div><span>${L('متجر صغير', 'Mini shop')}</span></div>
+                </div>
+              </div>
+            </div></div>
+          </div>
+          <div class="term"><span class="pr">$</span><span class="cmd"></span><span class="ok">${L('تم النشر ✓', 'Deployed ✓')}</span></div>
+        </div>
+        <ul class="chips">
+          <li class="tech">HTML</li><li class="tech">CSS</li><li class="tech">JavaScript</li><li class="tech">Git</li>
+          <li class="soft">${L('حل المشكلات', 'Problem solving')}</li><li class="soft">${L('التواصل', 'Communication')}</li><li class="soft">${L('العمل ضمن فريق', 'Teamwork')}</li>
+        </ul>
+      </div>
+    </div>
+
+    <nav class="rail" aria-label="${L('مراحل الرحلة', 'Journey stages')}">
+      <button type="button" data-go="0"><span class="seg"><span class="fill"></span></span><span class="lb">${L('الخطوة الأولى', 'First step')}</span></button>
+      <button type="button" data-go="1"><span class="seg"><span class="fill"></span></span><span class="lb">${L('التدريب', 'Practice')}</span></button>
+      <button type="button" data-go="2"><span class="seg"><span class="fill"></span></span><span class="lb">${L('المشروع', 'Project')}</span></button>
+      <button type="button" data-go="3"><span class="seg"><span class="fill"></span></span><span class="lb">${L('المهارة', 'Skill')}</span></button>
+    </nav>
+  </div>
+</section>`;
+}
+
+function mountSignature(root) {
+  const q = s => root.querySelector(s), qa = s => [...root.querySelectorAll(s)];
+  const docEl = document.documentElement;
+  const stage = q('.stage'), win = q('.win'), linesEl = q('.lines'), hint = q('.hint'), raw = q('.raw'),
+        cmdEl = q('.cmd'), okEl = q('.term .ok'), pubEl = q('.pub');
+  const chEls = qa('.ch'), railBtns = qa('.rail button'), fills = railBtns.map(b => b.querySelector('.fill')), chips = qa('.chips li');
+  const reduce = reduceMotion;
+  const VARS = ['--d', '--chrome', '--frac', '--prev', '--site', '--tabs', '--url', '--term', '--t1', '--t2', '--t3'];
+
+  /* Timeline (0..1 of the scroll track)
+     0.00 first line typed on load · 0.06 window + preview · 0.22 practice
+     0.50 project · 0.78 professional skill */
+  const B = [0.22, 0.50, 0.78], SEG = [[0, .22], [.22, .5], [.5, .78], [.78, 1]];
+  const ANCHOR = [0, .46, .74, 1], CENTER = [.11, .36, .64, .89], FIX = 0.37;
+  const BLUE = '#0074d9';
+
+  const lines = [
+    { at: 0, dur: 0, segs: [['t', '<h1>'], ['x', 'Hello, Codera'], ['t', '</h1>']] },
+    { at: .200, dur: .015, segs: [['t', '<style>']] },
+    { at: .215, dur: .060, variant: p => (p < FIX ? 0 : 1),
+      segs: p => [['p', '  h1 { '], [p < FIX ? 'k err' : 'k', p < FIX ? 'colr' : 'color'], ['p', ': '], ['s', BLUE], ['p', '; }']] },
+    { at: .275, dur: .015, segs: [['t', '</style>']] },
+    { at: .385, dur: .012, segs: [['t', '<ul>']] },
+    { at: .397, dur: .022, segs: [['p', '  '], ['t', '<li>'], ['x', 'HTML'], ['t', '</li>']] },
+    { at: .419, dur: .020, segs: [['p', '  '], ['t', '<li>'], ['x', 'CSS'], ['t', '</li>']] },
+    { at: .439, dur: .012, segs: [['t', '</ul>']] },
+    { at: .515, dur: .030, segs: [['t', '<section'], ['p', ' '], ['k', 'class'], ['p', '='], ['s', '"projects"'], ['t', '>']] },
+    { at: .550, dur: .035, segs: [['p', '  '], ['t', '<article'], ['p', ' '], ['k', 'class'], ['p', '='], ['s', '"calc"'], ['t', '></article>']] },
+    { at: .600, dur: .035, segs: [['p', '  '], ['t', '<article'], ['p', ' '], ['k', 'class'], ['p', '='], ['s', '"todo"'], ['t', '></article>']] },
+    { at: .650, dur: .035, segs: [['p', '  '], ['t', '<article'], ['p', ' '], ['k', 'class'], ['p', '='], ['s', '"shop"'], ['t', '></article>']] },
+    { at: .690, dur: .012, segs: [['t', '</section>']] }
+  ];
+  const esc2 = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  const caret = Object.assign(document.createElement('span'), { className: 'caret' });
+  lines.forEach((ln, i) => {
+    ln.row = document.createElement('div'); ln.row.className = 'ln';
+    const no = document.createElement('span'); no.className = 'no'; no.textContent = i + 1;
+    ln.code = document.createElement('span');
+    ln.row.append(no, ln.code); linesEl.appendChild(ln.row);
+  });
+
+  let W = 0, H = 0, mobile = false, destroyed = false;
+  function measure() { const r = win.getBoundingClientRect(); W = r.width; H = r.height; mobile = matchMedia('(max-width: 860px)').matches; schedule(); }
+
+  function renderLines(p, intro) {
+    let vis = 0, last = -1;
+    lines.forEach((ln, i) => {
+      const segs = typeof ln.segs === 'function' ? ln.segs(p) : ln.segs;
+      const total = segs.reduce((n, s) => n + s[1].length, 0);
+      const f = i === 0 ? Math.max(intro, ss(0, .03, p)) : prog(ln.at, ln.at + ln.dur, p);
+      const n = Math.round(f * total);
+      const key = n + '|' + (ln.variant ? ln.variant(p) : 0);
+      if (ln._key !== key) {
+        ln._key = key;
+        let left = n, html = '';
+        for (const [c, tx] of segs) { if (left <= 0) break; const part = tx.slice(0, left); left -= part.length; html += '<span class="' + c + '">' + esc2(part) + '</span>'; }
+        ln.code.innerHTML = html; ln.row.style.display = n > 0 ? 'flex' : 'none';
+      }
+      if (n > 0) { vis++; last = i; }
+    });
+    if (last >= 0 && lines[last].code.lastChild !== caret) lines[last].code.appendChild(caret);
+    return vis;
+  }
+
+  let hintState = '', lastActive = -1, fixedOn = null, listOn = null;
+  const cmd = 'git push origin main';
+  const HINT_ERR = L('خطأ: لا توجد خاصية اسمها colr. هل تقصد color؟', 'Error: there is no property called colr. Did you mean color?');
+  const HINT_OK = L('تم الإصلاح. الصفحة تعمل الآن.', 'Fixed. The page works now.');
+
+  function render(p, intro) {
+    const d = ss(.18, .55, p), s1 = ss(.06, .24, p), s3 = ss(.48, .62, p), s4 = ss(.76, .88, p);
+    const chrome = ss(.08, .22, p), frac = 1 - .44 * s1 - .30 * s3 - .26 * s4, term = ss(.82, .88, p), url = ss(.78, .86, p);
+    const vars = { '--d': d, '--chrome': chrome, '--frac': frac, '--prev': ss(.10, .22, p), '--site': ss(.50, .58, p), '--tabs': ss(.50, .58, p),
+      '--url': url, '--term': term, '--t1': ss(.58, .62, p), '--t2': ss(.63, .67, p), '--t3': ss(.68, .72, p) };
+    for (const k in vars) docEl.style.setProperty(k, vars[k].toFixed(4));
+
+    const vis = renderLines(p, intro);
+    const barH = 38 * chrome, termH = 56 * term, bodyH = H - barH - termH, paneW = W * frac;
+    const fsBig = Math.min(W * .062, 56), fsMid = mobile ? 13 : 15, fs3 = mobile ? 11 : 12;
+    const fs = lerp(lerp(fsBig, fsMid, s1), fs3, s3);
+    linesEl.style.fontSize = fs.toFixed(2) + 'px';
+    const lh = fs * 1.75, contentH = vis * lh, padX = mobile ? 12 : 18, padY = mobile ? 12 : 16, reserve = lerp(0, 46, s1);
+    const x = lerp((paneW - 13.2 * fs) / 2, padX, s1), yC = (bodyH - contentH) / 2, yT = Math.min(padY, bodyH - reserve - contentH);
+    linesEl.style.transform = 'translate(' + x.toFixed(1) + 'px,' + lerp(yC, yT, s1).toFixed(1) + 'px)';
+
+    const hs = (p >= .305 && p < FIX) ? 'err' : (p >= FIX && p < .47) ? 'ok' : '';
+    if (hs !== hintState) { hintState = hs; if (hs === 'err') hint.textContent = HINT_ERR; if (hs === 'ok') hint.textContent = HINT_OK; hint.className = 'hint ' + hs; }
+    const fx = p >= FIX, ls = p >= .43;
+    if (fx !== fixedOn) { fixedOn = fx; raw.classList.toggle('fixed', fx); }
+    if (ls !== listOn) { listOn = ls; raw.classList.toggle('on', ls); }
+
+    cmdEl.textContent = cmd.slice(0, Math.round(prog(.835, .885, p) * cmd.length));
+    okEl.style.opacity = ss(.89, .92, p).toFixed(3);
+    pubEl.style.opacity = ss(.90, .94, p).toFixed(3);
+    chips.forEach((c, i) => { const o = ss(.86 + i * .014, .90 + i * .014, p); c.style.opacity = o.toFixed(3); c.style.transform = reduce ? 'none' : 'translateY(' + ((1 - o) * 8).toFixed(1) + 'px)'; });
+
+    const w = .035;
+    chEls.forEach((el, i) => {
+      const inn = i === 0 ? 1 : ss(B[i - 1], B[i - 1] + w, p), out = i === 3 ? 1 : 1 - ss(B[i] - w, B[i], p), o = inn * out;
+      el.style.opacity = o.toFixed(3);
+      el.style.transform = reduce ? 'none' : 'translateY(' + ((1 - o) * 18 * (p < CENTER[i] ? 1 : -1)).toFixed(1) + 'px)';
+      const hide = o < .5;
+      if (el._hide !== hide) { el._hide = hide; el.inert = hide; el.setAttribute('aria-hidden', hide); }
+    });
+
+    const active = p < B[0] ? 0 : p < B[1] ? 1 : p < B[2] ? 2 : 3;
+    SEG.forEach(([a, b], i) => { fills[i].style.transform = 'scaleX(' + prog(a, b, p).toFixed(3) + ')'; });
+    if (active !== lastActive) { lastActive = active; railBtns.forEach((b, i) => (i === active ? b.setAttribute('aria-current', 'step') : b.removeAttribute('aria-current'))); }
+  }
+
+  let target = 0, cur = 0, intro = reduce ? 1 : 0, raf = 0;
+  const t0 = performance.now();
+  function readTarget() { const max = root.offsetHeight - stage.offsetHeight; target = max > 0 ? clamp(-root.getBoundingClientRect().top / max) : 0; }
+  function frame(now) {
+    raf = 0; if (destroyed) return;
+    if (!reduce && intro < 1) intro = prog(600, 1900, now - t0);
+    const diff = target - cur; cur = (reduce || Math.abs(diff) < .0003) ? target : cur + diff * .14;
+    render(cur, intro);
+    if (Math.abs(target - cur) > .0003 || intro < 1) schedule();
+  }
+  function schedule() { if (!raf && !destroyed) raf = requestAnimationFrame(frame); }
+  function onScroll() { readTarget(); if (intro < 1 && target > .02) intro = 1; schedule(); }
+  const onResize = () => { measure(); onScroll(); };
+  const ro = new ResizeObserver(measure); ro.observe(win);
+  addEventListener('scroll', onScroll, { passive: true }); addEventListener('resize', onResize);
+
+  function go(i) {
+    const max = root.offsetHeight - stage.offsetHeight, top = root.getBoundingClientRect().top + scrollY;
+    scrollTo({ top: top + ANCHOR[i] * max, behavior: reduce ? 'auto' : 'smooth' });
+  }
+  const onClick = e => { const b = e.target.closest('[data-go]'); if (b && root.contains(b)) go(+b.dataset.go); };
+  root.addEventListener('click', onClick);
+
+  measure(); readTarget(); cur = target; if (target > .02) intro = 1; render(cur, intro); schedule();
+
+  return {
+    destroy() {
+      destroyed = true; cancelAnimationFrame(raf); ro.disconnect();
+      removeEventListener('scroll', onScroll); removeEventListener('resize', onResize); root.removeEventListener('click', onClick);
+      VARS.forEach(v => docEl.style.removeProperty(v));
+    }
+  };
+}
+/* =====================================================================
+   HOMEPAGE CHAPTERS. Each returns '' when it has nothing to show,
+   so a hidden/empty chapter disappears without leaving gaps.
+   ===================================================================== */
+
+/* ---- shared building blocks used by home + inner pages ---- */
+function coverHTML(g) {
+  if (g.cover) return `<img class="cover cover-img" src="${esc(g.cover)}" alt="" loading="lazy" decoding="async">`;
+  return `<div class="cover cv-${esc(g.tone || 'blue')}" aria-hidden="true">
+    <span class="cv-brand mono">Codera Tech</span><span class="cv-glyph">&lt;/&gt;</span>
+    <strong class="cv-title">${T(g.title)}</strong><span class="cv-tag mono">${esc(CMS.settings.tagline)}</span></div>`;
+}
+function guideMeta(g) {
+  const bits = [];
+  if (g.pageCount) bits.push(L(`${g.pageCount} صفحة`, `${g.pageCount} pages`));
+  if (g.language) bits.push(g.language === 'ar' ? 'العربية' : g.language === 'en' ? 'English' : esc(g.language));
+  return bits.length ? `<p class="meta mono">${bits.join('  /  ')}</p>` : '';
+}
+function downloadBtn(g, cls = 'btn-ghost sm') {
+  return g.file
+    ? `<a class="btn ${cls}" href="${esc(g.file)}" download>${ico('download')}${L('تحميل', 'Download')}</a>`
+    : `<button class="btn ${cls}" type="button" disabled aria-disabled="true" title="${esc(L('الملف سيُضاف من لوحة التحكم', 'The file is added from the dashboard'))}">${ico('download')}${L('تحميل', 'Download')}</button>`;
+}
+function bookCard(g) {
+  const link = href('/guides/' + g.slug);
+  return `<article class="book">
+    <a class="book-cover" href="${link}" aria-label="${esc(t(g.title))}">${coverHTML(g)}</a>
+    <div class="book-info">
+      <span class="tag">${T(g.category)}</span>
+      <h3 class="h3"><a href="${link}">${T(g.title)}</a></h3>
+      <p>${T(g.description)}</p>${guideMeta(g)}
+      <div class="book-actions"><button class="btn btn-solid sm" type="button" data-read="${esc(g.slug)}">${ico('eye')}${L('معاينة', 'Preview')}</button>${downloadBtn(g)}</div>
+    </div></article>`;
+}
+function eventRow(e) {
+  return `<li><a class="ev-row${isPast(e) ? ' is-past' : ''}" href="${href('/events/' + e.slug)}">
+    <time datetime="${esc(e.date)}"><b>${fmtDate(e.date, { day: 'numeric' })}</b><span>${fmtDate(e.date, { month: 'long' })}</span></time>
+    <div class="ev-main"><span class="tag">${T(e.type)}</span><h3 class="h3">${T(e.title)}${demoTag(e)}</h3><p>${T(e.summary)}</p></div>
+    <span class="ev-go" aria-hidden="true">${ico('arrow')}</span></a></li>`;
+}
+const instrCourses = i => (i.courses || []).map(course).filter(Boolean);
+const coursesLine = i => { const cs = instrCourses(i); return cs.length ? `<p class="teaches">${cs.map(c => `<a href="${href('/courses/' + c.slug)}">${T(c.title)}</a>`).join('<span aria-hidden="true">، </span>')}</p>` : ''; };
+const secHead = (id, c) => `<header class="sec-h"><h2 id="${id}-t" class="h2">${T(c.title)}</h2>${c.lead ? `<p class="lead">${T(c.lead)}</p>` : ''}</header>`;
+
+/* ---- stories (interactive featured + list) ---- */
+function storiesInner() {
+  const list = vis(CMS.stories), i = Math.min(S.story, list.length - 1), s = list[i], c = course(s.course);
+  const label = s.name ? T(s.name) : L('قصة طالب', 'A student story');
+  const main = `<div class="film">${s.video
+      ? `<video controls preload="none"${s.image ? ` poster="${esc(s.image)}"` : ''} src="${esc(s.video)}"></video>`
+      : `${ph(L('فيديو الخريج', 'Graduate video'), { img: s.image, icon: 'film', cls: 'ph-film' })}<span class="play" aria-hidden="true">${ico('play')}</span>`}</div>
+    <div class="film-meta">
+      ${s.quote ? `<blockquote class="quote">${T(s.quote)}</blockquote>` : `<p class="quote is-empty">${L('هنا تظهر كلمات الخريج بصوته.', 'The graduate’s own words appear here.')}</p>`}
+      <p class="who"><b>${label}</b>${demoTag(s)}</p>
+      ${c ? `<p class="prog"><a href="${href('/courses/' + c.slug)}">${T(c.title)}</a></p>` : ''}
+      ${s.achievement ? `<p class="ach">${T(s.achievement)}</p>` : ''}
+    </div>`;
+  const others = list.length > 1 ? `<ul class="story-list" aria-label="${esc(L('قصص أخرى', 'More stories'))}">${list.map((x, k) => {
+    const cc = course(x.course);
+    return `<li><button type="button" class="story-btn" data-act="story" data-i="${k}" aria-pressed="${k === i}">
+      <span class="story-th">${ph('', { img: x.image, icon: 'film' })}</span>
+      <span class="story-tx"><b>${x.name ? T(x.name) : L('قصة طالب', 'A student story')}</b>${cc ? `<small>${T(cc.title)}</small>` : ''}</span></button></li>`;
+  }).join('')}</ul>` : '';
+  return `<div class="story-main">${main}</div>${others}`;
+}
+
+const Home = {
+  signature: () => sigHTML(),
+
+  /* 02 — WHY CODERA: a continuation of the signature screen, same navy, same code motif */
+  why() {
+    const w = CMS.why;
+    return sec('why', 'ink', `<div class="wrap why-grid">
+      <div class="why-copy">
+        <h2 id="why-t" class="display">${T(w.title)}</h2>
+        <p class="lead">${T(w.lead)}</p>
+        <ul class="why-list">${w.points.map(p => `<li><strong>${T(p.t)}</strong><span>${T(p.d)}</span></li>`).join('')}</ul>
+      </div>
+      <figure class="diff">
+        <figcaption class="mono diff-cap">${ico('code')}<span>learning.diff</span></figcaption>
+        ${w.diff.map((p, i) => `<div class="dpair rv" style="--i:${i}">
+          <p class="dl del"><b aria-hidden="true">−</b><span><span class="sr-only">${L('بدلًا من: ', 'Instead of: ')}</span>${T(p[0])}</span></p>
+          <p class="dl add"><b aria-hidden="true">+</b><span><span class="sr-only">${L('عندنا: ', 'With us: ')}</span>${T(p[1])}</span></p></div>`).join('')}
+      </figure>
+      <div class="why-media">${ph(t(w.media), { img: w.img, cls: 'ph-wide', ratio: '21/9' })}</div>
+    </div>`, 'why');
+  },
+
+  /* 03 — FIND YOUR PATH: a visual ecosystem. Stages are columns that climb; courses choose a stage; empty stages vanish. */
+  path() {
+    const cp = CMS.copy.path, cs = vis(CMS.courses);
+    if (!cs.length) return sec('path', 'paper', `<div class="wrap">${secHead('path', cp)}
+      <div class="empty"><p class="h3">${L('بنجهّز مسارات التعلّم.', 'We are preparing the learning paths.')}</p>
+      <p>${L('كلّمنا وهنرشّح لك نقطة البداية المناسبة.', 'Talk to us and we will suggest the right place to start.')}</p>
+      <div class="row"><button class="btn btn-solid" type="button" data-book>${BOOK()}</button><a class="btn btn-wa" href="${CMS.contact.whatsapp}" target="_blank" rel="noopener">${ico('whatsapp')}WhatsApp</a></div></div></div>`, 'path');
+    const stages = vis(CMS.stages), firstId = stages[0] && stages[0].id;
+    const stageOf = c => (stages.some(s => s.id === c.stage) ? c.stage : firstId);
+    const groups = stages.map(s => ({ s, items: cs.filter(c => stageOf(c) === s.id) })).filter(g => g.items.length || (g.s.extras && g.s.extras.length));
+    const cats = vis(CMS.categories).filter(c => cs.some(x => x.cat === c.id));
+    const node = c => { const k = category(c.cat); return `<li class="node" data-cat="${esc(c.cat)}"><a href="${href('/courses/' + c.slug)}"><i class="dot" style="--c:${k ? k.color : 'var(--brand)'}"></i><span>${T(c.title)}</span></a></li>`; };
+    return sec('path', 'paper', `<div class="wrap">${secHead('path', cp)}
+      ${cats.length > 1 ? `<div class="cat-filter" role="group" aria-label="${esc(L('تصفية حسب المجال', 'Filter by field'))}">
+        <button type="button" class="chip" data-act="path-cat" data-cat="all" aria-pressed="true">${L('الكل', 'All')}</button>
+        ${cats.map(c => `<button type="button" class="chip" data-act="path-cat" data-cat="${esc(c.id)}" aria-pressed="false"><i class="dot" style="--c:${c.color}"></i>${T(c.label)}</button>`).join('')}</div>` : ''}
+      <ol class="stages" style="--n:${groups.length}">
+        ${groups.map((g, i) => `<li class="stage" style="--i:${i}">
+          <div class="st-head"><span class="st-pin" aria-hidden="true"></span><h3 class="st-name">${T(g.s.label)}</h3><p class="st-desc">${T(g.s.desc)}</p></div>
+          <ul class="nodes">${g.items.map(node).join('')}${(g.s.extras || []).map(x => `<li class="node extra"><a href="${href(x.href)}"><i class="dot sq"></i><span>${T(x.label)}</span>${ico('arrow')}</a></li>`).join('')}</ul></li>`).join('')}
+      </ol>
+      <div class="path-cta"><a class="link-arrow" href="#/courses">${L('كل الكورسات', 'All courses')}${ico('arrow')}</a>
+        <p>${L('مش عارف تبدأ منين؟', 'Not sure where to start?')} <button class="linkbtn" type="button" data-book>${BOOK()}</button></p></div>
+    </div>`, 'path');
+  },
+
+  /* 04 — LEARN BY DOING: brand-blue immersion, four steps, an amber line that fills as you scroll */
+  doing() {
+    const cp = CMS.copy.doing;
+    return sec('doing', 'blue', `<div class="wrap">${secHead('doing', cp)}
+      <div class="steps" data-prog><span class="steps-line" aria-hidden="true"><i></i></span>
+        ${cp.steps.map((s, i) => `<article class="step${i % 2 ? ' flip' : ''} rv">
+          <div class="step-txt"><h3 class="step-t">${T(s.t)}</h3><p>${T(s.d)}</p><code class="mono step-code">${esc(s.key)}()</code></div>
+          <div class="step-media">${ph(t(s.media), { img: s.img, cls: 'ph-on-blue', ratio: '4/3' })}</div></article>`).join('')}
+      </div></div>`, 'doing');
+  },
+
+  /* 05 — PEOPLE: one featured mentor + supporting mentors, in CMS order */
+  people() {
+    const list = vis(CMS.instructors); if (!list.length) return '';
+    const f = list.find(i => i.featured) || list[0], rest = list.filter(i => i !== f).slice(0, 4);
+    const mini = i => `<li><a class="mini" href="${href('/instructors/' + i.slug)}"><span class="mini-pic">${ph('', { img: i.photo, icon: 'user' })}</span>
+      <span class="mini-tx"><b>${T(i.name)}${demoTag(i)}</b><small>${T(i.role)}</small>${tagList((i.expertise || []).slice(0, 2))}</span></a></li>`;
+    return sec('people', 'paper', `<div class="wrap">${secHead('people', CMS.copy.people)}
+      <div class="people-grid">
+        <a class="feat" href="${href('/instructors/' + f.slug)}">
+          <div class="feat-pic">${ph(L('صورة المدرّب', 'Instructor portrait'), { img: f.photo, icon: 'user', ratio: '4/5' })}</div>
+          <div class="feat-txt"><span class="role">${T(f.role)}${demoTag(f)}</span><h3 class="feat-name">${T(f.name)}</h3>${tagList(f.expertise)}
+            <span class="link-arrow">${L('الملف الشخصي', 'Full profile')}${ico('arrow')}</span></div>
+        </a>
+        ${rest.length ? `<ul class="minis">${rest.map(mini).join('')}</ul>` : ''}
+      </div>
+      <p class="sec-more"><a class="link-arrow" href="#/instructors">${L('كل المدرّبين', 'All instructors')}${ico('arrow')}</a></p></div>`, 'people');
+  },
+
+  /* 06 — COMMUNITY: an irregular mosaic (CSS columns, so any number of moments works) */
+  community() {
+    const ms = vis(CMS.moments); if (!ms.length) return '';
+    return sec('community', 'paper2', `<div class="wrap">${secHead('community', CMS.copy.community)}
+      <div class="mosaic">${ms.map(m => `<figure class="m">${ph(t(m.media), { img: m.img })}<figcaption><b>${T(m.type)}</b><span>${T(m.title)}</span></figcaption></figure>`).join('')}</div>
+      <p class="sec-more"><a class="link-arrow" href="#/events">${L('شوف الفعاليات', 'See the events')}${ico('arrow')}</a></p></div>`, 'comm');
+  },
+
+  /* 07 — STORIES: proof, after the visitor understands the journey. No invented quotes or numbers. */
+  stories() {
+    if (!vis(CMS.stories).length) return '';
+    return sec('stories', 'ink', `<div class="wrap">${secHead('stories', CMS.copy.stories)}<div class="stories-body" id="stories-body">${storiesInner()}</div></div>`, 'stories');
+  },
+
+  /* 08 — LIBRARY */
+  library() {
+    const gs = vis(CMS.guides); if (!gs.length) return '';
+    return sec('library', 'paper', `<div class="wrap">${secHead('library', CMS.copy.library)}
+      <div class="shelf">${gs.slice(0, 3).map(bookCard).join('')}</div>
+      ${gs.length > 3 || true ? `<p class="sec-more"><a class="link-arrow" href="#/guides">${L('كل الأدلة', 'All guides')}${ico('arrow')}</a></p>` : ''}</div>`, 'library');
+  },
+
+  /* 09 — WHAT'S HAPPENING: upcoming events, or a designed empty state */
+  happening(cfg) {
+    const c = CMS.copy.happening, up = vis(CMS.events).filter(e => !isPast(e)).sort((a, b) => new Date(a.date) - new Date(b.date)).slice(0, 4);
+    if (!up.length) {
+      if (cfg && cfg.empty === 'hide') return '';
+      return sec('happening', 'paper2', `<div class="wrap"><div class="empty empty-big"><span class="empty-ic" aria-hidden="true">${ico('sparkle')}</span>
+        <h2 id="happening-t" class="h2">${T(c.emptyTitle)}</h2><p class="lead">${T(c.emptyText)}</p>${socialIcons('social-lg')}</div></div>`, 'happening');
+    }
+    return sec('happening', 'paper2', `<div class="wrap"><header class="sec-h sec-h-row"><h2 id="happening-t" class="h2">${T(c.title)}</h2>
+      <a class="link-arrow" href="#/events">${L('كل الفعاليات', 'All events')}${ico('arrow')}</a></header>
+      <ul class="ev-list">${up.map(eventRow).join('')}</ul></div>`, 'happening');
+  },
+
+  /* 10 — FINAL: closes the loop with the very first line of code, now with the visitor's name */
+  final() {
+    const lines = L(['شفت الرحلة.', 'شفت التجربة.', 'قابلت المدرّبين.', 'شفت المجتمع.'], ['You saw the journey.', 'You saw how we learn.', 'You met the people.', 'You saw the community.']);
+    return sec('final', 'ink', `<div class="wrap final-in">
+      <h2 id="final-t" class="display final-t"><span class="fl-pre">${lines.map((l, i) => `<span class="fl rv" style="--i:${i}">${l}</span>`).join(' ')}</span> <span class="fl-main">${L('دلوقتي خد أول خطوة.', 'Now take your first step.')}</span></h2>
+      <div class="hello">
+        <label for="hello-in" class="lbl">${L('اكتب اسمك وشوف أول سطر ليك', 'Type your name and see your first line')}</label>
+        <div class="hello-row">
+          <input id="hello-in" class="in" type="text" maxlength="40" autocomplete="given-name" placeholder="${esc(L('اسمك', 'Your name'))}" value="${esc(S.draftName)}">
+          <pre class="mono hello-code" aria-hidden="true"><span class="t">&lt;h1&gt;</span>Hello, <bdi id="hello-name">${esc(S.draftName || 'Codera')}</bdi><span class="t">&lt;/h1&gt;</span><span class="caret"></span></pre>
+        </div>
+      </div>
+      <div class="final-cta"><button class="btn btn-solid lg" type="button" data-book>${BOOK()}</button>
+        <a class="btn btn-wa lg" href="${CMS.contact.whatsapp}" target="_blank" rel="noopener">${ico('whatsapp')}${L('تواصل معنا عبر WhatsApp', 'Message us on WhatsApp')}</a></div>
+    </div>`, 'final');
+  }
+};
+/* =====================================================================
+   PAGES. Each returns { html, meta, after? }
+   ===================================================================== */
+const crumbs = items => `<nav class="crumbs mono" aria-label="${esc(L('مسار التنقل', 'Breadcrumb'))}"><a href="#/">${L('الرئيسية', 'Home')}</a>${items.map(i => `<span aria-hidden="true">/</span>${i.path ? `<a href="${href(i.path)}">${i.label}</a>` : `<span aria-current="page">${i.label}</span>`}`).join('')}</nav>`;
+const phero = o => `<header class="phero tone-${o.tone || 'paper'}"><div class="wrap">${o.crumbs ? crumbs(o.crumbs) : ''}<h1 class="display">${o.title}</h1>${o.lead ? `<p class="lead">${o.lead}</p>` : ''}${o.extra || ''}</div></header>`;
+const ctaBand = (title) => `<section class="sec tone-ink cta-band" aria-label="${esc(L('ابدأ الآن', 'Get started'))}"><div class="wrap cta-band-in">
+  <h2 class="h2">${title || L('جاهز تاخد أول خطوة؟', 'Ready to take your first step?')}</h2>
+  <div class="row"><button class="btn btn-solid lg" type="button" data-book>${BOOK()}</button><a class="btn btn-wa lg" href="${CMS.contact.whatsapp}" target="_blank" rel="noopener">${ico('whatsapp')}WhatsApp</a></div></div></section>`;
+const empty = (title, text, extra = '') => `<div class="empty empty-big"><span class="empty-ic" aria-hidden="true">${ico('sparkle')}</span><h2 class="h2">${title}</h2><p class="lead">${text}</p>${extra}</div>`;
+const bulletList = arr => arr && arr.length ? `<ul class="checks">${arr.map(x => `<li>${ico('check')}<span>${T(x)}</span></li>`).join('')}</ul>` : '';
+
+/* ---------- HOME ---------- */
+function pageHome() {
+  const parts = vis(CMS.sections).map(s => ({ s, h: (Home[s.id] && Home[s.id](s)) || '' })).filter(x => x.h);
+  return {
+    html: parts.map(x => x.h).join(''), home: true,
+    meta: { home: true, path: '/', title: '', jsonld: orgLD() },
+    after() {
+      const sig = $('#sig'); if (sig) { const m = mountSignature(sig); onLeave(() => m.destroy()); }
+    }
+  };
+}
+
+/* ---------- ABOUT ---------- */
+function pageAbout() {
+  const a = CMS.about, row = (id, label, body, cls = '') => `<section class="ab-row ${cls}" id="${id}"><h2 class="ab-label h3">${label}</h2><div class="ab-body">${body}</div></section>`;
+  const steps = CMS.copy.doing.steps;
+  const html = `${phero({ title: L('نبدأ من أول سطر.', 'We begin with the first line.'), lead: L('قصة أكاديمية تؤمن أن التقنية تُتعلَّم بالممارسة، وأن لا أحد يتعلّم وحده.', 'The story of an academy that believes technology is learned by practice, and that nobody learns alone.'), crumbs: [{ label: L('من نحن', 'About') }] })}
+  <div class="tone-paper about"><div class="wrap">
+    ${row('who', L('من نحن', 'Who we are'), `<p class="statement">${T(a.who)}</p>`)}
+    ${row('vision', L('رؤيتنا', 'Our vision'), `<p class="statement">${T(a.vision)}${a.visionDemo ? demoTag({ demo: true }) : ''}</p>`)}
+    ${row('mission', L('رسالتنا', 'Our mission'), `<p class="statement">${T(a.mission)}${a.missionDemo ? demoTag({ demo: true }) : ''}</p>`)}
+    ${row('philosophy', L('فلسفتنا التعليمية', 'Our educational philosophy'), `<ul class="phil">${a.philosophy.map((p, i) => `<li><span class="mono">0${i + 1}</span><div><h3 class="h3">${T(p.t)}</h3><p>${T(p.d)}</p></div></li>`).join('')}</ul>`)}
+    ${row('different', L('ما الذي يميّزنا', 'What makes us different'), `<figure class="diff diff-light">${CMS.why.diff.map(p => `<div class="dpair"><p class="dl del"><b aria-hidden="true">−</b><span><span class="sr-only">${L('بدلًا من: ', 'Instead of: ')}</span>${T(p[0])}</span></p><p class="dl add"><b aria-hidden="true">+</b><span><span class="sr-only">${L('عندنا: ', 'With us: ')}</span>${T(p[1])}</span></p></div>`).join('')}</figure>`)}
+    ${row('how', L('كيف نتعلّم', 'How we learn'), `<ol class="how">${steps.map(s => `<li><b>${T(s.t)}</b><span>${T(s.d)}</span></li>`).join('')}</ol>`)}
+    ${row('community', L('مجتمعنا', 'Our community'), `<p class="statement">${T(CMS.copy.community.lead)}</p><p><a class="link-arrow" href="#/events">${L('شوف الفعاليات', 'See the events')}${ico('arrow')}</a></p>`)}
+    ${row('locations', L('أين نجدنا', 'Where to find us'), `<ul class="locs">${CMS.branches.map(b => `<li><span class="loc-pin">${ico('pin')}</span><div><b>${T(b.label)}</b><p>${T(CMS.contact.address)}</p><a class="link-arrow" href="${CMS.contact.mapsUrl}" target="_blank" rel="noopener">${L('افتح الخريطة', 'Open the map')}${ico('arrow')}</a></div></li>`).join('')}</ul>`)}
+  </div></div>${ctaBand()}`;
+  return { html, meta: { path: '/about', title: L('من نحن', 'About'), desc: t(a.who) } };
+}
+
+/* ---------- COURSES ---------- */
+function courseFilters(cs) {
+  const cats = vis(CMS.categories).filter(c => cs.some(x => x.cat === c.id));
+  const levels = [...new Set(cs.map(c => c.level).filter(Boolean))];
+  const group = (label, act, key, opts) => opts.length > 1 ? `<div class="fgroup" role="group" aria-label="${esc(label)}"><span class="lbl">${label}</span>
+    <button type="button" class="chip" data-act="${act}" data-v="all" aria-pressed="${S[key] === 'all'}">${L('الكل', 'All')}</button>
+    ${opts.map(o => `<button type="button" class="chip" data-act="${act}" data-v="${esc(o.id)}" aria-pressed="${S[key] === o.id}">${o.dot ? `<i class="dot" style="--c:${o.dot}"></i>` : ''}${T(o.label)}</button>`).join('')}</div>` : '';
+  return group(L('المجال', 'Field'), 'course-cat', 'cat', cats.map(c => ({ id: c.id, label: c.label, dot: c.color })))
+       + group(L('المستوى', 'Level'), 'course-level', 'level', levels.map(l => ({ id: l, label: CMS.levels[l] || l })));
+}
+function courseRows() {
+  const cs = vis(CMS.courses).filter(c => (S.cat === 'all' || c.cat === S.cat) && (S.level === 'all' || c.level === S.level));
+  if (!cs.length) return empty(L('لا توجد كورسات بهذا الاختيار.', 'No courses match this selection.'), L('جرّب مجالًا آخر أو كلّمنا وسنرشّح لك الأنسب.', 'Try another field, or talk to us and we will suggest the best fit.'), `<button class="btn btn-solid" type="button" data-book>${BOOK()}</button>`);
+  const facts = c => [c.level && T(CMS.levels[c.level] || c.level), c.age && T(c.age), c.mode && T(c.mode)].filter(Boolean);
+  return `<ul class="crows">${cs.map((c, i) => `<li class="crow${c.featured ? ' is-feat' : ''}"><a href="${href('/courses/' + c.slug)}">
+    <span class="crow-i mono" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+    <span class="crow-main"><span class="crow-t">${T(c.title)}</span><span class="crow-s">${T(c.summary)}</span></span>
+    <span class="crow-meta">${catTag(c.cat)}${facts(c).map(f => `<span class="tag">${f}</span>`).join('')}</span>
+    <span class="crow-go" aria-hidden="true">${ico('arrow')}</span></a></li>`).join('')}</ul>`;
+}
+function pageCourses() {
+  const cs = vis(CMS.courses);
+  const body = !cs.length ? empty(L('بنجهّز الكورسات.', 'We are preparing the courses.'), L('كلّمنا وهنرشّح لك نقطة البداية المناسبة.', 'Talk to us and we will suggest the right place to start.'), `<button class="btn btn-solid" type="button" data-book>${BOOK()}</button>`)
+    : `<div class="filters" id="course-filters">${courseFilters(cs)}</div><div id="course-list">${courseRows()}</div>`;
+  return { html: `${phero({ title: L('الكورسات', 'Courses'), lead: L('اختر نقطة البداية، وكمّل في المجال اللي يشدّك.', 'Pick a starting point and carry on in the direction that pulls you.'), crumbs: [{ label: L('الكورسات', 'Courses') }] })}
+    <div class="tone-paper sec-tight"><div class="wrap">${body}</div></div>${ctaBand()}`,
+    meta: { path: '/courses', title: L('الكورسات', 'Courses'), desc: L('كورسات Codera Tech: البرمجة، الويب، الذكاء الاصطناعي، تحليل البيانات والمهارات الرقمية.', 'Codera Tech courses: programming, web, AI, data analysis and digital skills.') } };
+}
+
+function pageCourse(slug) {
+  const c = course(slug); if (!c) return page404();
+  const k = category(c.cat), teachers = vis(CMS.instructors).filter(i => (i.courses || []).includes(c.slug));
+  const next = (c.leadsTo || []).map(course).filter(Boolean);
+  const related = vis(CMS.courses).filter(x => x.cat === c.cat && x.slug !== c.slug && !next.includes(x)).slice(0, 3);
+  const facts = [[L('المستوى', 'Level'), c.level && t(CMS.levels[c.level] || c.level)], [L('الفئة', 'For'), c.age && t(c.age)], [L('نمط التعلّم', 'Mode'), c.mode && t(c.mode)], [L('المدة', 'Duration'), c.duration && t(c.duration)], [L('الجلسات', 'Sessions'), c.sessions && t(c.sessions)]].filter(f => f[1]);
+  const block = (title, inner) => inner ? `<section class="cblock"><h2 class="h3">${title}</h2>${inner}</section>` : '';
+  const html = `<header class="phero tone-paper c-hero" style="--c:${k ? k.color : 'var(--brand)'}"><div class="wrap">
+      ${crumbs([{ label: L('الكورسات', 'Courses'), path: '/courses' }, { label: T(c.title) }])}
+      <div class="c-hero-grid"><div>${catTag(c.cat)}<h1 class="display">${T(c.title)}</h1><p class="lead">${T(c.summary)}</p>
+        <div class="row"><button class="btn btn-solid lg" type="button" data-book="${esc(c.slug)}">${BOOK()}</button><a class="btn btn-ghost lg" href="${CMS.contact.whatsapp}" target="_blank" rel="noopener">${ico('whatsapp')}${L('اسأل عن الكورس', 'Ask about this course')}</a></div></div>
+        <div class="c-file mono" aria-hidden="true"><span class="c-file-bar"><i></i><i></i><i></i></span><code>courses/${esc(c.slug)}.md</code></div></div>
+      ${facts.length ? `<dl class="facts">${facts.map(f => `<div><dt>${f[0]}</dt><dd>${esc(f[1])}</dd></div>`).join('')}</dl>` : ''}</div></header>
+    <div class="tone-paper2 c-body"><div class="wrap c-cols">
+      <div class="c-main">
+        ${c.description ? `<section class="cblock"><p class="statement">${T(c.description)}</p></section>` : ''}
+        ${block(L('ماذا ستتعلّم', 'What you will learn'), bulletList(c.learn))}
+        ${block(L('لمن هذا الكورس', 'Who it is for'), bulletList(c.audience))}
+        ${block(L('مخرجات التعلّم', 'Learning outcomes'), bulletList(c.outcomes))}
+        ${block(L('المنهج', 'Curriculum'), c.curriculum && c.curriculum.length ? `<ol class="how">${c.curriculum.map(x => `<li><b>${T(x.t)}</b><span>${T(x.d || '')}</span></li>`).join('')}</ol>` : '')}
+        ${block(L('المشاريع', 'Projects'), bulletList(c.projects))}
+        ${block(L('أسئلة شائعة', 'FAQ'), c.faq && c.faq.length ? c.faq.map(f => `<details class="faq"><summary>${T(f.q)}</summary><p>${T(f.a)}</p></details>`).join('') : '')}
+        ${next.length ? `<section class="cblock"><h2 class="h3">${L('بعد هذا الكورس تقدر تكمل مع', 'After this, you can continue with')}</h2><ul class="next-list">${next.map(n => `<li><a href="${href('/courses/' + n.slug)}"><span>${T(n.title)}</span>${ico('arrow')}</a></li>`).join('')}</ul></section>` : ''}
+      </div>
+      <aside class="c-side">
+        ${teachers.length ? `<div class="side-card"><h2 class="h3">${L('المدرّبون', 'Instructors')}</h2><ul class="side-people">${teachers.map(i => `<li><a href="${href('/instructors/' + i.slug)}"><span class="mini-pic">${ph('', { img: i.photo, icon: 'user' })}</span><b>${T(i.name)}${demoTag(i)}</b></a></li>`).join('')}</ul></div>` : ''}
+        <div class="side-card"><h2 class="h3">${L('خد أول خطوة', 'Take the first step')}</h2><button class="btn btn-solid" type="button" data-book="${esc(c.slug)}">${BOOK()}</button></div>
+      </aside></div></div>
+    ${related.length ? `<section class="sec tone-paper"><div class="wrap"><h2 class="h2">${L('كورسات قريبة', 'Related courses')}</h2><ul class="crows">${related.map((x, i) => `<li class="crow"><a href="${href('/courses/' + x.slug)}"><span class="crow-i mono" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span class="crow-main"><span class="crow-t">${T(x.title)}</span><span class="crow-s">${T(x.summary)}</span></span><span class="crow-go" aria-hidden="true">${ico('arrow')}</span></a></li>`).join('')}</ul></div></section>` : ''}
+    ${ctaBand()}`;
+  return { html, meta: { path: '/courses/' + c.slug, title: t(c.title), desc: t(c.summary), ogType: 'article',
+    jsonld: { '@context': 'https://schema.org', '@type': 'Course', name: t(c.title), description: t(c.summary), provider: { '@type': 'EducationalOrganization', name: CMS.settings.brand } } } };
+}
+
+/* ---------- SERVICES: three layout variants so no two neighbours look alike ---------- */
+function pageServices() {
+  const sv = vis(CMS.services);
+  const link = s => s.href ? `<a class="link-arrow" href="${href(s.href)}">${L('اعرف أكثر', 'Learn more')}${ico('arrow')}</a>` : (s.courses && s.courses.length ? `<p class="svc-c">${s.courses.map(course).filter(Boolean).map(c => `<a href="${href('/courses/' + c.slug)}">${T(c.title)}</a>`).join('<span aria-hidden="true"> / </span>')}</p>` : '');
+  const item = (s, i) => {
+    const v = i === 0 ? 'feature' : (i % 3 === 1 ? 'pair' : (i % 3 === 2 ? 'offset' : 'wide'));
+    return `<article class="svc svc-${v}"><span class="svc-i mono" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><h2 class="${v === 'feature' ? 'h2' : 'h3'}">${T(s.title)}</h2><p>${T(s.summary)}</p>${link(s)}</article>`;
+  };
+  const html = `${phero({ title: L('خدماتنا', 'What we offer'), lead: L('من الفصل الدراسي إلى الورش والفعاليات، كل ما نقدّمه يبدأ من فكرة واحدة: التعلّم بالممارسة.', 'From the classroom to workshops and events, everything we offer starts from one idea: learning by practice.'), tone: 'ink', crumbs: [{ label: L('الخدمات', 'Services') }] })}
+    <div class="tone-paper sec-tight"><div class="wrap">${sv.length ? `<div class="svc-grid">${sv.map(item).join('')}</div>` : empty(L('نجهّز قائمة الخدمات.', 'We are preparing our services.'), L('تواصل معنا لتعرف ما المتاح الآن.', 'Contact us to find out what is available now.'))}</div></div>${ctaBand()}`;
+  return { html, meta: { path: '/services', title: L('الخدمات', 'Services'), desc: L('خدمات Codera Tech التعليمية: البرمجة، الويب، الذكاء الاصطناعي، البيانات، المهارات الرقمية، الأطفال، الورش والفعاليات.', 'Codera Tech services: programming, web, AI, data, digital skills, kids, workshops and events.') } };
+}
+
+/* ---------- INSTRUCTORS ---------- */
+function pageInstructors() {
+  const list = vis(CMS.instructors);
+  const card = (i, k) => `<li class="ins ins-${k % 3}"><a href="${href('/instructors/' + i.slug)}"><div class="ins-pic">${ph(L('صورة المدرّب', 'Instructor portrait'), { img: i.photo, icon: 'user', ratio: k % 3 === 1 ? '1/1' : '4/5' })}</div>
+    <div class="ins-tx"><b class="ins-name">${T(i.name)}${demoTag(i)}</b><span class="ins-role">${T(i.role)}</span>${tagList(i.expertise)}</div></a></li>`;
+  const html = `${phero({ title: L('إنت مش لوحدك.', 'You do not learn alone.'), lead: T0(CMS.copy.people.lead), crumbs: [{ label: L('المدرّبون', 'Instructors') }] })}
+    <div class="tone-paper sec-tight"><div class="wrap">${list.length ? `<ul class="ins-grid">${list.map(card).join('')}</ul>` : empty(L('نعرّفك بمدرّبينا قريبًا.', 'We will introduce our instructors soon.'), L('تواصل معنا لتعرف من سيرافقك في رحلتك.', 'Contact us to find out who will walk beside you.'))}</div></div>${ctaBand()}`;
+  return { html, meta: { path: '/instructors', title: L('المدرّبون', 'Instructors'), desc: t(CMS.copy.people.lead) } };
+}
+function T0(v) { return esc(t(v)); }
+function pageInstructor(slug) {
+  const i = vis(CMS.instructors).find(x => x.slug === slug); if (!i) return page404();
+  const cs = instrCourses(i), evs = vis(CMS.events).slice(0, 2);
+  const html = `<div class="tone-paper prof"><div class="wrap prof-grid">
+    <div class="prof-pic">${ph(L('صورة المدرّب', 'Instructor portrait'), { img: i.photo, icon: 'user', ratio: '4/5' })}</div>
+    <div class="prof-main">${crumbs([{ label: L('المدرّبون', 'Instructors'), path: '/instructors' }, { label: T(i.name) }])}
+      <span class="role">${T(i.role)}${demoTag(i)}</span><h1 class="display">${T(i.name)}</h1>${tagList(i.expertise)}
+      ${i.bio ? `<p class="lead">${T(i.bio)}</p>` : ''}
+      ${cs.length ? `<section class="cblock"><h2 class="h3">${L('الكورسات', 'Courses')}</h2><ul class="next-list">${cs.map(c => `<li><a href="${href('/courses/' + c.slug)}"><span>${T(c.title)}</span>${ico('arrow')}</a></li>`).join('')}</ul></section>` : ''}
+      ${(i.social && i.social.length) ? `<ul class="social">${i.social.map(s => `<li><a href="${esc(s.url)}" target="_blank" rel="noopener" aria-label="${esc(s.label)}">${ico(s.id)}</a></li>`).join('')}</ul>` : ''}
+      <div class="row"><button class="btn btn-solid lg" type="button" data-book="${cs[0] ? esc(cs[0].slug) : ''}">${BOOK()}</button></div></div></div></div>
+    ${evs.length ? `<section class="sec tone-paper2"><div class="wrap"><h2 class="h2">${L('من داخل Codera', 'From inside Codera')}</h2><ul class="ev-list">${evs.map(eventRow).join('')}</ul></div></section>` : ''}${ctaBand()}`;
+  return { html, meta: { path: '/instructors/' + i.slug, title: t(i.name), desc: t(i.bio) || t(i.role), ogType: 'profile',
+    jsonld: { '@context': 'https://schema.org', '@type': 'Person', name: t(i.name), jobTitle: t(i.role), worksFor: { '@type': 'EducationalOrganization', name: CMS.settings.brand } } } };
+}
+
+/* ---------- EVENTS ---------- */
+function pageEvents() {
+  const all = vis(CMS.events), up = all.filter(e => !isPast(e)).sort((a, b) => new Date(a.date) - new Date(b.date)), past = all.filter(isPast).sort((a, b) => new Date(b.date) - new Date(a.date));
+  const feat = up.find(e => e.featured) || up[0], rest = up.filter(e => e !== feat);
+  const hero = e => `<a class="ev-feat" href="${href('/events/' + e.slug)}"><div class="ev-feat-media">${ph(L('غلاف الفعالية', 'Event cover'), { img: e.cover, icon: 'cal', ratio: '16/10' })}</div>
+    <div class="ev-feat-tx"><span class="tag">${T(e.type)}</span><time class="ev-date" datetime="${esc(e.date)}">${fmtDate(e.date, { day: 'numeric', month: 'long', year: 'numeric' })}</time><h2 class="h2">${T(e.title)}${demoTag(e)}</h2><p>${T(e.summary)}</p><span class="link-arrow">${L('التفاصيل', 'Details')}${ico('arrow')}</span></div></a>`;
+  const html = `${phero({ title: L('الفعاليات', 'Events'), lead: L('ورش ومسابقات ولحظات مجتمع. ما يحدث الآن، وما حدث من قبل.', 'Workshops, competitions and community moments. What is happening, and what has happened.'), crumbs: [{ label: L('الفعاليات', 'Events') }] })}
+    <div class="tone-paper sec-tight"><div class="wrap">
+      ${feat ? hero(feat) : empty(L('حاجة حلوة جاية قريب.', 'Something exciting is coming.'), t(CMS.copy.happening.emptyText), socialIcons('social-lg'))}
+      ${rest.length ? `<h2 class="h3 ev-h">${L('قريبًا', 'Coming up')}</h2><ul class="ev-list">${rest.map(eventRow).join('')}</ul>` : ''}</div></div>
+    ${past.length ? `<section class="sec tone-paper2"><div class="wrap"><h2 class="h2">${L('من الأرشيف', 'From the archive')}</h2><ul class="ev-list">${past.map(eventRow).join('')}</ul></div></section>` : ''}${ctaBand()}`;
+  return { html, meta: { path: '/events', title: L('الفعاليات', 'Events'), desc: L('ورش ومسابقات وفعاليات Codera Tech.', 'Codera Tech workshops, competitions and events.') } };
+}
+function pageEvent(slug) {
+  const e = vis(CMS.events).find(x => x.slug === slug); if (!e) return page404();
+  const past = isPast(e), g = e.gallery || [];
+  const html = `<header class="phero tone-ink"><div class="wrap">${crumbs([{ label: L('الفعاليات', 'Events'), path: '/events' }, { label: T(e.title) }])}
+      <div class="ev-hero"><div><span class="tag">${T(e.type)}</span><h1 class="display">${T(e.title)}${demoTag(e)}</h1></div>
+      <time class="ev-big" datetime="${esc(e.date)}"><b>${fmtDate(e.date, { day: 'numeric' })}</b><span>${fmtDate(e.date, { month: 'long', year: 'numeric' })}</span></time></div></div></header>
+    <div class="tone-paper sec-tight"><div class="wrap ev-cols">
+      <div>${ph(L('غلاف الفعالية', 'Event cover'), { img: e.cover, icon: 'cal', ratio: '16/9' })}
+        <p class="statement ev-desc">${T(e.description)}</p>
+        ${g.length ? `<ul class="gallery">${g.map(src => `<li>${ph('', { img: src })}</li>`).join('')}</ul>` : ''}</div>
+      <aside class="side-card"><dl class="facts facts-col">
+        <div><dt>${L('التاريخ', 'Date')}</dt><dd>${fmtDate(e.date, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</dd></div>
+        <div><dt>${L('المكان', 'Location')}</dt><dd>${T(e.location)}</dd></div></dl>
+        ${past ? `<p class="muted">${L('انتهت هذه الفعالية. تابعنا لتعرف الفعاليات القادمة.', 'This event has ended. Follow us to hear about the next ones.')}</p><a class="btn btn-ghost" href="#/events">${L('الفعاليات القادمة', 'Upcoming events')}</a>`
+              : `<button class="btn btn-solid lg" type="button" data-book data-note="${esc(L('أرغب في التسجيل في فعالية: ', 'I would like to register for the event: ') + t(e.title))}">${L('سجّل في الفعالية', 'Register for this event')}</button>`}
+      </aside></div></div>${ctaBand()}`;
+  return { html, meta: { path: '/events/' + e.slug, title: t(e.title), desc: t(e.summary), ogType: 'article',
+    jsonld: { '@context': 'https://schema.org', '@type': 'Event', name: t(e.title), description: t(e.summary), startDate: e.date, location: { '@type': 'Place', name: t(e.location), address: t(CMS.contact.address) }, organizer: { '@type': 'EducationalOrganization', name: CMS.settings.brand } } } };
+}
+
+/* ---------- GUIDES ---------- */
+function pageGuides() {
+  const gs = vis(CMS.guides);
+  const html = `${phero({ title: L('مكتبة Codera', 'The Codera Library'), lead: T0(CMS.copy.library.lead), crumbs: [{ label: L('الأدلة', 'Guides') }] })}
+    <div class="tone-paper sec-tight"><div class="wrap">${gs.length ? `<div class="shelf shelf-page">${gs.map(bookCard).join('')}</div>` : empty(L('نجهّز الأدلة.', 'We are preparing the guides.'), L('ستظهر هنا فور إضافتها.', 'They will appear here as soon as they are added.'))}</div></div>${ctaBand()}`;
+  return { html, meta: { path: '/guides', title: L('الأدلة', 'Guides'), desc: t(CMS.copy.library.lead) } };
+}
+function pageGuide(slug) {
+  const g = vis(CMS.guides).find(x => x.slug === slug); if (!g) return page404();
+  const others = vis(CMS.guides).filter(x => x !== g);
+  const html = `<div class="tone-paper2 gd"><div class="wrap gd-grid"><div class="gd-cover">${coverHTML(g)}</div>
+    <div class="gd-main">${crumbs([{ label: L('الأدلة', 'Guides'), path: '/guides' }, { label: T(g.title) }])}<span class="tag">${T(g.category)}</span><h1 class="display">${T(g.title)}</h1><p class="lead">${T(g.description)}</p>${guideMeta(g)}
+      <div class="row"><button class="btn btn-solid lg" type="button" data-read="${esc(g.slug)}">${ico('eye')}${L('معاينة الدليل', 'Preview the guide')}</button>${downloadBtn(g, 'btn-ghost lg')}</div>
+      ${g.outline && g.outline.length ? `<section class="cblock"><h2 class="h3">${L('ماذا في الدليل', 'Inside the guide')}</h2><ol class="how">${g.outline.map(o => `<li><b>${T(o)}</b></li>`).join('')}</ol></section>` : ''}</div></div></div>
+    ${others.length ? `<section class="sec tone-paper"><div class="wrap"><h2 class="h2">${L('أدلة أخرى', 'More guides')}</h2><div class="shelf">${others.map(bookCard).join('')}</div></div></section>` : ''}${ctaBand()}`;
+  return { html, meta: { path: '/guides/' + g.slug, title: t(g.title), desc: t(g.description), ogType: 'book' } };
+}
+
+/* ---------- CONTACT ---------- */
+function pageContact() {
+  const c = CMS.contact;
+  const html = `${phero({ title: L('خلّينا نتكلّم.', 'Let us talk.'), lead: L('أسرع طريقة للوصول إلينا هي WhatsApp. نرد عليك ونرشّح لك البداية المناسبة.', 'The fastest way to reach us is WhatsApp. We will reply and suggest the right place to begin.'), crumbs: [{ label: L('تواصل', 'Contact') }] })}
+    <div class="tone-paper sec-tight"><div class="wrap ct-grid">
+      <a class="wa-big" href="${c.whatsapp}" target="_blank" rel="noopener"><span class="wa-ic">${ico('whatsapp')}</span><span><b>${L('تواصل عبر WhatsApp', 'Message us on WhatsApp')}</b><small class="mono">${esc(c.phones[0])}</small></span><span class="wa-go">${ico('arrow')}</span></a>
+      <ul class="ct-list">
+        ${c.phones.map(p => `<li>${ico('phone')}<a class="mono" href="tel:${phoneIntl(p)}">${esc(p)}</a></li>`).join('')}
+        <li>${ico('mail')}<a class="mono" href="mailto:${esc(c.email)}">${esc(c.email)}</a></li>
+        <li>${ico('pin')}<span>${T(c.address)} <a class="link-arrow" href="${c.mapsUrl}" target="_blank" rel="noopener">${L('الخريطة', 'Map')}${ico('arrow')}</a></span></li></ul>
+      <form class="ct-form" id="contact-form" novalidate><h2 class="h3">${L('اكتب رسالتك', 'Write your message')}</h2>
+        <p class="muted">${L('سنفتح لك WhatsApp برسالتك جاهزة للإرسال.', 'We will open WhatsApp with your message ready to send.')}</p>
+        <div class="field"><label for="ct-name">${L('الاسم', 'Name')}</label><input class="in" id="ct-name" autocomplete="name" required></div>
+        <div class="field"><label for="ct-msg">${L('رسالتك', 'Your message')}</label><textarea class="in" id="ct-msg" required></textarea></div>
+        <p class="err-msg" id="ct-err" role="alert"></p>
+        <button class="btn btn-wa" type="submit">${ico('whatsapp')}${L('افتح WhatsApp', 'Open WhatsApp')}</button></form>
+      <div class="ct-social"><h2 class="h3">${L('تابعنا', 'Follow us')}</h2>${socialIcons('social-lg')}</div>
+    </div></div>`;
+  return { html, meta: { path: '/contact', title: L('تواصل معنا', 'Contact'), desc: L('تواصل مع Codera Tech عبر WhatsApp أو الهاتف أو البريد. دمنهور - إيتاي البارود.', 'Reach Codera Tech by WhatsApp, phone or email. Damanhour - Itay El Baroud.'), jsonld: orgLD() } };
+}
+
+function page404() {
+  return { html: `<div class="tone-paper sec-tight nf"><div class="wrap">${empty(L('الصفحة غير موجودة.', 'Page not found.'), L('ربما تغيّر الرابط. ابدأ من الرئيسية أو من الكورسات.', 'The link may have changed. Start from the homepage or the courses.'), `<div class="row"><a class="btn btn-solid" href="#/">${L('الرئيسية', 'Home')}</a><a class="btn btn-ghost" href="#/courses">${L('الكورسات', 'Courses')}</a></div>`)}</div></div>`,
+    meta: { path: '/', title: L('غير موجودة', 'Not found') } };
+}
+/* =====================================================================
+   BOOKING — public, three short steps, progressive disclosure.
+   With settings.booking.endpoint = null it runs frontend-only: the visitor
+   can finish via a prefilled WhatsApp message. Set an endpoint and it POSTs JSON.
+   ===================================================================== */
+const Book = { close: null, step: 0, data: {}, opts: {} };
+const PHONE_RE = /^(\+?20|0)?1[0125]\d{8}$/;
+const cleanPhone = v => String(v || '').replace(/[\s\-()]/g, '');
+
+function bookingHTML() {
+  const cs = vis(CMS.courses), brs = vis(CMS.branches), cats = vis(CMS.categories);
+  const opt = (v, l, sel) => `<option value="${esc(v)}"${sel ? ' selected' : ''}>${l}</option>`;
+  const courseOpts = cats.map(k => { const items = cs.filter(c => c.cat === k.id); return items.length ? `<optgroup label="${esc(t(k.label))}">${items.map(c => opt(c.slug, T(c.title), Book.opts.course === c.slug)).join('')}</optgroup>` : ''; }).join('')
+    + cs.filter(c => !cats.some(k => k.id === c.cat)).map(c => opt(c.slug, T(c.title), Book.opts.course === c.slug)).join('');
+  const choice = (name, v, label) => `<label class="choice"><input type="radio" name="${name}" value="${esc(v)}"><span>${label}</span></label>`;
+  return `<div class="sheet tone-paper" role="dialog" aria-modal="true" aria-labelledby="bk-title">
+    <button class="icon-btn sheet-x" type="button" data-close aria-label="${esc(L('إغلاق', 'Close'))}">${ico('close')}</button>
+    <div class="bk-prog" aria-hidden="true"><span><i></i></span><span><i></i></span><span><i></i></span></div>
+    <p class="bk-count mono" id="bk-count" aria-live="polite"></p>
+    <form id="bk-form" novalidate>
+      <fieldset class="bk-step" data-step="0"><legend><h2 class="h2" id="bk-title">${L('عرّفنا بنفسك', 'Tell us about yourself')}</h2></legend>
+        <div class="field"><label for="bk-name">${L('الاسم بالكامل', 'Full name')}</label><input class="in" id="bk-name" name="name" autocomplete="name" data-autofocus><p class="err-msg" id="bk-name-e"></p></div>
+        <div class="field"><label for="bk-age">${L('السن', 'Age')}</label><input class="in" id="bk-age" name="age" type="number" inputmode="numeric" min="3" max="99"><p class="err-msg" id="bk-age-e"></p></div>
+        <div class="field"><label for="bk-phone">${L('رقم الموبايل', 'Mobile number')}</label><input class="in mono" id="bk-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="01XXXXXXXXX"><p class="err-msg" id="bk-phone-e"></p></div>
+        <label class="check"><input type="checkbox" id="bk-wa-same" checked><span>${L('نفس الرقم على WhatsApp', 'Same number on WhatsApp')}</span></label>
+        <div class="field" id="bk-wa-wrap" hidden><label for="bk-wa">${L('رقم WhatsApp', 'WhatsApp number')}</label><input class="in mono" id="bk-wa" name="whatsapp" type="tel" inputmode="tel"><p class="err-msg" id="bk-wa-e"></p></div>
+      </fieldset>
+      <fieldset class="bk-step" data-step="1" hidden><legend><h2 class="h2">${L('عايز تتعلّم إيه؟', 'What would you like to learn?')}</h2></legend>
+        <div class="field"><label for="bk-course">${L('الكورس', 'Course')}</label><select class="in" id="bk-course" name="course"><option value="">${L('مش متأكد، محتاج ترشيح', 'Not sure yet, I need a suggestion')}</option>${courseOpts}</select></div>
+        <div class="field"><label for="bk-branch">${L('الفرع', 'Branch')}</label><select class="in" id="bk-branch" name="branch">${brs.map((b, i) => opt(b.id, T(b.label), i === 0)).join('')}</select></div>
+        <div class="field" role="radiogroup" aria-labelledby="bk-mode-l"><span class="lbl" id="bk-mode-l">${L('نمط التعلّم', 'Learning mode')}</span><div class="choice-grid">${vis(CMS.modes).map(m => choice('mode', m.id, T(m.label))).join('')}</div><p class="err-msg" id="bk-mode-e"></p></div>
+      </fieldset>
+      <fieldset class="bk-step" data-step="2" hidden><legend><h2 class="h2">${L('نتواصل معاك إزاي؟', 'How can we reach you?')}</h2></legend>
+        <div class="field" role="radiogroup" aria-labelledby="bk-contact-l"><span class="lbl" id="bk-contact-l">${L('وسيلة التواصل المفضلة', 'Preferred contact method')}</span><div class="choice-grid">
+          ${choice('contact', 'whatsapp', 'WhatsApp')}${choice('contact', 'call', L('مكالمة', 'Phone call'))}${choice('contact', 'email', L('بريد إلكتروني', 'Email'))}</div><p class="err-msg" id="bk-contact-e"></p></div>
+        <div class="field" id="bk-email-wrap" hidden><label for="bk-email">${L('البريد الإلكتروني', 'Email')}</label><input class="in mono" id="bk-email" name="email" type="email" autocomplete="email"><p class="err-msg" id="bk-email-e"></p></div>
+        <div class="field"><label for="bk-msg">${L('رسالة (اختياري)', 'Message (optional)')}</label><textarea class="in" id="bk-msg" name="message"></textarea></div>
+      </fieldset>
+      <p class="err-msg bk-fail" id="bk-fail" role="alert"></p>
+      <div class="bk-nav"><button class="btn btn-ghost" type="button" id="bk-back">${L('رجوع', 'Back')}</button><button class="btn btn-solid" type="submit" id="bk-next">${L('التالي', 'Next')}</button></div>
+    </form>
+    <div class="bk-done" id="bk-done" hidden tabindex="-1"></div></div>`;
+}
+
+function openBooking(opts = {}) {
+  Book.opts = opts; Book.step = 0; Book.data = {};
+  const el = $('#book-modal'); el.innerHTML = bookingHTML();
+  const f = $('#bk-form');
+  if (opts.name) $('#bk-name').value = opts.name;
+  const same = $('#bk-wa-same'), wrap = $('#bk-wa-wrap');
+  same.addEventListener('change', () => { wrap.hidden = same.checked; });
+  $$('input[name=contact]', f).forEach(r => r.addEventListener('change', () => { $('#bk-email-wrap').hidden = r.value !== 'email' || !r.checked; }));
+  $('#bk-back').addEventListener('click', () => showStep(Book.step - 1));
+  f.addEventListener('submit', e => { e.preventDefault(); next(); });
+  el.onclick = e => { if (e.target === el || e.target.closest('[data-close]')) Book.close && Book.close(); };
+  Book.close = openModal(el, { onClose() { Book.close = null; } });
+  showStep(0);
+}
+
+function showStep(n) {
+  Book.step = clamp(n, 0, 2);
+  $$('.bk-step').forEach(s => { s.hidden = +s.dataset.step !== Book.step; });
+  $$('.bk-prog i').forEach((b, i) => { b.style.transform = `scaleX(${i <= Book.step ? 1 : 0})`; });
+  $('#bk-count').textContent = L(`الخطوة ${Book.step + 1} من 3`, `Step ${Book.step + 1} of 3`);
+  $('#bk-back').hidden = Book.step === 0;
+  $('#bk-next').textContent = Book.step === 2 ? L('أرسل طلبي', 'Send my request') : L('التالي', 'Next');
+  const first = $(`.bk-step[data-step="${Book.step}"] input,.bk-step[data-step="${Book.step}"] select`); first && first.focus();
+}
+
+function setErr(id, msg) {
+  const inp = $('#' + id), er = $('#' + id + '-e');
+  if (er) er.textContent = msg || '';
+  if (inp) { if (msg) inp.setAttribute('aria-invalid', 'true'); else inp.removeAttribute('aria-invalid'); if (er) inp.setAttribute('aria-describedby', id + '-e'); }
+  return !msg;
+}
+function validate(step) {
+  let ok = true; const v = id => ($('#' + id).value || '').trim();
+  if (step === 0) {
+    ok = setErr('bk-name', v('bk-name').length < 2 ? L('اكتب اسمك بالكامل.', 'Please enter your full name.') : '') && ok;
+    const age = +v('bk-age'); ok = setErr('bk-age', !(age >= 3 && age <= 99) ? L('اكتب السن بالأرقام (من 3 إلى 99).', 'Enter your age in numbers (3 to 99).') : '') && ok;
+    ok = setErr('bk-phone', !PHONE_RE.test(cleanPhone(v('bk-phone'))) ? L('اكتب رقم موبايل مصري صحيح، مثل 01012345678.', 'Enter a valid Egyptian mobile number, e.g. 01012345678.') : '') && ok;
+    if (!$('#bk-wa-same').checked) ok = setErr('bk-wa', !PHONE_RE.test(cleanPhone(v('bk-wa'))) ? L('اكتب رقم WhatsApp صحيح.', 'Enter a valid WhatsApp number.') : '') && ok;
+  }
+  if (step === 1) { const m = $('input[name=mode]:checked'); const er = $('#bk-mode-e'); er.textContent = m ? '' : L('اختر نمط التعلّم.', 'Choose a learning mode.'); ok = !!m; }
+  if (step === 2) {
+    const c = $('input[name=contact]:checked'); $('#bk-contact-e').textContent = c ? '' : L('اختر وسيلة التواصل.', 'Choose how we should reach you.'); ok = !!c;
+    if (c && c.value === 'email') ok = setErr('bk-email', !/^\S+@\S+\.\S+$/.test(v('bk-email')) ? L('اكتب بريدًا إلكترونيًا صحيحًا.', 'Enter a valid email address.') : '') && ok;
+  }
+  if (!ok) { const bad = $(`.bk-step[data-step="${step}"] [aria-invalid="true"]`) || $(`.bk-step[data-step="${step}"] input`); bad && bad.focus(); }
+  return ok;
+}
+
+function bookingMessage(d) {
+  const c = course(d.course), br = CMS.branches.find(b => b.id === d.branch), md = CMS.modes.find(m => m.id === d.mode);
+  const how = { whatsapp: 'WhatsApp', call: L('مكالمة', 'phone call'), email: L('بريد إلكتروني', 'email') }[d.contact];
+  return L(`مرحبًا Codera Tech، أنا ${d.name} (${d.age} سنة). أرغب في الحجز${c ? ' في كورس ' + t(c.title) : ' ومحتاج ترشيح للكورس المناسب'}.${br ? ' الفرع: ' + t(br.label) + '.' : ''}${md ? ' نمط التعلّم: ' + t(md.label) + '.' : ''} وسيلة التواصل المفضلة: ${how}. رقمي: ${d.phone}.${d.message ? ' ' + d.message : ''}`,
+    `Hello Codera Tech, I am ${d.name} (${d.age} years old). I would like to book${c ? ' the ' + t(c.title) + ' course' : ' and need a suggestion for the right course'}.${br ? ' Branch: ' + t(br.label) + '.' : ''}${md ? ' Learning mode: ' + t(md.label) + '.' : ''} Preferred contact: ${how}. My number: ${d.phone}.${d.message ? ' ' + d.message : ''}`);
+}
+
+async function next() {
+  if (!validate(Book.step)) return;
+  if (Book.step < 2) return showStep(Book.step + 1);
+  const g = id => ($('#' + id).value || '').trim();
+  const d = { name: g('bk-name'), age: g('bk-age'), phone: cleanPhone(g('bk-phone')), whatsapp: $('#bk-wa-same').checked ? cleanPhone(g('bk-phone')) : cleanPhone(g('bk-wa')),
+    course: g('bk-course'), branch: g('bk-branch'), mode: ($('input[name=mode]:checked') || {}).value, contact: ($('input[name=contact]:checked') || {}).value,
+    email: g('bk-email'), message: [Book.opts.note, g('bk-msg')].filter(Boolean).join(' / '), lang: LANG };
+  const btn = $('#bk-next'); btn.disabled = true; $('#bk-fail').textContent = '';
+  const ep = CMS.settings.booking.endpoint; let sent = false;
+  try {
+    if (ep) { const r = await fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) }); if (!r.ok) throw new Error(r.status); sent = true; }
+    document.dispatchEvent(new CustomEvent('codera:booking', { detail: d }));
+  } catch (e) { btn.disabled = false; $('#bk-fail').textContent = L('تعذّر إرسال الطلب. جرّب مرة أخرى أو تواصل معنا عبر WhatsApp.', 'We could not send your request. Try again, or reach us on WhatsApp.'); return; }
+  const wa = `${CMS.contact.whatsapp}?text=${encodeURIComponent(bookingMessage(d))}`;
+  const done = $('#bk-done'); $('#bk-form').hidden = true; $('.bk-prog').hidden = true; $('#bk-count').hidden = true; done.hidden = false;
+  done.innerHTML = `<span class="done-ic" aria-hidden="true">${ico('check')}</span>
+    <h2 class="h2">${sent ? L('تم استلام طلبك بنجاح', 'We received your request') : L('طلبك جاهز', 'Your request is ready')}</h2>
+    <p class="lead">${sent ? L('فريق Codera Tech هيتواصل معاك قريبًا.', 'The Codera Tech team will contact you soon.') : L('أرسله الآن عبر WhatsApp ليصل إلى فريق Codera Tech مباشرة، وهيتواصلوا معاك قريبًا.', 'Send it now on WhatsApp so it reaches the Codera Tech team directly, and they will get back to you soon.')}</p>
+    <div class="row"><a class="btn btn-wa lg" href="${wa}" target="_blank" rel="noopener">${ico('whatsapp')}${sent ? L('كمّل على WhatsApp', 'Continue on WhatsApp') : L('أرسل عبر WhatsApp', 'Send on WhatsApp')}</a><button class="btn btn-ghost" type="button" data-close>${L('إغلاق', 'Close')}</button></div>
+    ${!sent && CMS.settings.demo ? `<p class="mono demo-note">${L('وضع المعاينة: لم يُرسل الطلب إلى خادم. اضبط settings.booking.endpoint لتفعيل الإرسال.', 'Preview mode: nothing was sent to a server. Set settings.booking.endpoint to enable submission.')}</p>` : ''}`;
+  done.focus();
+}
+
+/* =====================================================================
+   READER — page navigation, zoom, fullscreen, close, download.
+   Uses real page images (guide.pages) when present; otherwise renders
+   preview pages from the guide's own outline.
+   ===================================================================== */
+const Reader = { g: null, i: 0, z: 1, close: null, pages: [] };
+const ZOOMS = [.75, 1, 1.25, 1.5, 2];
+
+function readerPages(g) {
+  if (g.pages && g.pages.length) return g.pages.map(src => ({ img: src }));
+  const out = [{ html: coverHTML(g) }, { html: `<div class="rd-toc"><h3 class="h3">${L('المحتويات', 'Contents')}</h3><ol>${(g.outline || []).map(o => `<li>${T(o)}</li>`).join('')}</ol></div>` }];
+  (g.outline || []).forEach((o, i) => out.push({ html: `<div class="rd-sec"><span class="mono">0${i + 1}</span><h3 class="h2">${T(o)}</h3><p>${L('صفحة معاينة. تُستبدل بصفحات الملف الفعلي عند رفعه من لوحة التحكم.', 'Preview page. Replaced by the real pages once the file is uploaded from the dashboard.')}</p></div>` }));
+  return out;
+}
+function openReader(slug) {
+  const g = vis(CMS.guides).find(x => x.slug === slug); if (!g) return;
+  Reader.g = g; Reader.i = 0; Reader.z = 1; Reader.pages = readerPages(g);
+  const el = $('#reader');
+  el.innerHTML = `<div class="rd-shell tone-ink" role="dialog" aria-modal="true" aria-label="${esc(t(g.title))}">
+    <div class="rd-bar"><button class="icon-btn" type="button" data-close aria-label="${esc(L('إغلاق المعاينة', 'Close preview'))}">${ico('close')}</button>
+      <h2 class="rd-title">${T(g.title)}</h2>
+      <div class="rd-tools" role="toolbar" aria-label="${esc(L('أدوات القارئ', 'Reader tools'))}">
+        <button class="icon-btn" type="button" data-rd="zout" aria-label="${esc(L('تصغير', 'Zoom out'))}">${ico('zout')}</button><span class="rd-z mono" id="rd-z" aria-live="polite">100%</span>
+        <button class="icon-btn" type="button" data-rd="zin" aria-label="${esc(L('تكبير', 'Zoom in'))}">${ico('zin')}</button>
+        <button class="icon-btn" type="button" data-rd="full" aria-label="${esc(L('ملء الشاشة', 'Fullscreen'))}">${ico('full')}</button>
+        ${g.file ? `<a class="icon-btn" href="${esc(g.file)}" download aria-label="${esc(L('تحميل', 'Download'))}">${ico('download')}</a>` : `<button class="icon-btn" type="button" disabled aria-label="${esc(L('تحميل (الملف غير متاح بعد)', 'Download (file not available yet)'))}">${ico('download')}</button>`}</div></div>
+    <div class="rd-stage" id="rd-stage" tabindex="0" aria-label="${esc(L('صفحات الدليل', 'Guide pages'))}"><div class="rd-page" id="rd-page"></div></div>
+    <div class="rd-nav"><button class="icon-btn" type="button" data-rd="prev" aria-label="${esc(L('الصفحة السابقة', 'Previous page'))}">${ico('prev')}</button><span class="mono" id="rd-n" aria-live="polite"></span><button class="icon-btn" type="button" data-rd="next" aria-label="${esc(L('الصفحة التالية', 'Next page'))}">${ico('next')}</button></div></div>`;
+  const onClick = e => { if (e.target === el || e.target.closest('[data-close]')) { Reader.close && Reader.close(); return; } const b = e.target.closest('[data-rd]'); if (b) readerAct(b.dataset.rd); };
+  const onKey = e => {
+    const rtl = LANG === 'ar';
+    if (e.key === 'ArrowRight') readerAct(rtl ? 'prev' : 'next'); else if (e.key === 'ArrowLeft') readerAct(rtl ? 'next' : 'prev');
+    else if (e.key === '+' || e.key === '=') readerAct('zin'); else if (e.key === '-') readerAct('zout'); else if (e.key.toLowerCase() === 'f') readerAct('full');
+  };
+  el.addEventListener('click', onClick); document.addEventListener('keydown', onKey);
+  Reader.close = openModal(el, { onClose() { document.removeEventListener('keydown', onKey); el.removeEventListener('click', onClick); if (document.fullscreenElement) document.exitFullscreen(); Reader.close = null; } });
+  paintReader();
+}
+function paintReader() {
+  const p = Reader.pages[Reader.i], host = $('#rd-page');
+  host.innerHTML = p.img ? `<img src="${esc(p.img)}" alt="${esc(t(Reader.g.title) + ' ' + (Reader.i + 1))}" decoding="async">` : p.html;
+  host.style.setProperty('--z', Reader.z);
+  $('#rd-n').textContent = `${Reader.i + 1} / ${Reader.pages.length}`;
+  $('#rd-z').textContent = Math.round(Reader.z * 100) + '%';
+  $('[data-rd=prev]').disabled = Reader.i === 0; $('[data-rd=next]').disabled = Reader.i === Reader.pages.length - 1;
+}
+function readerAct(a) {
+  if (a === 'next') Reader.i = Math.min(Reader.pages.length - 1, Reader.i + 1);
+  else if (a === 'prev') Reader.i = Math.max(0, Reader.i - 1);
+  else if (a === 'zin') Reader.z = ZOOMS[Math.min(ZOOMS.length - 1, ZOOMS.indexOf(Reader.z) + 1)];
+  else if (a === 'zout') Reader.z = ZOOMS[Math.max(0, ZOOMS.indexOf(Reader.z) - 1)];
+  else if (a === 'full') { const s = $('.rd-shell'); if (document.fullscreenElement) document.exitFullscreen(); else if (s.requestFullscreen) s.requestFullscreen(); return; }
+  paintReader();
+}
+/* =====================================================================
+   APP: celebration layer, chrome, router, scroll UI, delegation, init
+   ===================================================================== */
+const onLeaveFns = []; const onLeave = f => onLeaveFns.push(f);
+let CUR = { path: '/', home: false };
+const Menu = { close: null };
+
+/* ---------- Celebration layer (optional, subtle, never replaces the brand) ---------- */
+const CEL = {
+  ramadan:          { label: D('رمضان كريم', 'Ramadan Kareem'), motif: 'ramadan' },
+  'eid-fitr':       { label: D('عيد فطر مبارك', 'Eid Mubarak'), motif: 'sparkles' },
+  'eid-adha':       { label: D('عيد أضحى مبارك', 'Eid Al-Adha Mubarak'), motif: 'sparkles' },
+  anniversary:      { label: D('عيد ميلاد Codera Tech', 'Codera Tech anniversary'), motif: 'confetti' },
+  graduation:       { label: D('موسم التخرّج', 'Graduation season'), motif: 'cap' },
+  'back-to-school': { label: D('العودة للدراسة', 'Back to school'), motif: 'book' },
+  custom:           { label: D('مناسبة خاصة', 'Special occasion'), motif: 'sparkles' }
+};
+let celActive = null;
+const star4 = (x, y, r) => `<path d="M${x} ${y - r}l${r * .28} ${r * .72} ${r * .72} ${r * .28}-${r * .72} ${r * .28}-${r * .28} ${r * .72}-${r * .28}-${r * .72}-${r * .72}-${r * .28} ${r * .72}-${r * .28}z" fill="currentColor"/>`;
+const MOTIFS = {
+  ramadan: `<svg viewBox="0 0 220 150" fill="none"><path d="M128 18a40 40 0 1 0 34 60 32 32 0 1 1-34-60z" fill="currentColor"/>${star4(170, 34, 14)}${star4(196, 70, 8)}${star4(104, 96, 7)}
+    <path d="M40 0v30" stroke="currentColor" stroke-width="2"/><path d="M28 30h24l4 10v24a16 16 0 0 1-32 0V40z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M40 82v14M34 40v30M46 40v30" stroke="currentColor" stroke-width="1.6" opacity=".7"/></svg>`,
+  sparkles: `<svg viewBox="0 0 220 120" fill="none">${star4(60, 52, 30)}${star4(130, 30, 16)}${star4(168, 78, 22)}${star4(104, 92, 9)}</svg>`,
+  cap: `<svg viewBox="0 0 220 120" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M110 22 28 54l82 32 82-32z"/><path d="M60 68v22c0 8 22 16 50 16s50-8 50-16V68"/><path d="M192 54v36"/></svg>`,
+  book: `<svg viewBox="0 0 220 120" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M110 30c-18-12-46-14-70-8v66c24-6 52-4 70 8 18-12 46-14 70-8V22c-24-6-52-4-70 8z"/><path d="M110 30v66"/></svg>`,
+  confetti: ''
+};
+function applyCelebration(id) {
+  celActive = CEL[id] ? id : null;
+  const root = document.documentElement;
+  if (celActive) root.dataset.celebration = celActive; else delete root.dataset.celebration;
+  $('#cel').innerHTML = celActive ? (MOTIFS[CEL[celActive].motif] || '') : '';
+  if (celActive === 'anniversary' && !reduceMotion) {
+    const host = $('#confetti'), colors = ['#0074D9', '#F5C969', '#FFFFFF', '#6DB6FF'];
+    host.innerHTML = Array.from({ length: 42 }, (_, i) => `<i style="left:${(i * 97) % 100}%;background:${colors[i % 4]};animation-delay:${(i % 9) * .12}s;--r:${(i * 53) % 360}deg;--x:${((i * 31) % 60) - 30}px"></i>`).join('');
+    setTimeout(() => { host.innerHTML = ''; }, 4200);
+  }
+}
+const celBadge = () => celActive ? `<span class="cel-badge">${T(CMS.celebration.text && celActive === (CMS.celebration.active || celActive) ? CMS.celebration.text : CEL[celActive].label)}</span>` : '';
+
+/* ---------- Chrome ---------- */
+function renderChrome() {
+  const { path } = parseHash();
+  const items = vis(CMS.nav).filter(n => !n.needs || vis(CMS[n.needs]).length);
+  const act = n => (n.path === '/' ? path === '/' : path === n.path || path.startsWith(n.path + '/'));
+  const links = (cls) => items.map(n => `<a${cls ? ` class="${cls}"` : ''} href="${href(n.path)}"${act(n) ? ' aria-current="page"' : ''}>${T(n.label)}</a>`).join('');
+  const langBtn = `<button class="icon-btn lang-btn" type="button" data-lang="${LANG === 'ar' ? 'en' : 'ar'}" lang="${LANG === 'ar' ? 'en' : 'ar'}" aria-label="${LANG === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}">${ico('globe')}<span>${LANG === 'ar' ? 'EN' : 'عربي'}</span></button>`;
+  const themeBtn = `<button class="icon-btn" type="button" data-theme-toggle aria-label="${esc(THEME === 'dark' ? L('الوضع الفاتح', 'Switch to light mode') : L('الوضع الداكن', 'Switch to dark mode'))}">${ico(THEME === 'dark' ? 'sun' : 'moon')}</button>`;
+  const brand = `<a class="brand" href="#/" aria-label="${esc(CMS.settings.brand)}">${CMS.settings.logo ? `<img src="${esc(CMS.settings.logo)}" alt="" height="28">` : `<span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>`}<b>Codera</b><span>Tech</span></a>`;
+
+  $('#nav').innerHTML = `<div class="nav-in">${brand}${celBadge()}
+    <nav class="nav-links" aria-label="${esc(L('التنقل الرئيسي', 'Main navigation'))}">${links()}</nav>
+    <div class="nav-tools">${langBtn}${themeBtn}<button class="btn btn-solid sm nav-cta" type="button" data-book>${BOOK()}</button>
+      <button class="icon-btn nav-burger" type="button" data-menu aria-expanded="${!!Menu.close}" aria-controls="menu" aria-label="${esc(L('القائمة', 'Menu'))}">${ico('menu')}</button></div></div>`;
+
+  $('#menu').innerHTML = `<div class="menu-in tone-ink" role="dialog" aria-modal="true" aria-label="${esc(L('القائمة', 'Menu'))}">
+    <div class="menu-top">${brand}<button class="icon-btn" type="button" data-menu aria-label="${esc(L('إغلاق القائمة', 'Close menu'))}">${ico('close')}</button></div>
+    <nav class="menu-links" aria-label="${esc(L('التنقل الرئيسي', 'Main navigation'))}">${links()}</nav>
+    <div class="menu-foot"><button class="btn btn-solid lg" type="button" data-book>${BOOK()}</button><div class="row">${langBtn}${themeBtn}</div></div></div>`;
+
+  const c = CMS.contact;
+  $('#footer').innerHTML = `<div class="wrap foot">
+    <div class="foot-brand">${brand}<p class="foot-tag mono">${esc(CMS.settings.tagline)}</p><p>${T(CMS.settings.name)}</p>
+      <div class="row"><button class="btn btn-solid" type="button" data-book>${BOOK()}</button><a class="btn btn-ghost" href="${c.whatsapp}" target="_blank" rel="noopener">${ico('whatsapp')}WhatsApp</a></div></div>
+    <nav class="foot-col" aria-label="${esc(L('روابط التذييل', 'Footer links'))}"><h2 class="h4">${L('استكشف', 'Explore')}</h2>${links()}</nav>
+    <div class="foot-col"><h2 class="h4">${L('تواصل', 'Contact')}</h2>
+      ${c.phones.map(p => `<a class="mono" href="tel:${phoneIntl(p)}">${esc(p)}</a>`).join('')}<a class="mono" href="mailto:${esc(c.email)}">${esc(c.email)}</a><span>${T(c.address)}</span></div>
+    <div class="foot-col"><h2 class="h4">${L('تابعنا', 'Follow us')}</h2>${socialIcons()}<div class="row">${langBtn}${themeBtn}</div>
+      ${CMS.settings.demo ? `<label class="cel-pick mono" for="celPick">${L('معاينة المناسبات', 'Celebration preview')}<select id="celPick" class="in"><option value="">${L('بدون', 'None')}</option>${Object.keys(CEL).map(k => `<option value="${k}"${k === celActive ? ' selected' : ''}>${esc(t(CEL[k].label))}</option>`).join('')}</select></label>` : ''}</div>
+    <p class="foot-legal">© ${new Date().getFullYear()} ${esc(CMS.settings.brand)} · ${T(CMS.settings.name)}</p></div>`;
+
+  $('#sticky').innerHTML = `<button class="btn btn-solid lg" type="button" data-book>${BOOK()}</button>`;
+  $('.skip').textContent = L('تخطّي إلى المحتوى', 'Skip to content');
+}
+
+/* ---------- Router ---------- */
+function parseHash() { const h = location.hash.replace(/^#/, '') || '/'; const [path, qs] = h.split('?'); return { path: path || '/', q: new URLSearchParams(qs || '') }; }
+const ROUTES = [
+  [/^\/$/, () => pageHome()], [/^\/about\/?$/, () => pageAbout()],
+  [/^\/courses\/?$/, () => pageCourses()], [/^\/courses\/([\w-]+)\/?$/, m => pageCourse(m[1])],
+  [/^\/services\/?$/, () => pageServices()],
+  [/^\/instructors\/?$/, () => pageInstructors()], [/^\/instructors\/([\w-]+)\/?$/, m => pageInstructor(m[1])],
+  [/^\/events\/?$/, () => pageEvents()], [/^\/events\/([\w-]+)\/?$/, m => pageEvent(m[1])],
+  [/^\/guides\/?$/, () => pageGuides()], [/^\/guides\/([\w-]+)\/?$/, m => pageGuide(m[1])],
+  [/^\/contact\/?$/, () => pageContact()]
+];
+let lastPath = null;
+function render(keepScroll) {
+  onLeaveFns.splice(0).forEach(f => f());
+  const { path, q } = parseHash();
+  if (path !== '/courses') { S.cat = 'all'; S.level = 'all'; }
+  let res = null;
+  for (const [re, fn] of ROUTES) { const m = path.match(re); if (m) { res = fn(m); break; } }
+  res = res || page404();
+  CUR = { path, home: !!res.home };
+  if (q.get('celebrate') !== null) applyCelebration(q.get('celebrate'));
+  $('#app').innerHTML = res.html;
+  setMeta(res.meta);
+  if (!keepScroll) window.scrollTo(0, 0);
+  renderChrome();
+  if (res.after) res.after();
+  bindReveal(); updateUI();
+  if (!keepScroll && lastPath !== null) { $('#app').focus({ preventScroll: true }); announce(document.title); }
+  lastPath = path;
+}
+
+/* ---------- Scroll UI: nav mode, sticky CTA, progress lines ---------- */
+let ticking = false;
+const schedUI = () => { if (!ticking) { ticking = true; requestAnimationFrame(() => { ticking = false; updateUI(); }); } };
+const modalOpen = () => $$('.modal').some(m => !m.hidden);
+function updateUI() {
+  const nav = $('#nav'); if (!nav) return;
+  const sig = CUR.home ? $('#sig') : null;
+  const immersive = !!sig && sig.getBoundingClientRect().bottom > 80;
+  nav.classList.toggle('solid', !immersive); nav.classList.toggle('tone-paper', !immersive); nav.classList.toggle('compact', scrollY > 24);
+  $('#sticky').classList.toggle('on', !immersive && !modalOpen());
+  $$('[data-prog]').forEach(el => {
+    const r = el.getBoundingClientRect(), p = reduceMotion ? 1 : clamp((innerHeight * .62 - r.top) / Math.max(r.height, 1));
+    el.style.setProperty('--p', p.toFixed(3));
+  });
+}
+let io = null;
+function bindReveal() {
+  const els = $$('.rv:not(.in)');
+  if (reduceMotion || !('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('in')); return; }
+  io = io || new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -12% 0px', threshold: .15 });
+  els.forEach(e => io.observe(e));
+}
+
+/* ---------- Language / theme / menu ---------- */
+function applyLang() { const h = document.documentElement; h.lang = LANG; h.dir = LANG === 'ar' ? 'rtl' : 'ltr'; }
+function setLang(l) { if (l === LANG) return; LANG = l; store.set('codera-lang', l); applyLang(); render(true); }
+function setTheme(th) { THEME = th; document.documentElement.dataset.theme = th; store.set('codera-theme', th); renderChrome(); }
+function toggleMenu() {
+  if (Menu.close) { Menu.close(); return; }
+  Menu.close = openModal($('#menu'), { onClose() { Menu.close = null; $$('.nav-burger').forEach(b => b.setAttribute('aria-expanded', 'false')); } });
+  $$('.nav-burger').forEach(b => b.setAttribute('aria-expanded', 'true'));
+}
+
+/* ---------- Delegated interactions ---------- */
+document.addEventListener('click', e => {
+  const el = e.target;
+  if (el.closest('.skip')) { e.preventDefault(); $('#app').focus(); return; }
+  const bk = el.closest('[data-book]');
+  if (bk) { e.preventDefault(); if (Menu.close) Menu.close(); openBooking({ course: bk.dataset.book || '', note: bk.dataset.note || '', name: S.draftName }); return; }
+  const rd = el.closest('[data-read]'); if (rd) { e.preventDefault(); openReader(rd.dataset.read); return; }
+  const lg = el.closest('[data-lang]'); if (lg) { setLang(lg.dataset.lang); return; }
+  if (el.closest('[data-theme-toggle]')) { setTheme(THEME === 'dark' ? 'light' : 'dark'); return; }
+  if (el.closest('[data-menu]')) { toggleMenu(); return; }
+  if (el.closest('#menu a') && Menu.close) { Menu.close(); return; }
+  if (el.closest('.menu-modal') === $('#menu') && el === $('#menu') && Menu.close) { Menu.close(); return; }
+  const a = el.closest('[data-act]'); if (!a) return;
+  const act = a.dataset.act;
+  if (act === 'path-cat') {
+    const cat = a.dataset.cat;
+    $$('.cat-filter .chip').forEach(c => c.setAttribute('aria-pressed', c === a));
+    $$('.stages .node:not(.extra)').forEach(n => n.classList.toggle('dim', cat !== 'all' && n.dataset.cat !== cat));
+  } else if (act === 'story') {
+    S.story = +a.dataset.i; $('#stories-body').innerHTML = storiesInner(); const b = $(`#stories-body [data-i="${S.story}"]`); b && b.focus();
+  } else if (act === 'course-cat' || act === 'course-level') {
+    S[act === 'course-cat' ? 'cat' : 'level'] = a.dataset.v;
+    const cs = vis(CMS.courses); $('#course-filters').innerHTML = courseFilters(cs); $('#course-list').innerHTML = courseRows();
+    const b = $(`#course-filters [data-act="${act}"][data-v="${a.dataset.v}"]`); b && b.focus();
+  }
+});
+document.addEventListener('input', e => {
+  if (e.target.id === 'hello-in') { S.draftName = e.target.value.trim(); const n = $('#hello-name'); if (n) n.textContent = S.draftName || 'Codera'; }
+});
+document.addEventListener('change', e => { if (e.target.id === 'celPick') applyCelebration(e.target.value); renderChromeKeepFocus(e.target); });
+function renderChromeKeepFocus(t0) { if (t0 && t0.id === 'celPick') { renderChrome(); const s = $('#celPick'); s && s.focus(); } }
+document.addEventListener('submit', e => {
+  if (e.target.id !== 'contact-form') return;
+  e.preventDefault();
+  const n = $('#ct-name').value.trim(), m = $('#ct-msg').value.trim(), er = $('#ct-err');
+  if (n.length < 2 || m.length < 2) { er.textContent = L('اكتب اسمك ورسالتك أولًا.', 'Please add your name and a message first.'); return; }
+  er.textContent = '';
+  window.open(`${CMS.contact.whatsapp}?text=${encodeURIComponent((LANG === 'ar' ? 'مرحبًا Codera Tech، أنا ' : 'Hello Codera Tech, I am ') + n + '. ' + m)}`, '_blank', 'noopener');
+});
+
+/* ---------- Init ---------- */
+(function init() {
+  const sl = store.get('codera-lang'); LANG = (sl === 'en' || sl === 'ar') ? sl : 'ar';
+  THEME = store.get('codera-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  document.documentElement.dataset.theme = THEME; applyLang();
+  applyCelebration(new URLSearchParams(location.search).get('celebrate') || CMS.celebration.active);
+  addEventListener('hashchange', () => render(false));
+  addEventListener('scroll', schedUI, { passive: true }); addEventListener('resize', schedUI);
+  render(false);
+})();
+</script></body></html>
