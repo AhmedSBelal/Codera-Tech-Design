@@ -639,6 +639,107 @@ legend{padding:0;margin-bottom:18px;width:100%}
   .sig .s-tile{transform:none}
   .confetti{display:none}
 }
+
+
+/* P1 · safe-area يمين/شمال + سكرول المنيو */
+@media (max-width:1119px){
+  .wrap,.nav-in,.menu-in{padding-left:max(var(--gut),env(safe-area-inset-left,0px));padding-right:max(var(--gut),env(safe-area-inset-right,0px))}
+  .menu-modal{overflow-y:auto;overscroll-behavior:contain}
+}
+
+/* P2 · المنيو: يدخل في 667 من غير سكرول (تقدير ≈590px) */
+@media (max-width:1119px) and (max-height:720px){
+  .menu-links a{font-size:clamp(1.25rem,5.4vw,1.6rem);line-height:1.5;padding:.25em 0}
+}
+
+/* P3 · الـ nav: compact + fallback (البرجر دايمًا ظاهر) */
+@media (max-width:420px){
+  .nav-in{gap:8px}
+  .brand{font-size:1rem}
+  .brand-mark{margin-inline-end:6px}
+  .nav-tools{gap:4px}
+  .btn.sm.nav-cta{padding:0 .7em;font-size:.78rem;white-space:nowrap}
+}
+@media (max-width:372px){
+  .btn.sm.nav-cta{display:none}
+}
+
+/* P4 · Signature على الموبايل: الـ win تملأ المتاح + safety net + لمس الـ rail */
+@media (max-width:860px){
+  .sig .grid{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+  .sig .visual{overflow:hidden}
+  .sig .win{height:auto;flex:1 1 0;min-height:170px;max-height:360px}
+  .sig .rail button{padding-block:12px 6px;margin-block:-12px -6px}
+  .sticky-cta{left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px))}
+}
+
+/* P5 · الـ hint، القارئ، زرار واتساب (≤480) */
+@media (max-width:480px){
+  .sig .hint{left:8px;right:8px;bottom:6px;padding:5px 10px;font-size:12px;line-height:1.5}
+  .rd-bar{flex-wrap:wrap;row-gap:0}
+  .rd-tools{margin-inline-start:auto}
+  .rd-title{order:3;flex:1 0 100%}
+  .wa-big{gap:12px;padding:20px}
+  .wa-ic .i{width:40px;height:40px}
+  .wa-go .i{width:24px;height:24px}
+}
+
+/* P6 · شاشات قصيرة (≤700): copy أصغر عشان النافذة تاخد حقها (375×667) */
+@media (max-width:860px) and (max-height:700px){
+  .sig .grid{padding-bottom:64px}
+  .sig .ch h1,.sig .ch h2{font-size:clamp(1.5rem,6.6vw,1.9rem)}
+  .sig .ch p{font-size:.92rem;line-height:1.7}
+  .sig .cta{margin-top:.9rem;gap:.5rem}
+  .sig .btn.lg{min-height:44px;padding:0 1.1em;font-size:.9rem}
+}
+
+/* P7 · شاشات أقصر (≤600): 320×568 */
+@media (max-width:860px) and (max-height:600px){
+  .sig .win{min-height:130px}
+  .sig .chips{gap:4px}
+  .sig .chips li{font-size:.72rem;padding:.25em .65em}
+  .sig .chips li.tech{font-size:.76rem}
+}
+
+/* P8 · landscape موبايل (667×375): عمودين 1fr/1fr */
+@media (max-width:860px) and (max-height:500px){
+  :root{--hh:calc(56px + env(safe-area-inset-top,0px))}
+  .nav.compact{--navh:calc(52px + env(safe-area-inset-top,0px))}
+  .sig .grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-rows:minmax(0,1fr);align-items:center;gap:clamp(16px,4vw,32px);
+    padding:var(--hh) max(var(--gut),env(safe-area-inset-right,0px)) 56px max(var(--gut),env(safe-area-inset-left,0px))}
+  .sig .copy{align-self:center}
+  .sig .visual{align-self:stretch}
+  .sig .ch h1,.sig .ch h2{font-size:clamp(1.35rem,3.8vw,1.8rem);margin-bottom:.3em}
+  .sig .ch p{font-size:.9rem;line-height:1.7}
+  .sig .cta{margin-top:.8rem}
+  .sig .win{min-height:120px}
+  .sig .chips{min-height:0;gap:4px}
+  .sig .chips li{font-size:.72rem;padding:.25em .65em}
+  .sig .chips li.tech{font-size:.76rem}
+}
+
+/* P9 · المنيو في landscape: عمودين + الفوتر في سطر */
+@media (max-width:1119px) and (max-height:500px){
+  .menu-in{gap:16px;padding-bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
+  .menu-top{min-height:48px}
+  .menu-links{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px}
+  .menu-links a{font-size:1.15rem;padding:.2em 0}
+  .menu-foot{grid-template-columns:minmax(0,1fr) auto;align-items:center}
+}
+
+/* P10 · الفوتر: منع الـ overflow الأفقي (الإيميل mono عريض والعمود مش بينكمش) */
+@media (max-width:860px){
+  .foot{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .foot-col a,.foot-col span{overflow-wrap:anywhere}
+}
+@media (max-width:480px){
+  .foot{grid-template-columns:minmax(0,1fr)}
+}
+
+/* P11 · الـ rail: الشرائط على خط واحد حتى لو label أخد سطرين */
+@media (max-width:860px){
+  .sig .rail{align-items:start}
+}
 </style>
 </head>
 <body>
