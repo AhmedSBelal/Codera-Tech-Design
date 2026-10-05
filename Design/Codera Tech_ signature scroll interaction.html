@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Codera Tech | ابدأ بسطر واحد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Readex+Pro:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ---------- Tokens ----------
+   Two endpoints, blended by --d (0 = blank page, 1 = professional).
+   The page literally goes from an empty sheet to a lit workspace as the student grows. */
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+
+  --a-bg:#F3F5F9; --a-fg:#13202F; --a-accent:#2A52E6; --a-prop:#9A4D00; --a-str:#0F7B5F; --a-err:#C4262E;
+  --z-bg:#0D1A2A; --z-fg:#EAF0F8; --z-accent:#8FB0FF; --z-prop:#FFC878; --z-str:#7FE0B8; --z-err:#FF8A8A;
+  --grow:#FFB43A;
+
+  --d:0; --chrome:0; --frac:1; --prev:0; --site:0; --tabs:0; --url:0; --term:0;
+  --t1:0; --t2:0; --t3:0;
+  --hh:calc(64px + env(safe-area-inset-top,0px));
+
+  --bg:color-mix(in oklab, var(--z-bg) calc(var(--d) * 100%), var(--a-bg));
+  --fg:color-mix(in oklab, var(--z-fg) calc(var(--d) * 100%), var(--a-fg));
+  --accent:color-mix(in oklab, var(--z-accent) calc(var(--d) * 100%), var(--a-accent));
+  --prop:color-mix(in oklab, var(--z-prop) calc(var(--d) * 100%), var(--a-prop));
+  --str:color-mix(in oklab, var(--z-str) calc(var(--d) * 100%), var(--a-str));
+  --err:color-mix(in oklab, var(--z-err) calc(var(--d) * 100%), var(--a-err));
+  --muted:color-mix(in oklab, var(--fg) 62%, var(--bg));
+  --line:color-mix(in oklab, var(--fg) 16%, var(--bg));
+  --win:color-mix(in oklab, var(--fg) 5%, var(--bg));
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --a-bg:#16283E; --a-fg:#EAF0F8; --a-accent:#8FB0FF; --a-prop:#FFC878; --a-str:#7FE0B8; --a-err:#FF8A8A;
+    --z-bg:#0A1422;
+  }
+}
+:root[data-theme="dark"]{
+  --a-bg:#16283E; --a-fg:#EAF0F8; --a-accent:#8FB0FF; --a-prop:#FFC878; --a-str:#7FE0B8; --a-err:#FF8A8A;
+  --z-bg:#0A1422;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px);background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--fg);
+  font-family:"Readex Pro","Segoe UI",Tahoma,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+/* ---------- Header ---------- */
+.top{position:fixed;inset:0 0 auto 0;z-index:10;height:var(--hh);
+  padding:env(safe-area-inset-top,0px) clamp(20px,5vw,72px) 0;
+  display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:600;font-size:1.15rem;color:var(--fg);text-decoration:none;direction:ltr;display:inline-flex;gap:.35em}
+.brand span{font-weight:300}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 1.6em;
+  border-radius:999px;border:1.5px solid transparent;font:500 1rem/1 "Readex Pro",sans-serif;
+  text-decoration:none;cursor:pointer;transition:transform .2s ease,background-color .2s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-solid{background:var(--accent);color:var(--bg)}
+.btn-ghost{background:transparent;color:var(--fg);border-color:color-mix(in oklab,var(--fg) 30%,transparent)}
+.btn.sm{min-height:40px;padding:0 1.2em;font-size:.92rem}
+
+/* ---------- Scroll track + sticky stage ---------- */
+.track{position:relative;height:560vh;height:560svh}
+.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden}
+.grid{height:100%;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);
+  gap:clamp(24px,4vw,72px);align-items:center;
+  padding:var(--hh) clamp(20px,5vw,72px) 92px}
+
+/* ---------- Copy (one block per chapter, stacked in one cell) ---------- */
+.copy{display:grid}
+.ch{grid-area:1/1;align-self:center;will-change:opacity,transform}
+.ch h1,.ch h2{margin:0 0 .45em;font-weight:600;font-size:clamp(2.3rem,4.9vw,4.5rem);line-height:1.3;text-wrap:balance}
+.ch p{margin:0;max-width:26em;font-size:clamp(1.05rem,1.5vw,1.3rem);line-height:1.95;color:var(--muted)}
+.cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:2rem}
+
+/* ---------- Visual column ---------- */
+.visual{display:flex;flex-direction:column;justify-content:center;gap:18px;min-height:0}
+.win{position:relative;display:flex;flex-direction:column;direction:ltr;
+  height:min(62vh,560px);height:min(62svh,560px);
+  border:1px solid color-mix(in oklab,var(--line) calc(var(--chrome) * 100%),transparent);
+  background:color-mix(in oklab,var(--win) calc(var(--chrome) * 100%),transparent);
+  border-radius:16px;overflow:hidden;container-type:inline-size}
+.bar{position:relative;flex:none;height:calc(38px * var(--chrome));opacity:var(--chrome);
+  border-bottom:1px solid var(--line);overflow:hidden}
+.tabs{position:absolute;inset:0 auto 0 8px;display:flex;align-items:flex-end;gap:2px;opacity:calc(1 - var(--url))}
+.tab{display:inline-block;overflow:hidden;white-space:nowrap;font:400 12px/1 "IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  padding:9px 12px;border-radius:8px 8px 0 0;color:var(--muted)}
+.tab.on{color:var(--fg);background:var(--bg)}
+.tab.more:nth-child(2){max-width:calc(9em * var(--tabs));opacity:var(--tabs);padding-inline:calc(12px * var(--tabs))}
+.tab.more:nth-child(3){max-width:calc(7em * var(--tabs));opacity:var(--tabs);padding-inline:calc(12px * var(--tabs))}
+.url{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(58%,330px);height:24px;
+  border-radius:999px;background:color-mix(in oklab,var(--fg) 8%,transparent);
+  display:grid;place-items:center;font:400 12px/1 "IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;color:var(--fg);opacity:var(--url)}
+.pub{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;align-items:center;gap:6px;
+  font-size:12px;color:var(--fg);opacity:0}
+.pub::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--grow)}
+
+.body{flex:1;display:flex;min-height:0}
+.pane{position:relative;flex:0 0 calc(var(--frac) * 100%);overflow:hidden;
+  -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 22px),transparent);
+  mask-image:linear-gradient(to right,#000 calc(100% - 22px),transparent)}
+.lines{position:absolute;left:0;top:0;will-change:transform;
+  font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace}
+.ln{display:none;white-space:pre;line-height:1.75}
+.no{display:inline-block;width:calc(2.2em * var(--chrome));margin-right:calc(.7em * var(--chrome));
+  overflow:hidden;text-align:right;color:var(--muted);opacity:.7;user-select:none}
+.t{color:var(--accent)} .k{color:var(--prop)} .s{color:var(--str)} .x{color:var(--fg)} .p{color:var(--muted)}
+.err{text-decoration:underline wavy var(--err);text-decoration-thickness:1.5px;text-underline-offset:.22em}
+.caret{display:inline-block;width:.5em;height:1.15em;margin-left:2px;vertical-align:-.2em;
+  background:var(--accent);animation:blink 1.05s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hint{position:absolute;left:14px;right:14px;bottom:12px;direction:rtl;text-align:right;font-size:12.5px;line-height:1.6;
+  padding:8px 12px;border-radius:10px;opacity:0;transition:opacity .35s ease;
+  background:color-mix(in oklab,var(--fg) 7%,transparent);color:var(--fg)}
+.hint.err{opacity:1;box-shadow:inset -3px 0 0 var(--err)}
+.hint.ok{opacity:1;box-shadow:inset -3px 0 0 var(--str)}
+
+.preview{position:relative;flex:1 1 0;min-width:0;opacity:var(--prev);
+  border-left:1px solid color-mix(in oklab,var(--line) calc(var(--prev) * 100%),transparent)}
+.page{position:absolute;inset:12px;background:#fff;color:#14202e;border-radius:10px;overflow:hidden;container-type:size}
+.raw,.site{position:absolute;inset:0}
+.raw{padding:6cqw 7cqw;font-family:"Times New Roman",Times,serif;color:#111;opacity:calc(1 - var(--site))}
+.raw h1{margin:0 0 .5em;font-size:9cqw;line-height:1.15;font-weight:700;transition:color .5s ease}
+.raw.fixed h1{color:#2f6bff}
+.raw ul{margin:0;padding-left:1.4em;font-size:5.2cqw;line-height:1.5;opacity:0;transition:opacity .4s ease}
+.raw.on ul{opacity:1}
+.site{opacity:var(--site);padding:5cqw 6cqw;direction:rtl;font-family:"Readex Pro","Segoe UI",Tahoma,sans-serif}
+.s-nav{display:flex;align-items:center;gap:3cqw;font-size:max(11px,2.7cqw);color:#4a5a6c}
+.s-nav b{margin-inline-end:auto;color:#14202e;font-weight:600;font-size:max(12px,3cqw)}
+.site h3{margin:5cqw 0 1cqw;font-size:max(18px,6.6cqw);line-height:1.3;font-weight:600}
+.site p{margin:0 0 4cqw;font-size:max(11px,3cqw);color:#4a5a6c}
+.s-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5cqw}
+.s-tile{opacity:var(--v);transform:translateY(calc((1 - var(--v)) * 14px));display:grid;gap:1.6cqw;
+  font-size:max(10px,2.5cqw);color:#14202e}
+.s-tile .art{aspect-ratio:1/.8;border-radius:1.6cqw;padding:2cqw;display:grid;gap:1cqw}
+.a1{background:#E6ECFF;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr}
+.a1 i{border-radius:.8cqw;background:#2f6bff;opacity:.9}
+.a1 i:first-child{grid-column:1/-1}
+.a2{background:#FFF1D6;align-content:center}
+.a2 i{display:block;height:3.2cqw;border-radius:1cqw;background:#14202e;opacity:.78}
+.a2 i:nth-child(1){width:90%} .a2 i:nth-child(2){width:62%} .a2 i:nth-child(3){width:76%}
+.a3{background:#E2F5EC;position:relative}
+.a3 i{position:absolute;border-radius:1.4cqw}
+.a3 i:nth-child(1){inset:18% 38% 22% 14%;background:#FFB43A}
+.a3 i:nth-child(2){inset:30% 12% 12% 40%;background:#2f6bff;opacity:.92}
+
+.term{flex:none;height:calc(56px * var(--term));overflow:hidden;display:flex;align-items:center;gap:.6em;
+  padding:0 16px;border-top:1px solid var(--line);background:color-mix(in oklab,var(--bg) 78%,#000);
+  font:400 13px/1 "IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;color:var(--fg);white-space:nowrap}
+.term .pr{color:var(--grow)}
+.term .ok{margin-left:auto;opacity:0;font-family:"Readex Pro","Segoe UI",Tahoma,sans-serif;font-size:13px;color:var(--str);direction:rtl}
+
+.chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;min-height:3.2rem;align-content:flex-start}
+.chips li{opacity:0;padding:.42em .95em;border-radius:999px;font-size:.88rem;line-height:1.4;border:1px solid var(--line);color:var(--fg)}
+.chips li.tech{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.82rem;direction:ltr}
+.chips li.soft{background:color-mix(in oklab,var(--accent) 16%,transparent);border-color:transparent}
+
+/* ---------- Progress rail ---------- */
+.rail{position:absolute;left:50%;transform:translateX(-50%);
+  bottom:calc(18px + env(safe-area-inset-bottom,0px));
+  width:min(620px,calc(100% - 40px));display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.rail button{appearance:none;background:none;border:0;padding:0;cursor:pointer;text-align:start;color:var(--muted);font:400 .8rem/1.4 "Readex Pro",sans-serif}
+.rail .seg{display:block;height:3px;border-radius:2px;background:var(--line);overflow:hidden;margin-bottom:8px}
+.rail .fill{display:block;height:100%;background:var(--grow);transform:scaleX(0);transform-origin:100% 50%}
+.rail button[aria-current="step"]{color:var(--fg)}
+
+/* ---------- Handoff to the next chapter ---------- */
+.next{min-height:70vh;min-height:70svh;display:grid;place-items:center;text-align:center;padding:7rem 1.5rem;background:var(--bg)}
+.next h2{margin:0 0 .4em;font-size:clamp(1.8rem,3.4vw,2.8rem);font-weight:600}
+.next p{margin:0;color:var(--muted);line-height:1.9}
+
+/* ---------- Mobile ---------- */
+@media (max-width:860px){
+  .grid{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);align-items:start;gap:14px;
+    padding:calc(var(--hh) + 6px) 20px 76px}
+  .ch h1,.ch h2{font-size:clamp(1.9rem,8.2vw,2.5rem);margin-bottom:.3em}
+  .ch p{font-size:1rem;line-height:1.8}
+  .cta{margin-top:1.1rem}
+  .btn{min-height:44px;padding:0 1.3em;font-size:.95rem}
+  .visual{gap:10px;align-self:stretch}
+  .win{height:min(42vh,360px);height:min(42svh,360px)}
+  .chips{min-height:2.6rem;gap:6px}
+  .chips li{font-size:.78rem;padding:.3em .75em}
+  .rail .lb{visibility:hidden}
+  .rail button[aria-current="step"] .lb{visibility:visible}
+}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion:reduce){
+  .caret{animation:none}
+  .btn,.hint,.raw h1,.raw ul{transition:none}
+  .s-tile{transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="#" data-noop>Codera <span>Tech</span></a>
+  <a class="btn btn-solid sm" href="#" data-noop>احجز مكانك</a>
+</header>
+
+<main>
+<section class="track" id="track" aria-label="رحلة التعلم في Codera Tech">
+  <p class="sr-only">عرض متحرك مرتبط بالتمرير: سطر HTML واحد يتحول إلى صفحة تدريب، ثم إلى مشروع كامل، ثم إلى موقع منشور مع مهارات تقنية وشخصية.</p>
+
+  <div class="stage" id="stage">
+    <div class="grid">
+
+      <div class="copy" id="copy">
+        <article class="ch">
+          <h1>ابدأ بسطر واحد.</h1>
+          <p>لا تحتاج أن تعرف كل شيء. تحتاج فقط أن تبدأ.</p>
+          <div class="cta">
+            <a class="btn btn-solid" href="#" data-noop>احجز مكانك</a>
+            <button class="btn btn-ghost" type="button" data-go="1">اكتشف رحلتك</button>
+          </div>
+        </article>
+        <article class="ch">
+          <h2>اكتب. أخطئ. أصلح.</h2>
+          <p>نتعلم بالتطبيق. الخطأ جزء من التعلّم، وكل خطأ تصلحه بنفسك يثبّت الفكرة.</p>
+        </article>
+        <article class="ch">
+          <h2>سطورك تصبح مشروعًا.</h2>
+          <p>من أول سطر إلى صفحة كاملة تعرضها وتفخر بها.</p>
+        </article>
+        <article class="ch">
+          <h2>ثم تصبح مهارة تحملها معك.</h2>
+          <p>مهارات تقنية ومهارات شخصية، تبنيها خطوة بخطوة مع مدربين يرافقونك.</p>
+          <div class="cta"><a class="btn btn-solid" href="#" data-noop>احجز مكانك</a></div>
+        </article>
+      </div>
+
+      <div class="visual" aria-hidden="true">
+        <div class="win" id="win">
+          <div class="bar">
+            <div class="tabs">
+              <span class="tab on">index.html</span>
+              <span class="tab more">style.css</span>
+              <span class="tab more">app.js</span>
+            </div>
+            <div class="url">my-portfolio.dev</div>
+            <div class="pub" id="pub">منشور</div>
+          </div>
+
+          <div class="body">
+            <div class="pane" id="pane">
+              <div class="lines" id="lines"></div>
+              <div class="hint" id="hint"></div>
+            </div>
+
+            <div class="preview">
+              <div class="page">
+                <div class="raw" id="raw" dir="ltr">
+                  <h1>Hello, Codera</h1>
+                  <ul><li>HTML</li><li>CSS</li></ul>
+                </div>
+                <div class="site">
+                  <div class="s-nav"><b>ملف أعمالي</b><span>المشاريع</span><span>تواصل</span></div>
+                  <h3>أبني ما أتعلمه.</h3>
+                  <p>ثلاثة مشاريع من رحلتي.</p>
+                  <div class="s-grid">
+                    <div class="s-tile" style="--v:var(--t1)"><div class="art a1"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span>حاسبة</span></div>
+                    <div class="s-tile" style="--v:var(--t2)"><div class="art a2"><i></i><i></i><i></i></div><span>قائمة مهام</span></div>
+                    <div class="s-tile" style="--v:var(--t3)"><div class="art a3"><i></i><i></i></div><span>متجر صغير</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="term"><span class="pr">$</span><span id="cmd"></span><span class="ok" id="ok">تم النشر ✓</span></div>
+        </div>
+
+        <ul class="chips" id="chips">
+          <li class="tech">HTML</li><li class="tech">CSS</li><li class="tech">JavaScript</li><li class="tech">Git</li>
+          <li class="soft">حل المشكلات</li><li class="soft">التواصل</li><li class="soft">العمل ضمن فريق</li>
+        </ul>
+      </div>
+    </div>
+
+    <nav class="rail" id="rail" aria-label="مراحل الرحلة">
+      <button type="button" data-go="0"><span class="seg"><span class="fill"></span></span><span class="lb">الخطوة الأولى</span></button>
+      <button type="button" data-go="1"><span class="seg"><span class="fill"></span></span><span class="lb">التدريب</span></button>
+      <button type="button" data-go="2"><span class="seg"><span class="fill"></span></span><span class="lb">المشروع</span></button>
+      <button type="button" data-go="3"><span class="seg"><span class="fill"></span></span><span class="lb">المهارة</span></button>
+    </nav>
+  </div>
+</section>
+
+<section class="next">
+  <div>
+    <h2>لماذا Codera؟</h2>
+    <p>هنا يبدأ الفصل التالي من الصفحة الرئيسية.</p>
+  </div>
+</section>
+</main>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const $ = s => document.querySelector(s);
+  const track = $('#track'), stage = $('#stage'), win = $('#win'), linesEl = $('#lines'),
+        hint = $('#hint'), raw = $('#raw'), cmdEl = $('#cmd'), okEl = $('#ok'), pubEl = $('#pub');
+  const chEls = [...document.querySelectorAll('.ch')];
+  const railBtns = [...document.querySelectorAll('.rail button')];
+  const fills = railBtns.map(b => b.querySelector('.fill'));
+  const chips = [...document.querySelectorAll('#chips li')];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+  const ss = (a, b, x) => { const t = clamp((x - a) / (b - a)); return t * t * (3 - 2 * t); };
+  const prog = (a, b, x) => clamp((x - a) / (b - a));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  /* Timeline (0..1 of the scroll track)
+     0.00  first line, typed on load
+     0.06  window and preview appear
+     0.22  practice: write, mistake, fix
+     0.50  project: lines become a page
+     0.78  professional: published, skills */
+  const B = [0.22, 0.50, 0.78];             // chapter boundaries
+  const SEG = [[0, .22], [.22, .5], [.5, .78], [.78, 1]];
+  const ANCHOR = [0, .46, .74, 1];          // where each rail button lands
+  const CENTER = [.11, .36, .64, .89];
+  const FIX = 0.37;                         // the typo gets fixed here
+
+  const lines = [
+    { at: 0,    dur: 0,    segs: [['t','<h1>'],['x','Hello, Codera'],['t','</h1>']] },
+    { at: .200, dur: .015, segs: [['t','<style>']] },
+    { at: .215, dur: .060, variant: p => p < FIX ? 0 : 1,
+      segs: p => [['p','  h1 { '],[p < FIX ? 'k err' : 'k', p < FIX ? 'colr' : 'color'],['p',': '],['s','#2f6bff'],['p','; }']] },
+    { at: .275, dur: .015, segs: [['t','</style>']] },
+    { at: .385, dur: .012, segs: [['t','<ul>']] },
+    { at: .397, dur: .022, segs: [['p','  '],['t','<li>'],['x','HTML'],['t','</li>']] },
+    { at: .419, dur: .020, segs: [['p','  '],['t','<li>'],['x','CSS'],['t','</li>']] },
+    { at: .439, dur: .012, segs: [['t','</ul>']] },
+    { at: .515, dur: .030, segs: [['t','<section'],['p',' '],['k','class'],['p','='],['s','"projects"'],['t','>']] },
+    { at: .550, dur: .035, segs: [['p','  '],['t','<article'],['p',' '],['k','class'],['p','='],['s','"calc"'],['t','></article>']] },
+    { at: .600, dur: .035, segs: [['p','  '],['t','<article'],['p',' '],['k','class'],['p','='],['s','"todo"'],['t','></article>']] },
+    { at: .650, dur: .035, segs: [['p','  '],['t','<article'],['p',' '],['k','class'],['p','='],['s','"shop"'],['t','></article>']] },
+    { at: .690, dur: .012, segs: [['t','</section>']] },
+  ];
+  const caret = Object.assign(document.createElement('span'), { className: 'caret' });
+  lines.forEach((ln, i) => {
+    ln.row = document.createElement('div'); ln.row.className = 'ln';
+    const no = document.createElement('span'); no.className = 'no'; no.textContent = i + 1;
+    ln.code = document.createElement('span');
+    ln.row.append(no, ln.code); linesEl.appendChild(ln.row);
+  });
+
+  let W = 0, H = 0, mobile = false;
+  function measure() {
+    const r = win.getBoundingClientRect();
+    W = r.width; H = r.height;
+    mobile = matchMedia('(max-width: 860px)').matches;
+    schedule();
+  }
+
+  function renderLines(p, intro) {
+    let vis = 0, last = -1;
+    lines.forEach((ln, i) => {
+      const segs = typeof ln.segs === 'function' ? ln.segs(p) : ln.segs;
+      const total = segs.reduce((n, s) => n + s[1].length, 0);
+      const f = i === 0 ? Math.max(intro, ss(0, .03, p)) : prog(ln.at, ln.at + ln.dur, p);
+      const n = Math.round(f * total);
+      const key = n + '|' + (ln.variant ? ln.variant(p) : 0);
+      if (ln._key !== key) {
+        ln._key = key;
+        let left = n, html = '';
+        for (const [c, t] of segs) {
+          if (left <= 0) break;
+          const part = t.slice(0, left); left -= part.length;
+          html += '<span class="' + c + '">' + esc(part) + '</span>';
+        }
+        ln.code.innerHTML = html;
+        ln.row.style.display = n > 0 ? 'flex' : 'none';
+      }
+      if (n > 0) { vis++; last = i; }
+    });
+    if (last >= 0 && lines[last].code.lastChild !== caret) lines[last].code.appendChild(caret);
+    return vis;
+  }
+
+  let hintState = '', lastActive = -1, fixedOn = null, listOn = null;
+  const cmd = 'git push origin main';
+
+  function render(p, intro) {
+    const d = ss(.18, .55, p);
+    const s1 = ss(.06, .24, p), s3 = ss(.48, .62, p), s4 = ss(.76, .88, p);
+    const chrome = ss(.08, .22, p);
+    const frac = 1 - .44 * s1 - .30 * s3 - .26 * s4;
+    const term = ss(.82, .88, p);
+    const url = ss(.78, .86, p);
+
+    const vars = {
+      '--d': d, '--chrome': chrome, '--frac': frac, '--prev': ss(.10, .22, p), '--site': ss(.50, .58, p),
+      '--tabs': ss(.50, .58, p), '--url': url, '--term': term,
+      '--t1': ss(.58, .62, p), '--t2': ss(.63, .67, p), '--t3': ss(.68, .72, p)
+    };
+    for (const k in vars) root.style.setProperty(k, vars[k].toFixed(4));
+
+    // code geometry
+    const vis = renderLines(p, intro);
+    const barH = 38 * chrome, termH = 56 * term;
+    const bodyH = H - barH - termH, paneW = W * frac;
+    const fsBig = Math.min(W * .062, 56), fsMid = mobile ? 13 : 15, fs3 = mobile ? 11 : 12;
+    const fs = lerp(lerp(fsBig, fsMid, s1), fs3, s3);
+    linesEl.style.fontSize = fs.toFixed(2) + 'px';
+    const lh = fs * 1.75, contentH = vis * lh;
+    const padX = mobile ? 12 : 18, padY = mobile ? 12 : 16, reserve = lerp(0, 46, s1);
+    const x = lerp((paneW - 13.2 * fs) / 2, padX, s1);
+    const yC = (bodyH - contentH) / 2;
+    const yT = Math.min(padY, bodyH - reserve - contentH);
+    linesEl.style.transform = 'translate(' + x.toFixed(1) + 'px,' + lerp(yC, yT, s1).toFixed(1) + 'px)';
+
+    // practice: error, then fix
+    const hs = (p >= .305 && p < FIX) ? 'err' : (p >= FIX && p < .47) ? 'ok' : '';
+    if (hs !== hintState) {
+      hintState = hs;
+      if (hs === 'err') hint.textContent = 'خطأ: لا توجد خاصية اسمها colr. هل تقصد color؟';
+      if (hs === 'ok') hint.textContent = 'تم الإصلاح. الصفحة تعمل الآن.';
+      hint.className = 'hint ' + hs;
+    }
+    const fx = p >= FIX, ls = p >= .43;
+    if (fx !== fixedOn) { fixedOn = fx; raw.classList.toggle('fixed', fx); }
+    if (ls !== listOn) { listOn = ls; raw.classList.toggle('on', ls); }
+
+    // publish
+    cmdEl.textContent = cmd.slice(0, Math.round(prog(.835, .885, p) * cmd.length));
+    okEl.style.opacity = ss(.89, .92, p).toFixed(3);
+    pubEl.style.opacity = ss(.90, .94, p).toFixed(3);
+    chips.forEach((c, i) => {
+      const o = ss(.86 + i * .014, .90 + i * .014, p);
+      c.style.opacity = o.toFixed(3);
+      c.style.transform = reduce ? 'none' : 'translateY(' + ((1 - o) * 8).toFixed(1) + 'px)';
+    });
+
+    // copy blocks: fade out first, then the next fades in (no overlapping text)
+    const w = .035;
+    chEls.forEach((el, i) => {
+      const inn = i === 0 ? 1 : ss(B[i - 1], B[i - 1] + w, p);
+      const out = i === 3 ? 1 : 1 - ss(B[i] - w, B[i], p);
+      const o = inn * out;
+      el.style.opacity = o.toFixed(3);
+      el.style.transform = reduce ? 'none' : 'translateY(' + ((1 - o) * 18 * (p < CENTER[i] ? 1 : -1)).toFixed(1) + 'px)';
+      const hide = o < .5;
+      if (el._hide !== hide) { el._hide = hide; el.inert = hide; el.setAttribute('aria-hidden', hide); }
+    });
+
+    // rail
+    const active = p < B[0] ? 0 : p < B[1] ? 1 : p < B[2] ? 2 : 3;
+    SEG.forEach(([a, b], i) => { fills[i].style.transform = 'scaleX(' + prog(a, b, p).toFixed(3) + ')'; });
+    if (active !== lastActive) {
+      lastActive = active;
+      railBtns.forEach((b, i) => i === active ? b.setAttribute('aria-current', 'step') : b.removeAttribute('aria-current'));
+    }
+  }
+
+  // ---- loop ----
+  let target = 0, cur = 0, intro = reduce ? 1 : 0, raf = 0;
+  const t0 = performance.now();
+  function readTarget() {
+    const max = track.offsetHeight - stage.offsetHeight;
+    target = max > 0 ? clamp(-track.getBoundingClientRect().top / max) : 0;
+  }
+  function frame(now) {
+    raf = 0;
+    if (!reduce && intro < 1) intro = prog(600, 1900, now - t0);
+    const diff = target - cur;
+    cur = (reduce || Math.abs(diff) < .0003) ? target : cur + diff * .14;
+    render(cur, intro);
+    if (Math.abs(target - cur) > .0003 || intro < 1) schedule();
+  }
+  function schedule() { if (!raf) raf = requestAnimationFrame(frame); }
+  function onScroll() { readTarget(); if (intro < 1 && target > .02) intro = 1; schedule(); }
+
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', () => { measure(); onScroll(); });
+  new ResizeObserver(measure).observe(win);
+
+  // ---- navigation ----
+  function go(i) {
+    const max = track.offsetHeight - stage.offsetHeight;
+    const top = track.getBoundingClientRect().top + scrollY;
+    scrollTo({ top: top + ANCHOR[i] * max, behavior: reduce ? 'auto' : 'smooth' });
+  }
+  document.querySelectorAll('[data-go]').forEach(b => b.addEventListener('click', () => go(+b.dataset.go)));
+  document.querySelectorAll('[data-noop]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+
+  // ---- start ----
+  measure(); readTarget(); cur = target;
+  if (target > .02) intro = 1;
+  render(cur, intro); schedule();
+})();
+</script>
+</body>
+</html>
