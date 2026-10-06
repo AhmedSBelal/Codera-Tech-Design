@@ -825,6 +825,182 @@ legend{padding:0;margin-bottom:18px;width:100%}
 @media (prefers-reduced-motion:reduce){.btn.nudge{animation:none}}
 
 </style>
+<!-- ===== STEP 1: paste this <style> block just before </head> (after your main <style>) ===== -->
+<style>
+/* =====================================================================
+   CODERA UPDATE LAYER v2 — styles (add inside <head>, after the main <style>)
+   ===================================================================== */
+
+/* ---- nav: dropdowns, account, tighter links ---- */
+.nav-links a{padding:.45em .65em;font-size:.9rem;white-space:nowrap}
+.nav-links{align-items:center}
+.dd{position:relative}
+.dd>summary{list-style:none;display:inline-flex;align-items:center;gap:.4em;min-height:44px;padding:0 .7em;border-radius:10px;cursor:pointer;font-size:.9rem;opacity:.9;white-space:nowrap;transition:background-color .2s,opacity .2s}
+.dd>summary::-webkit-details-marker{display:none}
+.dd>summary:hover,.dd[open]>summary{background:color-mix(in oklab,currentColor 10%,transparent);opacity:1}
+.dd>summary .i-chevron{width:1em;height:1em;transition:transform .2s var(--ease)}
+.dd[open]>summary .i-chevron{transform:rotate(180deg)}
+.dd-panel{position:absolute;inset-inline-end:0;top:calc(100% + 6px);min-width:210px;padding:8px;display:grid;gap:2px;border-radius:12px;z-index:80;
+  --bg:var(--ink);--fg:var(--ink-fg);--accent:var(--ink-accent);--line:rgba(255,255,255,.16);
+  background:var(--ink);color:var(--ink-fg);border:1px solid rgba(255,255,255,.14);box-shadow:0 18px 40px rgba(0,0,0,.35)}
+.dd-panel a,.dd-panel button{display:flex;align-items:center;gap:.6em;width:100%;min-height:44px;padding:0 12px;border:0;border-radius:8px;background:transparent;color:inherit;text-decoration:none;text-align:start;font-size:.92rem;cursor:pointer;opacity:1;box-shadow:none}
+.dd-panel a:hover,.dd-panel button:hover{background:rgba(255,255,255,.1)}
+.dd-panel a[aria-current="page"]{color:var(--ink-accent)}
+.nav-more .dd-panel{inset-inline-end:auto;inset-inline-start:0}
+.avatar{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--brand);color:#fff;font-weight:600;font-size:.85rem}
+@media (max-width:1359px){.acct-l{display:none}}
+@media (max-width:1179px){
+  .nav-links,.nav-tools .lang-btn,.nav-tools [data-theme-toggle],.nav-acct{display:none}
+  .nav-burger{display:inline-flex}
+}
+.menu-links a{font-size:clamp(1.3rem,5.4vw,1.9rem)}
+.menu-acct{display:flex;flex-wrap:wrap;gap:8px}
+.foot-acct{gap:16px}
+
+/* ---- home: find your path ---- */
+.fp{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(32px,6vw,96px);margin-top:56px;align-items:start}
+.fp-list{display:grid}
+.fp-item{border-top:1px solid var(--line)}
+.fp-item:last-child{border-bottom:1px solid var(--line)}
+.fp-btn{width:100%;display:grid;grid-template-columns:2.4rem minmax(0,1fr);gap:4px 16px;align-items:baseline;padding:22px 0;background:none;border:0;text-align:start;cursor:pointer;color:var(--muted);transition:color .2s,padding .25s var(--ease)}
+.fp-n{font-size:.8rem}
+.fp-q{font-size:clamp(1.25rem,2.4vw,2rem);font-weight:500;line-height:1.45;color:inherit;text-wrap:balance}
+.fp-to{grid-column:2;display:inline-flex;align-items:center;gap:.5em;font-size:.95rem;color:var(--accent);opacity:0;max-height:0;overflow:hidden;transition:opacity .25s,max-height .25s}
+.fp-btn:hover,.fp-item.is-on .fp-btn{color:var(--fg)}
+.fp-item.is-on .fp-to{opacity:1;max-height:3em}
+.fp-item.is-on .fp-btn{padding-inline-start:12px}
+.fp-inline{display:none}
+.fp-side{position:sticky;top:calc(var(--hh) + 24px);padding:clamp(24px,3vw,40px);border-radius:14px;border:1px solid var(--line)}
+.fpp{display:grid;gap:18px}
+.fpp-h{display:flex;gap:14px;align-items:center}
+.fpp-ic{display:grid;place-items:center;width:52px;height:52px;flex:none;border-radius:12px;background:var(--brand);color:#fff}
+.fpp-ic .i{width:26px;height:26px}
+.fpp-k{font-size:.78rem;color:var(--muted)}
+.fpp-t,.fpp-n{color:var(--muted)}
+.chain{display:grid}
+.chain li{display:flex;gap:14px;align-items:center;position:relative;padding:7px 0}
+.chain li:not(:last-child)::after{content:"";position:absolute;inset-inline-start:13px;top:calc(50% + 14px);height:calc(100% - 28px);width:1.5px;background:var(--line)}
+.chain-n{display:grid;place-items:center;width:28px;height:28px;flex:none;border-radius:50%;border:1.5px solid var(--accent);font-size:.72rem;background:var(--bg)}
+.chain-tag{color:var(--accent);font-size:.78rem}
+@media (max-width:860px){
+  .fp{grid-template-columns:1fr;margin-top:36px}
+  .fp-side{display:none}
+  .fp-to{opacity:1;max-height:3em}
+  .fp-item.is-on .fp-inline{display:block;margin-bottom:28px;padding:20px;border-radius:12px}
+  .fp-item.is-on .fp-btn{padding-inline-start:0}
+}
+
+/* ---- locations ---- */
+.locg{display:grid;gap:clamp(20px,3vw,32px);margin-top:56px}
+.sec-h+.locg,.phero+div .locg{margin-top:0}
+.loc-grp{font-size:.8rem;font-weight:400;color:var(--muted);margin:8px 0 -8px}
+.locg-b{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:clamp(20px,3vw,32px)}
+.loc{display:grid;grid-template-rows:auto 1fr;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--bg)}
+.loc-m{display:block;position:relative;aspect-ratio:16/9;overflow:hidden}
+.loc-m .ph{position:absolute;inset:0;border-radius:0}
+.mapv{position:absolute;inset:0;display:grid;place-items:center;overflow:hidden;
+  background-color:color-mix(in oklab,var(--fg) 7%,var(--bg));
+  background-image:linear-gradient(color-mix(in oklab,var(--fg) 9%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in oklab,var(--fg) 9%,transparent) 1px,transparent 1px);background-size:36px 36px}
+.mapv::before{content:"";position:absolute;inset-inline:-10%;top:56%;height:14px;background:color-mix(in oklab,var(--accent) 22%,transparent);transform:rotate(-8deg)}
+.mapv-pin{position:relative;display:grid;place-items:center;width:56px;height:56px;border-radius:50% 50% 50% 0;background:var(--brand);color:#fff;transform:rotate(-45deg);box-shadow:0 10px 24px rgba(0,116,217,.35)}
+.mapv-pin .i{width:24px;height:24px;transform:rotate(45deg)}
+a.loc-m:hover .mapv-pin{transform:rotate(-45deg) translateY(-4px);transition:transform .25s var(--ease)}
+.loc-b{display:grid;gap:12px;align-content:start;padding:clamp(20px,3vw,32px)}
+.loc-b .tag{justify-self:start}
+.loc-n{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:600;line-height:1.3;margin:0}
+.loc-p{color:var(--accent);font-size:.95rem}
+.loc-a{display:flex;gap:.6em;align-items:flex-start;color:var(--muted)}
+.loc-a .i{margin-top:.3em;flex:none}
+.loc-a.is-soon{padding:10px 14px;border:1.5px dashed var(--line);border-radius:10px}
+.loc-act{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;margin-top:8px}
+.loc-online{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(16px,3vw,32px);align-items:center;padding:clamp(24px,4vw,48px);border-radius:14px;border:1px solid var(--line)}
+.loc-online .tag{margin-bottom:8px}
+.loc-ic{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:color-mix(in oklab,var(--accent) 16%,transparent);color:var(--accent)}
+.loc-ic .i{width:30px;height:30px}
+@media (max-width:760px){.loc-online{grid-template-columns:1fr;justify-items:start}}
+
+/* ---- learning paths ---- */
+.prows{display:grid}
+.prow a{display:grid;grid-template-columns:3rem 52px minmax(0,1fr) auto 2rem;gap:20px;align-items:center;padding:28px 0;border-top:1px solid var(--line);text-decoration:none;transition:padding .25s var(--ease)}
+.prows>li:last-child a{border-bottom:1px solid var(--line)}
+.prow a:hover{padding-inline-start:12px}
+.prow-i{color:var(--muted);font-size:.85rem}
+.prow-ic{display:grid;place-items:center;width:52px;height:52px;border-radius:12px;background:color-mix(in oklab,var(--accent) 12%,transparent);color:var(--accent)}
+.prow-ic .i{width:26px;height:26px}
+.prow-t{display:block;font-size:clamp(1.4rem,2.6vw,2.2rem);font-weight:600;line-height:1.4}
+.prow-s{display:block;color:var(--muted);margin-top:2px}
+.prow-chain{display:flex;flex-wrap:wrap;gap:6px 0;margin-top:12px;font-size:.82rem;color:var(--muted)}
+.prow-chain i{font-style:normal}
+.prow-chain i:not(:last-child)::after{content:"→";margin-inline:.6em;opacity:.6}
+[dir="rtl"] .prow-chain i:not(:last-child)::after{content:"←"}
+.prow-go{display:grid;place-items:center}
+@media (max-width:860px){
+  .prow a{grid-template-columns:44px minmax(0,1fr) 1.5rem;gap:14px}
+  .prow-i,.prow-meta{display:none}
+  .prow-ic{width:44px;height:44px}
+}
+.kids-band .kids-in{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(24px,5vw,72px);align-items:center}
+.kids-band .display{margin-block:.2em .3em}
+.kids-chips{display:flex;flex-wrap:wrap;gap:8px}
+.kids-chips li{padding:.45em 1.1em;border:1px solid rgba(255,255,255,.45);border-radius:999px;font-size:1rem}
+@media (max-width:860px){.kids-band .kids-in{grid-template-columns:1fr}}
+.path-note{margin-bottom:28px;color:var(--muted)}
+.path-note .link-arrow{margin-inline-start:.6em;color:var(--accent)}
+
+.path-hero .path-ic{display:inline-grid;place-items:center;width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,.12);margin-bottom:16px}
+.path-hero .path-ic .i{width:28px;height:28px}
+.path-k{display:block;font-size:.85rem;color:var(--muted);margin-bottom:6px}
+.jr{display:grid;margin-top:8px}
+.jr-st{position:relative;padding-inline-start:64px}
+.jr-st::before{content:"";position:absolute;inset-inline-start:21px;top:52px;bottom:-4px;width:2px;background:var(--line)}
+.jr-st:last-child::before{display:none}
+.jr-btn{width:100%;display:flex;align-items:center;gap:14px;min-height:60px;padding:12px 0;background:none;border:0;text-align:start;cursor:pointer;color:var(--fg)}
+.jr-node{position:absolute;inset-inline-start:0;top:8px;display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:2px solid var(--accent);background:var(--bg);font-size:.9rem;z-index:1}
+.jr-st.is-start .jr-node{background:var(--brand);border-color:var(--brand);color:#fff}
+.jr-tx{display:grid;gap:2px;flex:1;justify-items:start}
+.jr-t{font-size:clamp(1.15rem,2vw,1.5rem);font-weight:600;line-height:1.45}
+.jr-tag{color:var(--accent);font-size:.8rem}
+.jr-start{padding:0 .75em;border-radius:999px;background:var(--grow);color:#2A1A00;font-size:.75rem;font-weight:500;margin-top:4px}
+.jr-btn .i-chevron{margin-inline-start:auto;flex:none;transition:transform .2s var(--ease)}
+.jr-btn[aria-expanded="true"] .i-chevron{transform:rotate(180deg)}
+.jr-d{padding:4px 0 28px}
+.jr-in{display:grid;gap:14px;max-width:44rem;padding:20px;border:1px solid var(--line);border-radius:10px;background:var(--win)}
+.jr-f b{margin-inline-end:.6em;font-weight:600}
+.jr-f a{color:var(--accent)}
+
+/* ---- auth + account ---- */
+.auth{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);min-height:100vh;min-height:100svh;padding-top:var(--hh)}
+.auth-art{display:flex;flex-direction:column;justify-content:center;gap:28px;padding:clamp(32px,6vw,80px)}
+.auth-code{font-size:clamp(1.4rem,3.2vw,2.6rem);line-height:1.4;overflow-wrap:anywhere}
+.auth-code .t{color:var(--accent)}
+.auth-lines{color:var(--muted);max-width:24em}
+.auth-main{display:grid;place-items:center;padding:clamp(28px,5vw,64px)}
+.auth-card{width:min(460px,100%);display:grid;gap:18px}
+.auth-f{display:grid;gap:14px}
+.auth-row{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;font-size:.92rem}
+.auth-row a,.auth-alt a{color:var(--accent);text-underline-offset:4px}
+.auth-note{font-size:.9rem}
+.pw{position:relative}
+.pw .in{padding-inline-end:52px}
+.pw-t{position:absolute;inset-inline-end:3px;top:3px}
+@media (max-width:860px){
+  .auth{grid-template-columns:1fr;min-height:0}
+  .auth-art{padding:28px var(--gut);gap:8px}
+  .auth-lines{display:none}
+}
+.acct-pad{padding-top:calc(var(--hh) + 32px);padding-bottom:clamp(56px,8vw,100px);min-height:80vh}
+.acct-pad .display{margin-block:.2em .1em}
+.acct-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px;margin-top:32px}
+.acct-warn{margin-top:20px;max-width:34rem}
+.bk-acct{font-size:.88rem}
+.bk-acct a{color:var(--accent);text-underline-offset:4px}
+
+@media (prefers-reduced-motion:reduce){
+  .fp-btn,.fp-to,.prow a,.jr-btn .i-chevron,.dd>summary .i-chevron{transition:none}
+  a.loc-m:hover .mapv-pin{transition:none}
+}
+</style>
+
 </head>
 <body>
 <a class="skip" href="#app"></a>
@@ -2290,4 +2466,660 @@ document.addEventListener('submit', e => {
   addEventListener('scroll', schedUI, { passive: true }); addEventListener('resize', schedUI);
   render(false);
 })();
-</script></body></html>
+</script>
+
+
+<!-- ===== STEP 2: paste this <script> block right after your main </script>, before </body> ===== -->
+<script>
+
+(function () {
+
+  /* ---------- extra icons ---------- */
+  Object.assign(ICONS, {
+    sparkle: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 1.8L21.5 18.5l-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7z"/>',
+    monitor: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>',
+    palette: '<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 1.4-2.2-.6-1.2.2-2.3 1.6-2.3H17a4 4 0 0 0 4-4C21 6.5 17 3 12 3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/>',
+    server: '<rect x="3" y="4" width="18" height="6" rx="2"/><rect x="3" y="14" width="18" height="6" rx="2"/><path d="M7 7h.01M7 17h.01"/>',
+    chart: '<path d="M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-3"/>',
+    brain: '<path d="M9 4a3 3 0 0 0-3 3 3 3 0 0 0-2 5 3 3 0 0 0 2 5 3 3 0 0 0 6 1V5a2 2 0 0 0-3-1zM15 4a3 3 0 0 1 3 3 3 3 0 0 1 2 5 3 3 0 0 1-2 5 3 3 0 0 1-6 1"/>',
+    smile: '<circle cx="12" cy="12" r="9"/><path d="M8 14a4.5 4.5 0 0 0 8 0M9 9.5h.01M15 9.5h.01"/>',
+    chevron: '<path d="M6 9l6 6 6-6"/>',
+    wifi: '<path d="M2 9a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r=".8"/>',
+    building: '<rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2M10 21v-4h4v4"/>',
+    lock: '<rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>'
+  });
+
+  /* ---------- helpers ---------- */
+  const EMAIL = /^\S+@\S+\.\S+$/;
+  const val = id => ($('#' + id).value || '').trim();
+  const pathsV = () => vis(CMS.paths);
+  const pathBy = s => pathsV().find(p => p.slug === s);
+  const locsV = () => vis(CMS.locations).filter(l => l.active !== false);
+  const stageCourses = s => (s.courses || []).map(course).filter(Boolean);
+  const nStages = n => LANG === 'ar' ? (n === 1 ? 'مرحلة واحدة' : n === 2 ? 'مرحلتان' : n + ' مراحل') : (n === 1 ? '1 stage' : n + ' stages');
+  const attr = s => esc(s);
+
+  /* =====================================================================
+     DATA
+     ===================================================================== */
+  CMS.settings.auth = { endpoints: { signin: null, signup: null, forgot: null, reset: null, verify: null, resend: null, signout: null } };
+
+  CMS.contact.address = D('دمنهور (بالشراكة مع SHARKS) · إيتاي البارود · أونلاين', 'Damanhour (with SHARKS) · Itay El Baroud · Online');
+  CMS.contact.mapsUrl = 'https://maps.app.goo.gl/h8fNgc6y16dE85MD7';
+
+  /* Locations — CMS-ready. address:null => designed "coming soon" state. Never invent an address. */
+  CMS.locations = [
+    { id: 'damanhour', kind: 'branch', order: 1, visible: true, active: true,
+      name: D('دمنهور', 'Damanhour'), partner: 'SHARKS',
+      partnerNote: D('بالشراكة مع مساحة العمل SHARKS', 'In partnership with the SHARKS workspace'),
+      address: null, mapUrl: null, image: null,
+      description: D('فرع دمنهور يعمل بالشراكة مع مساحة العمل SHARKS.', 'Our Damanhour branch runs in partnership with the SHARKS workspace.') },
+    { id: 'itay', kind: 'branch', order: 2, visible: true, active: true,
+      name: D('إيتاي البارود', 'Itay El Baroud'), partner: null, partnerNote: null,
+      address: null, mapUrl: 'https://maps.app.goo.gl/h8fNgc6y16dE85MD7', image: null, description: null },
+    { id: 'online', kind: 'online', order: 3, visible: true, active: true,
+      name: D('أونلاين', 'Online'), partner: null, partnerNote: null, address: null, mapUrl: null, image: null,
+      description: D('تعلّم من أي مكان، بدون الحاجة للتواجد في فرع.', 'Learn from anywhere, without needing to be at a branch.') }
+  ];
+  const syncBranches = () => { CMS.branches.length = 0; locsV().filter(l => l.kind !== 'online').forEach(l => CMS.branches.push({ id: l.id, label: l.name })); };
+  syncBranches();
+
+  CMS.events.forEach(e => { e.location = D('يُحدَّد لاحقًا', 'To be announced'); });
+
+  /* Course referenced by every path */
+  CMS.courses.push({ slug: 'everyday-ai', cat: 'pro', stage: 'specialize', title: D('Everyday AI', 'Everyday AI'),
+    summary: D('الذكاء الاصطناعي في الحياة اليومية.', 'AI in everyday life.'), leadsTo: [] });
+
+  /* Learning paths — ordered stages. A stage may point to 0..n courses; stages with none show an honest "coming soon". */
+  const st = (id, ar, en, courses = [], extra = {}) => Object.assign({ id, title: D(ar, en), courses }, extra);
+  const eai = () => st('everyday-ai', 'الذكاء الاصطناعي اليومي', 'Everyday AI', ['everyday-ai']);
+  const pf = () => st('prog-fund', 'أساسيات البرمجة', 'Programming Fundamentals', ['cpp-fundamentals', 'python-fundamentals']);
+  const web = () => st('web-basics', 'أساسيات الويب', 'Web Basics', ['web-basics']);
+
+  CMS.paths = [
+    { slug: 'computer-science', order: 1, visible: true, kind: 'career', icon: 'code',
+      intent: D('أريد أن أبني برمجيات.', 'I want to build software.'),
+      title: D('علوم الحاسب', 'Computer Science'),
+      tagline: D('ابنِ أساسات هندسة البرمجيات الجادة.', 'Build the foundations of serious software engineering.'),
+      related: ['backend', 'ai-ml'],
+      stages: [ st('lang', 'لغة برمجة (C++ / Python)', 'Programming Language (C++ / Python)', ['cpp-fundamentals', 'python-fundamentals']),
+        st('oop', 'البرمجة كائنية التوجّه (OOP)', 'OOP'), st('dsa', 'هياكل البيانات والخوارزميات', 'Data Structures & Algorithms'),
+        st('ps', 'حل المشكلات', 'Problem Solving'), st('se', 'هندسة البرمجيات', 'Software Engineering'), eai()] },
+    { slug: 'frontend', order: 2, visible: true, kind: 'career', icon: 'globe',
+      intent: D('أريد أن أبني مواقع.', 'I want to build websites.'),
+      title: D('تطوير الواجهات (Front-end)', 'Front-end Development'),
+      tagline: D('ابنِ المواقع والواجهات التي يراها الناس ويتفاعلون معها.', 'Build the websites and interfaces people see and use.'),
+      related: ['backend', 'ui-ux'],
+      stages: [pf(), web(), st('fe-basics', 'أساسيات Front-end', 'Front-end Basics'), st('fe-adv', 'Front-end المتقدم', 'Front-end Advanced'), eai()] },
+    { slug: 'backend', order: 3, visible: true, kind: 'career', icon: 'server',
+      intent: D('أريد أن أبني أنظمة وAPIs.', 'I want to build systems and APIs.'),
+      title: D('تطوير الخلفية (Back-end)', 'Back-end Development'),
+      tagline: D('ابنِ الأنظمة والـ APIs التي تعمل خلف التطبيقات.', 'Build the systems and APIs that power applications.'),
+      related: ['frontend', 'computer-science'],
+      stages: [pf(), web(), st('be-basics', 'أساسيات Back-end', 'Back-end Basics'), st('be-adv', 'Back-end المتقدم', 'Back-end Advanced'), eai()] },
+    { slug: 'ui-ux', order: 4, visible: true, kind: 'career', icon: 'palette',
+      intent: D('أريد أن أصمّم تجارب رقمية.', 'I want to design digital experiences.'),
+      title: D('تصميم UI/UX', 'UI/UX Design'),
+      tagline: D('صمّم تجارب رقمية واضحة وجميلة يحبها المستخدمون.', 'Design digital experiences that are clear and a pleasure to use.'),
+      related: ['frontend', 'digital-skills'],
+      stages: [st('cb', 'أساسيات الحاسوب', 'Computer Basics', ['computer-basics']), web(), st('uiux-dip', 'دبلومة تصميم UI/UX', 'UI/UX Design Diploma'), eai()] },
+    { slug: 'data-analysis', order: 5, visible: true, kind: 'career', icon: 'chart',
+      intent: D('أريد أن أعمل مع البيانات.', 'I want to work with data.'),
+      title: D('تحليل البيانات', 'Data Analysis'),
+      tagline: D('اقرأ البيانات وحوّلها إلى أفكار وقرارات.', 'Read data and turn it into ideas and decisions.'),
+      related: ['ai-ml', 'computer-science'],
+      stages: [pf(), st('da-fund', 'أساسيات تحليل البيانات', 'Data Analysis Fundamentals', ['data-analysis']), eai()] },
+    { slug: 'ai-ml', order: 6, visible: true, kind: 'career', icon: 'brain',
+      intent: D('أريد أن أبني أنظمة ذكية.', 'I want to build intelligent systems.'),
+      title: D('الذكاء الاصطناعي وتعلّم الآلة', 'AI / Machine Learning'),
+      tagline: D('ابنِ أنظمة ذكية تتعلّم من البيانات.', 'Build intelligent systems that learn from data.'),
+      related: ['data-analysis', 'computer-science'],
+      stages: [pf(), st('da-fund', 'أساسيات تحليل البيانات', 'Data Analysis Fundamentals', ['data-analysis']),
+        st('mldl', 'تعلّم الآلة والتعلّم العميق', 'Machine Learning & Deep Learning'), eai()] },
+    { slug: 'digital-skills', order: 7, visible: true, kind: 'career', icon: 'monitor',
+      intent: D('أريد مهارات رقمية قوية.', 'I want strong digital skills.'),
+      title: D('المهارات الرقمية', 'Digital Skills'),
+      tagline: D('اكتسب المهارات الرقمية التي تحتاجها في الدراسة والعمل.', 'Build the digital skills you need for study and work.'),
+      related: ['computer-science', 'kids'],
+      stages: [st('cb', 'أساسيات الحاسوب', 'Computer Basics', ['computer-basics']), st('icdl', 'ICDL', 'ICDL', ['icdl']), eai()] },
+    { slug: 'kids', order: 8, visible: true, kind: 'kids', icon: 'smile', suggested: true,
+      intent: D('أريد أن يبدأ طفلي مبكرًا.', 'I want my child to start early.'),
+      title: D('برنامج الأطفال', 'Kids Program'),
+      tagline: D('أولى خطوات طفلك في الحاسوب والبرمجة، بطريقة ممتعة ومنظّمة.', 'Your child’s first steps into computers and coding, in a playful and organized way.'),
+      related: ['digital-skills'],
+      stages: [
+        st('k-explore', 'أساسيات الحاسوب', 'Computer Basics', ['computer-basics'], { tag: D('استكشف', 'Explore') }),
+        st('k-create', 'Scratch', 'Scratch', ['scratch'], { tag: D('ابتكر', 'Create') }),
+        st('k-code', 'App Inventor', 'App Inventor', [], { tag: D('برمج', 'Code') }),
+        st('k-build', 'أساسيات البرمجة (نسخة مبسّطة)', 'Fundamental Programming Lite', [], { tag: D('ابنِ', 'Build') }),
+        st('k-ai', 'الذكاء الاصطناعي اليومي', 'Everyday AI', ['everyday-ai'], { tag: D('اكتشف الذكاء الاصطناعي', 'Discover AI') })] }
+  ];
+
+  CMS.nav.length = 0;
+  [
+    { id: 'home', path: '/', label: D('الرئيسية', 'Home') },
+    { id: 'about', path: '/about', label: D('من نحن', 'About'), primary: true },
+    { id: 'paths', path: '/paths', label: D('المسارات', 'Learning paths'), needs: 'paths', primary: true },
+    { id: 'courses', path: '/courses', label: D('الكورسات', 'Courses'), needs: 'courses', primary: true },
+    { id: 'services', path: '/services', label: D('الخدمات', 'Services'), needs: 'services' },
+    { id: 'instructors', path: '/instructors', label: D('المدرّبون', 'Instructors'), needs: 'instructors', primary: true },
+    { id: 'events', path: '/events', label: D('الفعاليات', 'Events'), primary: true },
+    { id: 'guides', path: '/guides', label: D('الأدلة', 'Guides'), needs: 'guides' },
+    { id: 'locations', path: '/locations', label: D('أماكن التعلّم', 'Locations'), needs: 'locations', primary: true },
+    { id: 'contact', path: '/contact', label: D('تواصل', 'Contact') }
+  ].forEach(n => CMS.nav.push(n));
+
+  CMS.sections.length = 0;
+  ['signature', 'why', 'path', 'doing', 'people', 'community', 'stories', 'library', 'happening', 'locations', 'final']
+    .forEach((id, i) => CMS.sections.push(Object.assign({ id, visible: true, order: i + 1 }, id === 'happening' ? { empty: 'state' } : {})));
+
+  CMS.copy.path = {
+    title: D('عايز تبقى إيه؟ فيه مسار ليك.', 'What do you want to become? There is a path for you.'),
+    lead: D('اختر الجملة اللي تشبهك، وشوف الرحلة مرحلة بمرحلة.', 'Pick the sentence that sounds like you, and see the journey stage by stage.')
+  };
+  CMS.copy.locations = {
+    title: D('اختر طريقة تعلّمك.', 'Choose how you want to learn.'),
+    lead: D('حضوري في فروعنا، أو أونلاين من أي مكان.', 'In person at our branches, or online from anywhere.')
+  };
+
+  /* =====================================================================
+     AUTH (frontend-only until endpoints are set; clearly flagged as preview)
+     ===================================================================== */
+  const Auth = {
+    get() { try { return JSON.parse(store.get('codera-session') || 'null'); } catch (e) { return null; } },
+    set(u) { store.set('codera-session', JSON.stringify(u)); },
+    clear() { store.set('codera-session', ''); },
+    demoUser() { try { return JSON.parse(store.get('codera-demo-user') || 'null'); } catch (e) { return null; } }
+  };
+  async function authCall(kind, data) {
+    const ep = CMS.settings.auth.endpoints[kind];
+    if (!ep) return { demo: true };
+    const r = await fetch(ep, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data), credentials: 'include' });
+    if (!r.ok) throw new Error(r.status);
+    return r.json().catch(() => ({}));
+  }
+  const inDemo = () => CMS.settings.demo && !CMS.settings.auth.endpoints.signin;
+  const demoNote = () => inDemo() ? `<p class="mono demo-note">${L('وضع المعاينة: لا يوجد خادم بعد. اضبط CMS.settings.auth.endpoints لتفعيل الحسابات.', 'Preview mode: no server yet. Set CMS.settings.auth.endpoints to enable accounts.')}</p>` : '';
+  const initial = u => ((u && u.name) || '?').trim().charAt(0).toUpperCase();
+
+  /* =====================================================================
+     CHROME — account-aware nav, premium mobile menu, locations in footer
+     ===================================================================== */
+  renderChrome = function () {
+    const { path } = parseHash();
+    const items = vis(CMS.nav).filter(n => !n.needs || vis(CMS[n.needs]).length);
+    const act = n => (n.path === '/' ? path === '/' : path === n.path || path.startsWith(n.path + '/'));
+    const a = (n, cls) => `<a${cls ? ` class="${cls}"` : ''} href="${href(n.path)}"${act(n) ? ' aria-current="page"' : ''}>${T(n.label)}</a>`;
+    const prim = items.filter(n => n.primary), more = items.filter(n => n.id !== 'home' && !n.primary);
+    const u = Auth.get();
+    const langBtn = `<button class="icon-btn lang-btn" type="button" data-lang="${LANG === 'ar' ? 'en' : 'ar'}" lang="${LANG === 'ar' ? 'en' : 'ar'}" aria-label="${LANG === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'}">${ico('globe')}<span>${LANG === 'ar' ? 'EN' : 'عربي'}</span></button>`;
+    const themeBtn = `<button class="icon-btn" type="button" data-theme-toggle aria-label="${esc(THEME === 'dark' ? L('الوضع الفاتح', 'Switch to light mode') : L('الوضع الداكن', 'Switch to dark mode'))}">${ico(THEME === 'dark' ? 'sun' : 'moon')}</button>`;
+    const brand = `<a class="brand" href="#/" aria-label="${esc(CMS.settings.brand)}">${CMS.settings.logo ? `<img src="${esc(CMS.settings.logo)}" alt="" height="28">` : `<span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>`}<b>Codera</b><span>Tech</span></a>`;
+
+    const acct = u
+      ? `<details class="dd nav-acct"><summary aria-label="${esc(L('حسابي', 'My account'))}"><span class="avatar" aria-hidden="true">${esc(initial(u))}</span><span class="acct-l">${L('حسابي', 'My account')}</span></summary>
+          <div class="dd-panel"><a href="#/account">${ico('user')}${L('حسابي', 'My account')}</a><button type="button" data-signout>${ico('close')}${L('تسجيل الخروج', 'Sign out')}</button></div></details>`
+      : `<details class="dd nav-acct"><summary aria-label="${esc(L('الحساب', 'Account'))}">${ico('user')}<span class="acct-l">${L('الحساب', 'Account')}</span></summary>
+          <div class="dd-panel"><a href="#/signin">${L('تسجيل الدخول', 'Sign in')}</a><a href="#/signup">${L('إنشاء حساب', 'Create account')}</a></div></details>`;
+    const moreDD = more.length ? `<details class="dd nav-more"><summary>${L('المزيد', 'More')}${ico('chevron')}</summary><div class="dd-panel">${more.map(n => a(n)).join('')}</div></details>` : '';
+
+    $('#nav').innerHTML = `<div class="nav-in">${brand}${celBadge()}
+      <nav class="nav-links" aria-label="${esc(L('التنقل الرئيسي', 'Main navigation'))}">${prim.map(n => a(n)).join('')}${moreDD}</nav>
+      <div class="nav-tools">${langBtn}${themeBtn}${acct}<button class="btn btn-solid sm nav-cta" type="button" data-book>${BOOK()}</button>
+        <button class="icon-btn nav-burger" type="button" data-menu aria-expanded="${!!Menu.close}" aria-controls="menu" aria-label="${esc(L('القائمة', 'Menu'))}">${ico('menu')}</button></div></div>`;
+
+    const menuAcct = u
+      ? `<a class="btn btn-ghost" href="#/account">${ico('user')}${L('حسابي', 'My account')}</a><button class="btn btn-ghost" type="button" data-signout>${L('تسجيل الخروج', 'Sign out')}</button>`
+      : `<a class="btn btn-ghost" href="#/signin">${L('تسجيل الدخول', 'Sign in')}</a><a class="btn btn-ghost" href="#/signup">${L('إنشاء حساب', 'Create account')}</a>`;
+    $('#menu').innerHTML = `<div class="menu-in tone-ink" role="dialog" aria-modal="true" aria-label="${esc(L('القائمة', 'Menu'))}">
+      <div class="menu-top">${brand}<button class="icon-btn" type="button" data-menu aria-label="${esc(L('إغلاق القائمة', 'Close menu'))}">${ico('close')}</button></div>
+      <nav class="menu-links" aria-label="${esc(L('التنقل الرئيسي', 'Main navigation'))}">${items.map(n => a(n)).join('')}</nav>
+      <div class="menu-foot"><button class="btn btn-solid lg" type="button" data-book>${BOOK()}</button><div class="menu-acct">${menuAcct}</div><div class="row">${langBtn}${themeBtn}</div></div></div>`;
+
+    const c = CMS.contact;
+    const locLines = locsV().map(l => `<a href="#/locations">${l.kind === 'online' ? ico('wifi') : ico('pin')} ${T(l.name)}</a>`).join('');
+    $('#footer').innerHTML = `<div class="wrap foot">
+      <div class="foot-brand">${brand}<p class="foot-tag mono">${esc(CMS.settings.tagline)}</p><p>${T(CMS.settings.name)}</p>
+        <div class="row"><button class="btn btn-solid" type="button" data-book>${BOOK()}</button><a class="btn btn-ghost" href="${c.whatsapp}" target="_blank" rel="noopener">${ico('whatsapp')}WhatsApp</a></div></div>
+      <nav class="foot-col" aria-label="${esc(L('روابط التذييل', 'Footer links'))}"><h2 class="h4">${L('استكشف', 'Explore')}</h2>${items.map(n => a(n)).join('')}</nav>
+      <div class="foot-col"><h2 class="h4">${L('تواصل', 'Contact')}</h2>
+        ${c.phones.map(p => `<a class="mono" href="tel:${phoneIntl(p)}">${esc(p)}</a>`).join('')}<a class="mono" href="mailto:${esc(c.email)}">${esc(c.email)}</a>${locLines}</div>
+      <div class="foot-col"><h2 class="h4">${L('تابعنا', 'Follow us')}</h2>${socialIcons()}
+        <div class="row foot-acct">${u ? `<a href="#/account">${L('حسابي', 'My account')}</a>` : `<a href="#/signin">${L('تسجيل الدخول', 'Sign in')}</a><a href="#/signup">${L('إنشاء حساب', 'Create account')}</a>`}</div>
+        <div class="row">${langBtn}${themeBtn}</div>
+        ${CMS.settings.demo ? `<label class="cel-pick mono" for="celPick">${L('معاينة المناسبات', 'Celebration preview')}<select id="celPick" class="in"><option value="">${L('بدون', 'None')}</option>${Object.keys(CEL).map(k => `<option value="${k}"${k === celActive ? ' selected' : ''}>${esc(t(CEL[k].label))}</option>`).join('')}</select></label>` : ''}</div>
+      <p class="foot-legal">© ${new Date().getFullYear()} ${esc(CMS.settings.brand)} · ${T(CMS.settings.name)}</p></div>`;
+
+    $('#sticky').innerHTML = `<button class="btn btn-solid lg" type="button" data-book>${BOOK()}</button>`;
+    $('.skip').textContent = L('تخطّي إلى المحتوى', 'Skip to content');
+  };
+
+  const _render = render;
+  render = function (keep) {
+    syncBranches();
+    _render(keep);
+    const r = $('meta[name="robots"]');
+    if (r) r.setAttribute('content', /^\/(signin|signup|forgot|reset|verify|account)/.test(parseHash().path) ? 'noindex,nofollow' : 'index,follow,max-image-preview:large');
+  };
+
+  /* =====================================================================
+     HOME: FIND YOUR PATH + LOCATIONS
+     ===================================================================== */
+  const fpPanel = p => {
+    const kids = p.kind === 'kids', sts = p.stages || [];
+    return `<div class="fpp"><div class="fpp-h"><span class="fpp-ic">${ico(p.icon)}</span><div><span class="mono fpp-k">${kids ? L('برنامج الأطفال', 'Kids program') : L('مسار تعليمي', 'Learning path')}</span><h3 class="h3">${T(p.title)}</h3></div></div>
+      <p class="fpp-t">${T(p.tagline)}</p>
+      <ol class="chain">${sts.map((s, i) => `<li><span class="chain-n mono">${i + 1}</span><span>${s.tag ? `<small class="chain-tag">${T(s.tag)}</small> ` : ''}${T(s.title)}</span></li>`).join('')}</ol>
+      ${p.suggested ? `<p class="fpp-n">${L('ترتيب مقترح وليس إلزاميًا.', 'A suggested order, not a mandatory one.')}</p>` : ''}
+      <div class="row"><a class="btn btn-solid" href="${href('/paths/' + p.slug)}">${L('شوف المسار', 'See this path')}${ico('arrow')}</a>
+        <button class="btn btn-ghost" type="button" data-book data-note="${attr(L('مهتم بمسار: ', 'Interested in the path: ') + t(p.title))}">${BOOK()}</button></div></div>`;
+  };
+  S.fp = 0;
+  const _homePath = Home.path;
+  Home.path = function () {
+    const ps = pathsV(); if (!ps.length) return _homePath();
+    S.fp = Math.min(S.fp, ps.length - 1);
+    return sec('path', 'paper', `<div class="wrap">${secHead('path', CMS.copy.path)}
+      <div class="fp">
+        <ol class="fp-list">${ps.map((p, i) => `<li class="fp-item${i === S.fp ? ' is-on' : ''}">
+          <button type="button" class="fp-btn" data-act="fp" data-i="${i}" aria-expanded="${i === S.fp}" aria-controls="fpi-${i}">
+            <span class="fp-n mono" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span>
+            <span class="fp-q">${T(p.intent)}</span>
+            <span class="fp-to"><span class="sr-only">${L('المسار: ', 'Path: ')}</span>${T(p.title)}${ico('arrow')}</span></button>
+          <div class="fp-inline tone-ink" id="fpi-${i}">${fpPanel(p)}</div></li>`).join('')}</ol>
+        <aside class="fp-side tone-ink" id="fp-side" data-i="${S.fp}" aria-live="polite">${fpPanel(ps[S.fp])}</aside></div>
+      <div class="path-cta"><a class="link-arrow" href="#/paths">${L('كل المسارات', 'All learning paths')}${ico('arrow')}</a>
+        <p>${L('مش متأكد أنهي مسار يناسبك؟', 'Not sure which path fits you?')} <button class="linkbtn" type="button" data-book>${BOOK()}</button></p></div></div>`, 'path');
+  };
+  function fpSet(i) {
+    const ps = pathsV(); if (!ps[i]) return; S.fp = i;
+    $$('.fp-item').forEach((li, k) => { li.classList.toggle('is-on', k === i); li.querySelector('.fp-btn').setAttribute('aria-expanded', k === i); });
+    const side = $('#fp-side'); if (side && side.dataset.i !== String(i)) { side.dataset.i = i; side.innerHTML = fpPanel(ps[i]); }
+  }
+
+  /* ---- locations ---- */
+  const locMedia = l => {
+    if (l.image) return `<div class="loc-m">${ph(t(l.name), { img: l.image, alt: t(l.name), icon: 'building' })}</div>`;
+    const inner = `<div class="mapv" aria-hidden="true"><span class="mapv-pin">${ico('pin')}</span></div>`;
+    return l.mapUrl ? `<a class="loc-m" href="${attr(l.mapUrl)}" target="_blank" rel="noopener" aria-label="${attr(L('افتح على الخريطة: ', 'Open on the map: ') + t(l.name))}">${inner}</a>` : `<div class="loc-m">${inner}</div>`;
+  };
+  const locCard = l => {
+    const addr = l.address ? `<p class="loc-a">${ico('pin')}<span>${T(l.address)}</span></p>`
+      : (l.mapUrl ? '' : `<p class="loc-a is-soon">${ico('pin')}<span>${L('العنوان يُضاف قريبًا', 'Address coming soon')}${demoTag({ demo: true })}</span></p>`);
+    return `<article class="loc">${locMedia(l)}<div class="loc-b">
+      <span class="tag">${L('حضوري', 'In person')}</span><h3 class="loc-n">${T(l.name)}</h3>
+      ${l.partnerNote ? `<p class="loc-p">${T(l.partnerNote)}</p>` : ''}${l.description && !l.partnerNote ? `<p class="muted">${T(l.description)}</p>` : ''}${addr}
+      <div class="loc-act">${l.mapUrl ? `<a class="link-arrow" href="${attr(l.mapUrl)}" target="_blank" rel="noopener">${L('افتح على خرائط جوجل', 'Open in Google Maps')}${ico('arrow')}</a>` : `<span class="muted">${L('الخريطة قريبًا', 'Map coming soon')}</span>`}
+        <button class="btn btn-solid sm" type="button" data-book data-mode="in-person" data-branch="${attr(l.id)}" data-note="${attr(L('الفرع: ', 'Branch: ') + t(l.name))}">${L('احجز في هذا الفرع', 'Book at this branch')}</button></div></div></article>`;
+  };
+  const locOnline = l => `<article class="loc-online tone-ink"><span class="loc-ic" aria-hidden="true">${ico('wifi')}</span>
+    <div><span class="tag">${L('أونلاين', 'Online')}</span><h3 class="loc-n">${T(l.name)}</h3>${l.description ? `<p class="muted">${T(l.description)}</p>` : ''}</div>
+    <button class="btn btn-solid" type="button" data-book data-mode="online">${L('احجز أونلاين', 'Book online')}</button></article>`;
+  const locGrid = ls => {
+    const br = ls.filter(l => l.kind !== 'online'), on = ls.filter(l => l.kind === 'online');
+    return `<div class="locg">${br.length ? `<h3 class="loc-grp mono">${L('حضوري', 'In person')}</h3><div class="locg-b">${br.map(locCard).join('')}</div>` : ''}
+      ${on.length ? `<h3 class="loc-grp mono">${L('أونلاين', 'Online')}</h3>${on.map(locOnline).join('')}` : ''}</div>`;
+  };
+  Home.locations = function () {
+    const ls = locsV(); if (!ls.length) return '';
+    return sec('locations', 'paper', `<div class="wrap">${secHead('locations', CMS.copy.locations)}${locGrid(ls)}
+      <p class="sec-more"><a class="link-arrow" href="#/locations">${L('كل أماكن التعلّم', 'All locations')}${ico('arrow')}</a></p></div>`, 'locations');
+  };
+
+  function pageLocations() {
+    const ls = locsV();
+    return { html: `${phero({ title: L('اختر كيف تحب أن تتعلّم.', 'Choose how you want to learn.'), lead: L('Codera Tech ليست في مكان واحد. تعلّم حضوريًا في فروعنا، أو أونلاين من أي مكان.', 'Codera Tech is not in one place. Learn in person at our branches, or online from anywhere.'), crumbs: [{ label: L('أماكن التعلّم', 'Locations') }] })}
+      <div class="tone-paper sec-tight"><div class="wrap">${ls.length ? locGrid(ls) : empty(L('نجهّز أماكن التعلّم.', 'We are preparing our locations.'), L('كلّمنا وهنقولك المتاح.', 'Talk to us and we will tell you what is available.'))}</div></div>${ctaBand(L('جاهز تحجز مكانك؟', 'Ready to book your seat?'))}`,
+      meta: { path: '/locations', title: L('أماكن التعلّم', 'Locations'), desc: L('تعلّم مع Codera Tech حضوريًا في دمنهور وإيتاي البارود، أو أونلاين.', 'Learn with Codera Tech in person in Damanhour and Itay El Baroud, or online.') } };
+  }
+
+  /* =====================================================================
+     LEARNING PATHS
+     ===================================================================== */
+  const prow = (p, i) => `<li class="prow"><a href="${href('/paths/' + p.slug)}">
+    <span class="prow-i mono" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span class="prow-ic" aria-hidden="true">${ico(p.icon)}</span>
+    <span class="prow-main"><span class="prow-t">${T(p.title)}</span><span class="prow-s">${T(p.tagline)}</span>
+      <span class="prow-chain" aria-hidden="true">${(p.stages || []).map(s => `<i>${T(s.title)}</i>`).join('')}</span></span>
+    <span class="prow-meta tag">${nStages((p.stages || []).length)}</span><span class="prow-go" aria-hidden="true">${ico('arrow')}</span></a></li>`;
+
+  function pagePaths() {
+    const ps = pathsV(), career = ps.filter(p => p.kind !== 'kids'), kids = ps.filter(p => p.kind === 'kids');
+    const kidsBand = kids.map(k => `<section class="sec tone-blue kids-band" aria-labelledby="kids-t"><div class="wrap kids-in">
+      <div><span class="mono">${L('للأطفال وأولياء الأمور', 'For kids and parents')}</span><h2 id="kids-t" class="display">${T(k.title)}</h2><p class="lead">${T(k.tagline)}</p>
+        <div class="row"><a class="btn btn-solid lg" href="${href('/paths/' + k.slug)}">${L('اكتشف برنامج الأطفال', 'Explore the Kids program')}${ico('arrow')}</a></div></div>
+      <ol class="kids-chips">${(k.stages || []).map(s => `<li>${s.tag ? T(s.tag) : T(s.title)}</li>`).join('')}</ol></div></section>`).join('');
+    return { html: `${phero({ title: L('مساراتنا التعليمية', 'Learning paths'), tone: 'ink', lead: L('المسار رحلة من عدة مراحل مرتّبة، وكل مرحلة قد تضم كورسًا. الكورس خطوة واحدة؛ المسار هو الطريق كله.', 'A path is a journey of ordered stages, and each stage may include a course. A course is one step; a path is the whole road.'), crumbs: [{ label: L('المسارات', 'Learning paths') }] })}
+      <div class="tone-paper sec-tight"><div class="wrap">${career.length ? `<ol class="prows">${career.map(prow).join('')}</ol>` : empty(L('نجهّز المسارات.', 'We are preparing the paths.'), L('كلّمنا وهنرشّح لك نقطة البداية.', 'Talk to us and we will suggest where to start.'), `<button class="btn btn-solid" type="button" data-book>${BOOK()}</button>`)}
+        <p class="sec-more"><a class="link-arrow" href="#/courses">${L('تصفّح الكورسات منفصلة', 'Browse courses on their own')}${ico('arrow')}</a></p></div></div>${kidsBand}${ctaBand()}`,
+      meta: { path: '/paths', title: L('المسارات التعليمية', 'Learning paths'), desc: L('مسارات Codera Tech التعليمية: علوم الحاسب، الواجهات، الخلفية، UI/UX، البيانات، الذكاء الاصطناعي، المهارات الرقمية وبرنامج الأطفال.', 'Codera Tech learning paths: computer science, front-end, back-end, UI/UX, data, AI, digital skills and a Kids program.') } };
+  }
+
+  function jrStage(p, s, i, start) {
+    const cs = stageCourses(s), ins = s.instructor ? vis(CMS.instructors).find(x => x.slug === s.instructor) : null, on = i === start;
+    const note = attr(L('مهتم بمسار ', 'Interested in the path ') + t(p.title) + L(' - مرحلة ', ' - stage ') + t(s.title));
+    return `<li class="jr-st${on ? ' is-start' : ''}"><button class="jr-btn" type="button" data-act="jr" aria-expanded="${on}" aria-controls="jr-d-${i}">
+        <span class="jr-node mono" aria-hidden="true">${i + 1}</span>
+        <span class="jr-tx">${s.tag ? `<small class="jr-tag">${T(s.tag)}</small>` : ''}<span class="jr-t">${T(s.title)}</span>${on ? `<small class="jr-start">${L('ابدأ من هنا', 'Start here')}</small>` : ''}</span>${ico('chevron')}</button>
+      <div class="jr-d" id="jr-d-${i}"${on ? '' : ' hidden'}><div class="jr-in">
+        ${s.desc ? `<p>${T(s.desc)}</p>` : `<p class="muted">${L('تفاصيل هذه المرحلة تُضاف قريبًا.', 'Details for this stage are coming soon.')}${demoTag({ demo: true })}</p>`}
+        ${s.duration ? `<p class="jr-f"><b>${L('المدة', 'Duration')}</b>${T(s.duration)}</p>` : ''}
+        ${ins ? `<p class="jr-f"><b>${L('المدرّب', 'Instructor')}</b><a href="${href('/instructors/' + ins.slug)}">${T(ins.name)}</a></p>` : ''}
+        ${cs.length ? `<div><h4 class="h4">${cs.length > 1 ? L('الكورسات المتاحة', 'Available courses') : L('الكورس المتاح', 'Available course')}</h4><ul class="next-list">${cs.map(c => `<li><a href="${href('/courses/' + c.slug)}"><span>${T(c.title)}</span>${ico('arrow')}</a></li>`).join('')}</ul></div>` : ''}
+        <div class="row"><button class="btn btn-solid sm" type="button" data-book="${cs[0] ? attr(cs[0].slug) : ''}" data-note="${note}">${BOOK()}</button></div></div></div></li>`;
+  }
+
+  function pagePath(slug) {
+    const p = pathBy(slug); if (!p) return page404();
+    const kids = p.kind === 'kids', sts = p.stages || [], start = Math.max(0, Math.min(p.startAt || 0, sts.length - 1));
+    const related = (p.related || []).map(pathBy).filter(Boolean);
+    const outcomes = p.outcomes && p.outcomes.length ? bulletList(p.outcomes)
+      : (CMS.settings.demo ? `<div class="empty"><p class="muted">${L('نتائج التعلّم تُضاف من لوحة التحكم.', 'Learning outcomes are added from the dashboard.')}${demoTag({ demo: true })}</p></div>` : '');
+    const who = p.who ? T(p.who) : esc(L(`لمن يقول: «${t(p.intent)}»`, `For anyone who says: “${t(p.intent)}”`));
+    const parent = kids ? `<section class="cblock"><h2 class="h3">${L('لأولياء الأمور', 'For parents and guardians')}</h2>
+      <ul class="checks">${[L('ترتيب البرامج مقترح وليس إلزاميًا، فنبدأ من المناسب لطفلك.', 'The order is a suggestion, not a requirement, so we start where it suits your child.'),
+        L('تعلّم حضوري في فروعنا أو أونلاين، تختاره عند الحجز.', 'Learn in person at our branches or online, chosen when you book.'),
+        L('تواصل مباشر معنا عبر WhatsApp أو الهاتف قبل الحجز.', 'Talk to us directly on WhatsApp or by phone before you book.')].map(x => `<li>${ico('check')}<span>${x}</span></li>`).join('')}</ul>
+      <div class="row"><a class="btn btn-ghost" href="${CMS.contact.whatsapp}" target="_blank" rel="noopener">${ico('whatsapp')}${L('اسأل عن البرنامج', 'Ask about the program')}</a><a class="link-arrow" href="#/locations">${L('شوف أماكن التعلّم', 'See where we teach')}${ico('arrow')}</a></div></section>` : '';
+    const html = `<header class="phero tone-${kids ? 'blue' : 'ink'} path-hero"><div class="wrap">
+        ${crumbs([{ label: L('المسارات', 'Learning paths'), path: '/paths' }, { label: T(p.title) }])}
+        <span class="path-ic" aria-hidden="true">${ico(p.icon)}</span>
+        <span class="mono path-k">${kids ? L('برنامج الأطفال', 'Kids program') : L('مسار تعليمي', 'Learning path')} · ${nStages(sts.length)}</span>
+        <h1 class="display">${T(p.title)}</h1><p class="lead">${T(p.tagline)}</p>
+        <div class="row"><button class="btn btn-solid lg" type="button" data-book data-note="${attr(L('أرغب في بدء مسار: ', 'I would like to start the path: ') + t(p.title))}">${kids ? BOOK() : L('ابدأ هذا المسار', 'Start this path')}</button>
+          <a class="btn btn-ghost lg" href="${CMS.contact.whatsapp}" target="_blank" rel="noopener">${ico('whatsapp')}${L('اسأل عن المسار', 'Ask about this path')}</a></div></div></header>
+      <div class="tone-paper c-body"><div class="wrap c-cols">
+        <div class="c-main">
+          <section class="cblock"><h2 class="h3">${L('لمن هذا المسار', 'Who it is for')}</h2><p class="statement">${who}</p></section>
+          ${outcomes ? `<section class="cblock"><h2 class="h3">${L('ما ستخرج به', 'What you will take away')}</h2>${outcomes}</section>` : ''}
+          <section class="cblock"><h2 class="h3">${L('رحلتك مرحلة بمرحلة', 'Your journey, stage by stage')}</h2>
+            <p class="muted">${kids ? L('هذه برامج يمكن أن تتبع هذا الترتيب. اضغط على أي مرحلة لتعرف أكثر.', 'These programs can follow this order. Select any stage to learn more.') : L('اضغط على أي مرحلة لتعرف ما فيها والكورس المتاح لها.', 'Select any stage to see what is in it and the course available for it.')}</p>
+            <ol class="jr">${sts.map((s, i) => jrStage(p, s, i, start)).join('')}</ol></section>
+          ${parent}</div>
+        <aside class="c-side"><div class="side-card"><h2 class="h3">${L('نقطة البداية المقترحة', 'Recommended starting point')}</h2>
+          <p><b>${sts[start] ? T(sts[start].title) : ''}</b></p>
+          <button class="btn btn-solid" type="button" data-book data-note="${attr(L('أرغب في بدء مسار: ', 'I would like to start the path: ') + t(p.title))}">${BOOK()}</button></div>
+          <div class="side-card"><h2 class="h3">${L('أين تتعلّم؟', 'Where to learn')}</h2><p class="muted">${L('حضوري أو أونلاين، وتختار عند الحجز.', 'In person or online, chosen when you book.')}</p><a class="link-arrow" href="#/locations">${L('أماكن التعلّم', 'Locations')}${ico('arrow')}</a></div></aside></div></div>
+      ${related.length ? `<section class="sec tone-paper2"><div class="wrap"><h2 class="h2">${L('مسارات قريبة', 'Related paths')}</h2><ol class="prows">${related.map(prow).join('')}</ol></div></section>` : ''}
+      ${ctaBand(L('جاهز تبدأ هذا المسار؟', 'Ready to start this path?'))}`;
+    return { html, meta: { path: '/paths/' + p.slug, title: t(p.title), desc: t(p.tagline) } };
+  }
+
+  /* =====================================================================
+     AUTH PAGES
+     ===================================================================== */
+  const fld = (id, label, type, extra = '') => `<div class="field"><label for="${id}">${label}</label><input class="in" id="${id}" name="${id}" type="${type}" ${extra}><p class="err-msg" id="${id}-e"></p></div>`;
+  const pwf = (id, label, ac) => `<div class="field"><label for="${id}">${label}</label><div class="pw"><input class="in" id="${id}" type="password" autocomplete="${ac}"><button class="icon-btn pw-t" type="button" data-pw="${id}" aria-label="${attr(L('إظهار كلمة المرور', 'Show password'))}" aria-pressed="false">${ico('eye')}</button></div><p class="err-msg" id="${id}-e"></p></div>`;
+  const authShell = (title, lead, body) => `<div class="auth"><aside class="auth-art tone-deep" aria-hidden="true">
+      <p class="mono auth-code"><span class="t">&lt;h1&gt;</span>Hello, <bdi>${esc((Auth.get() || {}).name || 'Codera')}</bdi><span class="t">&lt;/h1&gt;</span><span class="caret"></span></p>
+      <p class="auth-lines">${L('حسابك يجمع حجوزاتك ومسارك التعليمي في مكان واحد.', 'Your account keeps your bookings and learning path in one place.')}</p></aside>
+    <div class="auth-main tone-paper"><div class="auth-card"><h1 class="h2">${title}</h1>${lead ? `<p class="muted">${lead}</p>` : ''}${body}${demoNote()}</div></div></div>`;
+  const authMeta = (path, title) => ({ path, title });
+  const bookHint = `<p class="auth-note muted">${L('لا تحتاج حسابًا لتحجز مكانك.', 'You do not need an account to book your seat.')} <button class="linkbtn" type="button" data-book>${BOOK()}</button></p>`;
+
+  function pageSignin() {
+    return { html: authShell(L('تسجيل الدخول', 'Sign in'), L('أهلًا بعودتك إلى Codera.', 'Welcome back to Codera.'),
+      `<form id="f-signin" class="auth-f" novalidate>${fld('si-email', L('البريد الإلكتروني', 'Email'), 'email', 'autocomplete="email" inputmode="email"')}${pwf('si-pw', L('كلمة المرور', 'Password'), 'current-password')}
+        <div class="auth-row"><label class="check"><input type="checkbox" id="si-rem"><span>${L('تذكّرني', 'Remember me')}</span></label><a href="#/forgot">${L('نسيت كلمة المرور؟', 'Forgot password?')}</a></div>
+        <p class="err-msg" id="si-fail" role="alert"></p><button class="btn btn-solid lg" type="submit">${L('تسجيل الدخول', 'Sign in')}</button></form>
+        <p class="auth-alt">${L('ليس لديك حساب؟', 'New to Codera?')} <a href="#/signup">${L('إنشاء حساب', 'Create account')}</a></p>${bookHint}`), meta: authMeta('/signin', L('تسجيل الدخول', 'Sign in')) };
+  }
+  function pageSignup() {
+    const role = (v, l) => `<label class="choice"><input type="radio" name="su-role" value="${v}"><span>${l}</span></label>`;
+    return { html: authShell(L('إنشاء حساب', 'Create account'), L('ابدأ بالأساسيات فقط. نكمل باقي بياناتك لاحقًا.', 'Start with the basics. We complete your profile later.'),
+      `<form id="f-signup" class="auth-f" novalidate>
+        <div class="field" role="radiogroup" aria-labelledby="su-role-l"><span class="lbl" id="su-role-l">${L('أنا', 'I am a')}</span><div class="choice-grid">${role('student', L('طالب', 'Student'))}${role('parent', L('ولي أمر', 'Parent / Guardian'))}</div><p class="err-msg" id="su-role-e"></p></div>
+        ${fld('su-name', L('الاسم', 'Name'), 'text', 'autocomplete="name"')}${fld('su-email', L('البريد الإلكتروني', 'Email'), 'email', 'autocomplete="email" inputmode="email"')}${pwf('su-pw', L('كلمة المرور (8 أحرف على الأقل)', 'Password (at least 8 characters)'), 'new-password')}
+        <p class="err-msg" id="su-fail" role="alert"></p><button class="btn btn-solid lg" type="submit">${L('إنشاء حساب', 'Create account')}</button></form>
+        <p class="auth-alt">${L('عندك حساب؟', 'Already have an account?')} <a href="#/signin">${L('تسجيل الدخول', 'Sign in')}</a></p>${bookHint}`), meta: authMeta('/signup', L('إنشاء حساب', 'Create account')) };
+  }
+  function pageForgot() {
+    return { html: authShell(L('نسيت كلمة المرور', 'Forgot password'), L('اكتب بريدك وسنرسل لك رابط إعادة التعيين.', 'Enter your email and we will send a reset link.'),
+      `<div id="fg-box"><form id="f-forgot" class="auth-f" novalidate>${fld('fg-email', L('البريد الإلكتروني', 'Email'), 'email', 'autocomplete="email" inputmode="email"')}
+        <p class="err-msg" id="fg-fail" role="alert"></p><button class="btn btn-solid lg" type="submit">${L('أرسل الرابط', 'Send reset link')}</button></form></div>
+        <p class="auth-alt"><a href="#/signin">${L('الرجوع لتسجيل الدخول', 'Back to sign in')}</a></p>`), meta: authMeta('/forgot', L('نسيت كلمة المرور', 'Forgot password')) };
+  }
+  function pageReset() {
+    const tok = parseHash().q.get('token');
+    if (!tok && !CMS.settings.demo) return { html: authShell(L('الرابط غير صالح', 'Link not valid'), L('انتهت صلاحية الرابط أو استُخدم من قبل.', 'This link has expired or was already used.'), `<a class="btn btn-solid" href="#/forgot">${L('اطلب رابطًا جديدًا', 'Request a new link')}</a>`), meta: authMeta('/reset', L('إعادة تعيين كلمة المرور', 'Reset password')) };
+    return { html: authShell(L('إعادة تعيين كلمة المرور', 'Reset password'), L('اختر كلمة مرور جديدة.', 'Choose a new password.'),
+      `<div id="rs-box"><form id="f-reset" class="auth-f" novalidate data-token="${attr(tok || '')}">${pwf('rs-pw', L('كلمة المرور الجديدة', 'New password'), 'new-password')}${pwf('rs-pw2', L('تأكيد كلمة المرور', 'Confirm password'), 'new-password')}
+        <p class="err-msg" id="rs-fail" role="alert"></p><button class="btn btn-solid lg" type="submit">${L('حفظ كلمة المرور', 'Save password')}</button></form></div>`), meta: authMeta('/reset', L('إعادة تعيين كلمة المرور', 'Reset password')) };
+  }
+  function pageVerify() {
+    const q = parseHash().q, tok = q.get('token'), email = q.get('email') || (Auth.get() || {}).email || '';
+    const body = tok ? `<div id="vf-box" aria-live="polite"><p class="muted">${L('جارٍ التحقق…', 'Verifying…')}</p></div>`
+      : `<div id="vf-box" aria-live="polite"><p class="lead">${email ? L('أرسلنا رابط التحقق إلى ', 'We sent a verification link to ') + `<bdi class="mono">${esc(email)}</bdi>` : L('افحص بريدك لرابط التحقق.', 'Check your inbox for the verification link.')}</p>
+        <div class="row"><button class="btn btn-ghost" type="button" data-act="resend" data-email="${attr(email)}">${L('أعد إرسال الرابط', 'Resend the link')}</button>${inDemo() ? `<button class="btn btn-ghost" type="button" data-act="demo-verify">${L('تحقق (معاينة)', 'Mark verified (preview)')}</button>` : ''}</div><p class="muted" id="vf-msg" role="status"></p></div>`;
+    return { html: authShell(L('تحقق من بريدك', 'Verify your email'), '', body + `<p class="auth-alt"><a href="#/account">${L('إلى حسابي', 'Go to my account')}</a></p>`), meta: authMeta('/verify', L('تحقق من البريد', 'Verify email')),
+      after() { if (tok) authCall('verify', { token: tok }).then(() => { const u = Auth.get(); if (u) { u.verified = true; Auth.set(u); } $('#vf-box').innerHTML = `<p class="lead">${L('تم التحقق من بريدك. شكرًا!', 'Your email is verified. Thank you!')}</p>`; }).catch(() => { $('#vf-box').innerHTML = `<p class="err-msg">${L('الرابط غير صالح أو منتهي.', 'This link is not valid or has expired.')}</p>`; }); } };
+  }
+  function pageAccount() {
+    const u = Auth.get();
+    if (!u) return { html: `<div class="tone-paper acct-pad"><div class="wrap">${empty(L('سجّل الدخول لتفتح حسابك.', 'Sign in to open your account.'), L('حسابك يجمع حجوزاتك ومسارك في مكان واحد.', 'Your account keeps your bookings and path in one place.'), `<div class="row"><a class="btn btn-solid" href="#/signin?next=/account">${L('تسجيل الدخول', 'Sign in')}</a><a class="btn btn-ghost" href="#/signup">${L('إنشاء حساب', 'Create account')}</a></div>`)}</div></div>`, meta: authMeta('/account', L('حسابي', 'My account')) };
+    const role = u.role === 'parent' ? L('ولي أمر', 'Parent / Guardian') : L('طالب', 'Student');
+    return { html: `<div class="tone-paper acct-pad"><div class="wrap">${crumbs([{ label: L('حسابي', 'My account') }])}
+      <span class="tag">${role}</span><h1 class="display">${L('أهلًا', 'Welcome')}, <bdi>${esc(u.name)}</bdi></h1><p class="mono muted">${esc(u.email || '')}</p>
+      ${u.verified === false ? `<div class="side-card acct-warn"><p>${L('لم تؤكد بريدك الإلكتروني بعد.', 'You have not verified your email yet.')}</p><a class="btn btn-ghost sm" href="#/verify?email=${encodeURIComponent(u.email || '')}">${L('تحقق الآن', 'Verify now')}</a></div>` : ''}
+      <div class="acct-grid">
+        <section class="side-card"><h2 class="h3">${L('حجوزاتي', 'My bookings')}</h2><p class="muted">${L('لا توجد حجوزات بعد.', 'No bookings yet.')}</p><button class="btn btn-solid sm" type="button" data-book>${BOOK()}</button></section>
+        <section class="side-card"><h2 class="h3">${L('مساري التعليمي', 'My learning path')}</h2><p class="muted">${L('لم تختر مسارًا بعد.', 'You have not picked a path yet.')}</p><a class="link-arrow" href="#/paths">${L('اكتشف المسارات', 'Discover paths')}${ico('arrow')}</a></section>
+        ${u.role === 'parent' ? `<section class="side-card"><h2 class="h3">${L('الأبناء', 'Children')}</h2><p class="muted">${L('إضافة الأبناء ومتابعتهم تتاح لاحقًا.', 'Adding and following your children comes later.')}</p><a class="link-arrow" href="#/paths/kids">${L('برنامج الأطفال', 'Kids program')}${ico('arrow')}</a></section>` : ''}
+        <form class="side-card" id="f-profile" novalidate><h2 class="h3">${L('بياناتي', 'My details')}</h2>${fld('pf-name', L('الاسم', 'Name'), 'text', `value="${attr(u.name)}" autocomplete="name"`)}${fld('pf-phone', L('رقم الموبايل (اختياري)', 'Mobile (optional)'), 'tel', `value="${attr(u.phone || '')}" autocomplete="tel" inputmode="tel"`)}
+          <p class="muted" id="pf-ok" role="status"></p><button class="btn btn-ghost sm" type="submit">${L('حفظ', 'Save')}</button></form></div>
+      <p class="sec-more"><button class="btn btn-ghost" type="button" data-signout>${L('تسجيل الخروج', 'Sign out')}</button></p>${demoNote()}</div></div>`, meta: authMeta('/account', L('حسابي', 'My account')) };
+  }
+
+  const bad = f => { const b = $('[aria-invalid="true"]', f) || $('input', f); b && b.focus(); };
+  const AUTH_FORMS = {
+    async 'f-signin'(f) {
+      const em = val('si-email'), pw = $('#si-pw').value; let ok = true;
+      ok = setErr('si-email', EMAIL.test(em) ? '' : L('اكتب بريدًا إلكترونيًا صحيحًا.', 'Enter a valid email address.')) && ok;
+      ok = setErr('si-pw', pw ? '' : L('اكتب كلمة المرور.', 'Enter your password.')) && ok;
+      if (!ok) return bad(f);
+      const btn = $('button[type=submit]', f); btn.disabled = true; $('#si-fail').textContent = '';
+      try {
+        const r = await authCall('signin', { email: em, password: pw, remember: $('#si-rem').checked }), d = Auth.demoUser();
+        Auth.set((r && r.user) || (d && d.email === em ? d : { name: em.split('@')[0], email: em, role: 'student', verified: true }));
+        renderChrome(); const nx = parseHash().q.get('next'); location.hash = '#' + (nx && nx.startsWith('/') ? nx : '/account');
+      } catch (e) { btn.disabled = false; $('#si-fail').textContent = L('البريد أو كلمة المرور غير صحيحة، أو تعذّر الاتصال.', 'Incorrect email or password, or we could not connect.'); }
+    },
+    async 'f-signup'(f) {
+      const role = $('input[name=su-role]:checked'), nm = val('su-name'), em = val('su-email'), pw = $('#su-pw').value; let ok = !!role;
+      $('#su-role-e').textContent = role ? '' : L('اختر نوع الحساب.', 'Choose an account type.');
+      ok = setErr('su-name', nm.length < 2 ? L('اكتب اسمك.', 'Enter your name.') : '') && ok;
+      ok = setErr('su-email', EMAIL.test(em) ? '' : L('اكتب بريدًا إلكترونيًا صحيحًا.', 'Enter a valid email address.')) && ok;
+      ok = setErr('su-pw', pw.length < 8 ? L('كلمة المرور 8 أحرف على الأقل.', 'Use at least 8 characters.') : '') && ok;
+      if (!ok) return bad(f);
+      const btn = $('button[type=submit]', f); btn.disabled = true; $('#su-fail').textContent = '';
+      try {
+        const r = await authCall('signup', { role: role.value, name: nm, email: em, password: pw }), u = (r && r.user) || { name: nm, email: em, role: role.value, verified: false };
+        if (r && r.demo) store.set('codera-demo-user', JSON.stringify(u));
+        Auth.set(u); renderChrome(); location.hash = '#/verify?email=' + encodeURIComponent(em);
+      } catch (e) { btn.disabled = false; $('#su-fail').textContent = L('تعذّر إنشاء الحساب. جرّب مرة أخرى.', 'We could not create your account. Please try again.'); }
+    },
+    async 'f-forgot'(f) {
+      const em = val('fg-email'); if (!setErr('fg-email', EMAIL.test(em) ? '' : L('اكتب بريدًا إلكترونيًا صحيحًا.', 'Enter a valid email address.'))) return bad(f);
+      const btn = $('button[type=submit]', f); btn.disabled = true;
+      try { await authCall('forgot', { email: em }); } catch (e) { /* same message either way */ }
+      $('#fg-box').innerHTML = `<p class="lead" role="status">${L('إن كان هذا البريد مسجّلًا، سيصلك رابط إعادة التعيين قريبًا.', 'If that email is registered, a reset link is on its way.')}</p>`;
+    },
+    async 'f-reset'(f) {
+      const a = $('#rs-pw').value, b = $('#rs-pw2').value; let ok = true;
+      ok = setErr('rs-pw', a.length < 8 ? L('كلمة المرور 8 أحرف على الأقل.', 'Use at least 8 characters.') : '') && ok;
+      ok = setErr('rs-pw2', a !== b ? L('كلمتا المرور غير متطابقتين.', 'The passwords do not match.') : '') && ok;
+      if (!ok) return bad(f);
+      const btn = $('button[type=submit]', f); btn.disabled = true;
+      try { await authCall('reset', { token: f.dataset.token, password: a }); $('#rs-box').innerHTML = `<p class="lead" role="status">${L('تم تغيير كلمة المرور.', 'Your password has been changed.')}</p><a class="btn btn-solid" href="#/signin">${L('تسجيل الدخول', 'Sign in')}</a>`; }
+      catch (e) { btn.disabled = false; $('#rs-fail').textContent = L('الرابط غير صالح أو منتهي.', 'This link is not valid or has expired.'); }
+    },
+    async 'f-profile'(f) {
+      const ph0 = val('pf-phone'), nm = val('pf-name'); let ok = true;
+      ok = setErr('pf-name', nm.length < 2 ? L('اكتب اسمك.', 'Enter your name.') : '') && ok;
+      ok = setErr('pf-phone', ph0 && !PHONE_RE.test(cleanPhone(ph0)) ? L('رقم موبايل غير صحيح.', 'Not a valid mobile number.') : '') && ok;
+      if (!ok) return bad(f);
+      const u = Auth.get() || {}; u.name = nm; u.phone = cleanPhone(ph0); Auth.set(u); renderChrome();
+      $('#pf-ok').textContent = L('تم الحفظ.', 'Saved.');
+    }
+  };
+
+  /* =====================================================================
+     BOOKING — mode first, branch only for in-person, optional account hint
+     ===================================================================== */
+  bookingHTML = function () {
+    const cs = vis(CMS.courses), cats = vis(CMS.categories), brs = locsV().filter(l => l.kind !== 'online');
+    const pre = Object.assign({}, Book.pre || {}); if (pre.branch && !pre.mode) pre.mode = 'in-person';
+    const opt = (v, l, sel) => `<option value="${esc(v)}"${sel ? ' selected' : ''}>${l}</option>`;
+    const courseOpts = cats.map(k => { const items = cs.filter(c => c.cat === k.id); return items.length ? `<optgroup label="${esc(t(k.label))}">${items.map(c => opt(c.slug, T(c.title), Book.opts.course === c.slug)).join('')}</optgroup>` : ''; }).join('')
+      + cs.filter(c => !cats.some(k => k.id === c.cat)).map(c => opt(c.slug, T(c.title), Book.opts.course === c.slug)).join('');
+    const choice = (name, v, label, on) => `<label class="choice"><input type="radio" name="${name}" value="${esc(v)}"${on ? ' checked' : ''}><span>${label}</span></label>`;
+    return `<div class="sheet tone-paper" role="dialog" aria-modal="true" aria-labelledby="bk-title">
+    <button class="icon-btn sheet-x" type="button" data-close aria-label="${esc(L('إغلاق', 'Close'))}">${ico('close')}</button>
+    <div class="bk-prog" aria-hidden="true"><span><i></i></span><span><i></i></span><span><i></i></span></div>
+    <p class="bk-count mono" id="bk-count" aria-live="polite"></p>
+    <form id="bk-form" novalidate>
+      <fieldset class="bk-step" data-step="0"><legend><h2 class="h2" id="bk-title">${L('عرّفنا بنفسك', 'Tell us about yourself')}</h2></legend>
+        <div class="field"><label for="bk-name">${L('الاسم بالكامل', 'Full name')}</label><input class="in" id="bk-name" name="name" autocomplete="name" data-autofocus><p class="err-msg" id="bk-name-e"></p></div>
+        <div class="field"><label for="bk-age">${L('السن', 'Age')}</label><input class="in" id="bk-age" name="age" type="number" inputmode="numeric" min="3" max="99"><p class="err-msg" id="bk-age-e"></p></div>
+        <div class="field"><label for="bk-phone">${L('رقم الموبايل', 'Mobile number')}</label><input class="in mono" id="bk-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="01XXXXXXXXX"><p class="err-msg" id="bk-phone-e"></p></div>
+        <label class="check"><input type="checkbox" id="bk-wa-same" checked><span>${L('نفس الرقم على WhatsApp', 'Same number on WhatsApp')}</span></label>
+        <div class="field" id="bk-wa-wrap" hidden><label for="bk-wa">${L('رقم WhatsApp', 'WhatsApp number')}</label><input class="in mono" id="bk-wa" name="whatsapp" type="tel" inputmode="tel"><p class="err-msg" id="bk-wa-e"></p></div>
+      </fieldset>
+      <fieldset class="bk-step" data-step="1" hidden><legend><h2 class="h2">${L('عايز تتعلّم إزاي وإيه؟', 'How and what would you like to learn?')}</h2></legend>
+        <div class="field" role="radiogroup" aria-labelledby="bk-mode-l"><span class="lbl" id="bk-mode-l">${L('نمط التعلّم', 'Learning mode')}</span><div class="choice-grid">${vis(CMS.modes).map(m => choice('mode', m.id, T(m.label), pre.mode === m.id)).join('')}</div><p class="err-msg" id="bk-mode-e"></p></div>
+        <div class="field" id="bk-branch-wrap" role="radiogroup" aria-labelledby="bk-br-l"${pre.mode === 'in-person' ? '' : ' hidden'}><span class="lbl" id="bk-br-l">${L('اختر الفرع', 'Choose a branch')}</span>
+          <div class="choice-grid">${brs.map(l => choice('branch-r', l.id, T(l.name), pre.branch === l.id)).join('')}</div><input type="hidden" id="bk-branch" name="branch" value="${esc(pre.branch || '')}"><p class="err-msg" id="bk-branch-e"></p></div>
+        <div class="field"><label for="bk-course">${L('الكورس', 'Course')}</label><select class="in" id="bk-course" name="course"><option value="">${L('مش متأكد، محتاج ترشيح', 'Not sure yet, I need a suggestion')}</option>${courseOpts}</select></div>
+      </fieldset>
+      <fieldset class="bk-step" data-step="2" hidden><legend><h2 class="h2">${L('نتواصل معاك إزاي؟', 'How can we reach you?')}</h2></legend>
+        <div class="field" role="radiogroup" aria-labelledby="bk-contact-l"><span class="lbl" id="bk-contact-l">${L('وسيلة التواصل المفضلة', 'Preferred contact method')}</span><div class="choice-grid">
+          ${choice('contact', 'whatsapp', 'WhatsApp')}${choice('contact', 'call', L('مكالمة', 'Phone call'))}${choice('contact', 'email', L('بريد إلكتروني', 'Email'))}</div><p class="err-msg" id="bk-contact-e"></p></div>
+        <div class="field" id="bk-email-wrap" hidden><label for="bk-email">${L('البريد الإلكتروني', 'Email')}</label><input class="in mono" id="bk-email" name="email" type="email" autocomplete="email"><p class="err-msg" id="bk-email-e"></p></div>
+        <div class="field"><label for="bk-msg">${L('رسالة (اختياري)', 'Message (optional)')}</label><textarea class="in" id="bk-msg" name="message"></textarea></div>
+        ${Auth.get() ? '' : `<p class="bk-acct muted">${L('عندك حساب؟', 'Have a Codera account?')} <a href="#/signin" data-close>${L('سجّل الدخول', 'Sign in')}</a></p>`}
+      </fieldset>
+      <p class="err-msg bk-fail" id="bk-fail" role="alert"></p>
+      <div class="bk-nav"><button class="btn btn-ghost" type="button" id="bk-back">${L('رجوع', 'Back')}</button><button class="btn btn-solid" type="submit" id="bk-next">${L('التالي', 'Next')}</button></div>
+    </form>
+    <div class="bk-done" id="bk-done" hidden tabindex="-1"></div></div>`;
+  };
+
+  openBooking = function (opts = {}) {
+    Book.opts = opts; Book.step = 0; Book.data = {};
+    const el = $('#book-modal'); el.innerHTML = bookingHTML();
+    const f = $('#bk-form'), u = Auth.get(), nm = opts.name || (u && u.name) || '';
+    if (nm) $('#bk-name').value = nm;
+    const same = $('#bk-wa-same'), wrap = $('#bk-wa-wrap');
+    same.addEventListener('change', () => { wrap.hidden = same.checked; });
+    $$('input[name=contact]', f).forEach(r => r.addEventListener('change', () => { $('#bk-email-wrap').hidden = r.value !== 'email' || !r.checked; }));
+    const syncMode = () => {
+      const m = $('input[name=mode]:checked'), on = m && m.value === 'in-person';
+      $('#bk-branch-wrap').hidden = !on;
+      if (!on) { $('#bk-branch').value = ''; $$('input[name=branch-r]').forEach(x => { x.checked = false; }); $('#bk-branch-e').textContent = ''; }
+    };
+    $$('input[name=mode]', f).forEach(r => r.addEventListener('change', syncMode));
+    $$('input[name=branch-r]', f).forEach(r => r.addEventListener('change', () => { $('#bk-branch').value = r.value; $('#bk-branch-e').textContent = ''; }));
+    $('#bk-back').addEventListener('click', () => showStep(Book.step - 1));
+    f.addEventListener('submit', e => { e.preventDefault(); next(); });
+    el.onclick = e => { if (e.target === el || e.target.closest('[data-close]')) Book.close && Book.close(); };
+    Book.close = openModal(el, { onClose() { Book.close = null; } });
+    showStep(0);
+    const done = $('#bk-done');
+    new MutationObserver((_, ob) => {
+      if (done.hidden || done.querySelector('.bk-acct')) return;
+      if (Auth.get()) { ob.disconnect(); return; }
+      done.insertAdjacentHTML('beforeend', `<p class="bk-acct muted">${L('عايز تتابع رحلتك؟', 'Want to follow your journey?')} <a href="#/signup" data-close>${L('أنشئ حسابًا (اختياري)', 'Create an account (optional)')}</a></p>`);
+    }).observe(done, { childList: true });
+  };
+
+  const _validate = validate;
+  validate = function (step) {
+    if (step !== 1) return _validate(step);
+    const m = $('input[name=mode]:checked'); $('#bk-mode-e').textContent = m ? '' : L('اختر نمط التعلّم.', 'Choose a learning mode.');
+    let ok = !!m;
+    if (m && m.value === 'in-person') ok = setErr('bk-branch', $('#bk-branch').value ? '' : L('اختر الفرع.', 'Choose a branch.')) && ok;
+    if (!ok) { const b = $('.bk-step[data-step="1"] input:not([type=hidden])'); b && b.focus(); }
+    return ok;
+  };
+
+  bookingMessage = function (d) {
+    const c = course(d.course), loc = CMS.locations.find(b => b.id === d.branch), online = d.mode === 'online';
+    const how = { whatsapp: 'WhatsApp', call: L('مكالمة', 'phone call'), email: L('بريد إلكتروني', 'email') }[d.contact];
+    const mode = online ? L('أونلاين', 'Online') : (loc ? L('حضوري - فرع ', 'In person - ') + t(loc.name) : L('حضوري', 'In person'));
+    return L(`مرحبًا Codera Tech، أنا ${d.name} (${d.age} سنة). أرغب في الحجز${c ? ' في كورس ' + t(c.title) : ' ومحتاج ترشيح للكورس المناسب'}. نمط التعلّم: ${mode}. وسيلة التواصل المفضلة: ${how}. رقمي: ${d.phone}.${d.message ? ' ' + d.message : ''}`,
+      `Hello Codera Tech, I am ${d.name} (${d.age} years old). I would like to book${c ? ' the ' + t(c.title) + ' course' : ' and need a suggestion for the right course'}. Learning mode: ${mode}. Preferred contact: ${how}. My number: ${d.phone}.${d.message ? ' ' + d.message : ''}`);
+  };
+
+  /* =====================================================================
+     WRAPPED EXISTING PAGES (keep originals, inject what's new)
+     ===================================================================== */
+  const _pageCourse = pageCourse;
+  pageCourse = function (slug) {
+    const r = _pageCourse(slug), inP = pathsV().filter(p => (p.stages || []).some(s => (s.courses || []).includes(slug)));
+    if (r && r.html && inP.length) r.html = r.html.replace('<aside class="c-side">', `<aside class="c-side"><div class="side-card"><h2 class="h3">${L('ضمن المسارات', 'Part of these paths')}</h2><ul class="next-list">${inP.map(p => `<li><a href="${href('/paths/' + p.slug)}"><span>${T(p.title)}</span>${ico('arrow')}</a></li>`).join('')}</ul></div>`);
+    return r;
+  };
+  const _pageCourses = pageCourses;
+  pageCourses = function () {
+    const r = _pageCourses();
+    r.html = r.html.replace('<div class="filters" id="course-filters">', `<p class="path-note">${L('تبحث عن رحلة كاملة؟', 'Looking for a whole journey?')} <a class="link-arrow" href="#/paths">${L('شوف المسارات التعليمية', 'See the learning paths')}${ico('arrow')}</a></p><div class="filters" id="course-filters">`);
+    return r;
+  };
+  const _pageAbout = pageAbout;
+  pageAbout = function () {
+    const r = _pageAbout(), row = (id, label, body) => `<section class="ab-row " id="${id}"><h2 class="ab-label h3">${label}</h2><div class="ab-body">${body}</div></section>`;
+    const paths = row('paths', L('رحلات التعلّم', 'Learning paths'), `<p class="statement">${L('لكل هدف مسار مرتّب من أول خطوة إلى المهارة. وللأطفال برنامج خاص بهم.', 'Every goal has an ordered path, from the first step to the skill. Kids have a program of their own.')}</p><p><a class="link-arrow" href="#/paths">${L('اكتشف المسارات التعليمية', 'Discover learning paths')}${ico('arrow')}</a></p>`);
+    const loc = row('locations', L('أين نتعلّم', 'Where we learn'), `<p class="statement">${locsV().map(l => esc(t(l.name))).join(' · ')}</p><p><a class="link-arrow" href="#/locations">${L('شوف أماكن التعلّم', 'See where we teach')}${ico('arrow')}</a></p>`);
+    r.html = r.html.replace(/<section class="ab-row " id="locations">[\s\S]*?<\/section>/, paths + loc);
+    return r;
+  };
+  const _pageContact = pageContact;
+  pageContact = function () {
+    const r = _pageContact();
+    const items = locsV().map(l => `<li>${ico(l.kind === 'online' ? 'wifi' : 'pin')}<span><b>${T(l.name)}</b>${l.partnerNote ? ' · ' + T(l.partnerNote) : ''}<br>${l.address ? T(l.address) : l.mapUrl ? `<a class="link-arrow" href="${attr(l.mapUrl)}" target="_blank" rel="noopener">${L('الخريطة', 'Map')}${ico('arrow')}</a>` : (l.kind === 'online' ? L('تعلّم من أي مكان', 'Learn from anywhere') : L('العنوان قريبًا', 'Address coming soon'))}</span></li>`).join('');
+    r.html = r.html.replace(/<li><svg class="i i-pin[\s\S]*?<\/li>/, items);
+    return r;
+  };
+
+  /* =====================================================================
+     ROUTES + EVENTS
+     ===================================================================== */
+  ROUTES.unshift(
+    [/^\/paths\/?$/, () => pagePaths()], [/^\/paths\/([\w-]+)\/?$/, m => pagePath(m[1])], [/^\/kids\/?$/, () => pagePath('kids')],
+    [/^\/locations\/?$/, () => pageLocations()],
+    [/^\/signin\/?$/, () => pageSignin()], [/^\/signup\/?$/, () => pageSignup()], [/^\/forgot\/?$/, () => pageForgot()],
+    [/^\/reset\/?$/, () => pageReset()], [/^\/verify\/?$/, () => pageVerify()], [/^\/account\/?$/, () => pageAccount()]);
+
+  /* capture phase: remember mode/branch before the original handler opens the dialog */
+  document.addEventListener('click', e => {
+    const b = e.target.closest('[data-book]');
+    if (b) Book.pre = { mode: b.dataset.mode || '', branch: b.dataset.branch || '' };
+  }, true);
+
+  document.addEventListener('click', e => {
+    const el = e.target;
+    $$('details.dd[open]').forEach(d => { if (!d.contains(el) || el.closest('.dd-panel a')) d.open = false; });
+    const fp = el.closest('[data-act="fp"]'); if (fp) { fpSet(+fp.dataset.i); return; }
+    const jr = el.closest('[data-act="jr"]');
+    if (jr) { const open = jr.getAttribute('aria-expanded') === 'true', d = $('#' + jr.getAttribute('aria-controls')); jr.setAttribute('aria-expanded', !open); if (d) d.hidden = open; return; }
+    const pw = el.closest('[data-pw]');
+    if (pw) { const i = $('#' + pw.dataset.pw), show = i.type === 'password'; i.type = show ? 'text' : 'password'; pw.setAttribute('aria-pressed', show); pw.setAttribute('aria-label', show ? L('إخفاء كلمة المرور', 'Hide password') : L('إظهار كلمة المرور', 'Show password')); return; }
+    if (el.closest('[data-signout]')) {
+      e.preventDefault(); authCall('signout', {}).catch(() => {}); Auth.clear(); if (Menu.close) Menu.close(); renderChrome(); announce(L('تم تسجيل الخروج', 'Signed out'));
+      if (parseHash().path === '/') render(true); else location.hash = '#/'; return;
+    }
+    const rs = el.closest('[data-act="resend"]');
+    if (rs) { authCall('resend', { email: rs.dataset.email }).catch(() => {}).then(() => { const m = $('#vf-msg'); if (m) m.textContent = L('أرسلنا الرابط مرة أخرى.', 'We sent the link again.'); }); return; }
+    if (el.closest('[data-act="demo-verify"]')) { const u = Auth.get(); if (u) { u.verified = true; Auth.set(u); } $('#vf-box').innerHTML = `<p class="lead" role="status">${L('تم التحقق (معاينة).', 'Verified (preview).')}</p>`; }
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') $$('details.dd[open]').forEach(d => { d.open = false; const s = d.querySelector('summary'); s && s.focus(); }); });
+  document.addEventListener('mouseover', e => {
+    if (!matchMedia('(hover:hover) and (min-width:861px)').matches) return;
+    const b = e.target.closest('.fp-btn'); if (b) fpSet(+b.dataset.i);
+  });
+  document.addEventListener('submit', e => { const h = AUTH_FORMS[e.target.id]; if (h) { e.preventDefault(); h(e.target); } });
+
+  render(true);
+})();
+</script>
+
+</body></html>
