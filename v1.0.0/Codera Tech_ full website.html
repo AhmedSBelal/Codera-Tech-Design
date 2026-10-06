@@ -178,7 +178,7 @@ main:focus{outline:none}
 
 /* reveal: used sparingly, once, never looped */
 .rv{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease);transition-delay:calc(var(--i,0) * 90ms)}
-.rv.in{opacity:1;transform:none}
+.rv.is-in{opacity:1;transform:none}
 
 /* ---- forms ---- */
 .field{display:grid;gap:6px}
@@ -513,9 +513,8 @@ legend{padding:0;margin-bottom:18px;width:100%}
 /* 10 final */
 .final-in{display:grid;gap:44px;justify-items:start}
 .final-t{max-width:16em}
-.fl-pre{display:block;font-size:.4em;font-weight:300;line-height:1.7;color:var(--muted);margin-bottom:.9em}
-.fl{display:inline-block;margin-inline-end:.7em}
-.fl-main{display:block}
+.final-head{display:grid;gap:20px}
+.recap{display:flex;flex-wrap:wrap;gap:6px 20px;color:var(--muted);font-size:clamp(1rem,1.7vw,1.3rem);font-weight:300}
 .hello{display:grid;gap:12px;width:min(780px,100%)}
 .hello-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:16px;align-items:stretch}
 .hello-code{margin:0;padding:.9em 1.1em;border-radius:10px;background:color-mix(in oklab,var(--fg) 7%,var(--bg));border:1px solid var(--line);font-size:clamp(.95rem,1.8vw,1.15rem);display:flex;align-items:center;flex-wrap:wrap;overflow-x:auto;white-space:pre-wrap}
@@ -791,6 +790,29 @@ legend{padding:0;margin-bottom:18px;width:100%}
 .ssr p,.ssr li{color:var(--muted);margin-bottom:.8em}
 .ssr ul{display:flex;flex-wrap:wrap;gap:6px 22px}
 .ssr a{color:var(--accent)}
+
+/* FINAL · animation */
+.recap li{display:inline-flex;align-items:center;gap:.5em}
+.recap li::before{content:"";width:.42em;height:.8em;border:solid var(--grow);border-width:0 2.5px 2.5px 0;
+  transform:rotate(45deg) scale(0);margin-top:-.25em;
+  transition:transform .4s var(--ease) calc(var(--i,0) * 90ms + .35s)}
+.recap li.is-in::before{transform:rotate(45deg) scale(1)}
+
+.final-t .w{display:inline-block;opacity:0;transform:translateY(22px);filter:blur(10px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease),filter .7s var(--ease);
+  transition-delay:calc(var(--i,0) * 110ms)}
+.final-t .w.is-in{opacity:1;transform:none;filter:none}
+.final-t .w:last-child{color:var(--accent)}
+
+.hello-out{display:grid;gap:8px}
+.hello-page{padding:clamp(18px,3vw,28px) clamp(20px,3.5vw,32px);border-radius:10px;background:#fff;border:1px solid var(--line);
+  direction:ltr;text-align:left;font:700 clamp(1.7rem,4.2vw,2.8rem)/1.2 "Times New Roman",Times,serif;color:#0074d9;
+  overflow-wrap:anywhere;min-height:1.2em}
+
+@media (prefers-reduced-motion:reduce){
+  .recap li::before{transition:none;transform:rotate(45deg) scale(1)}
+  .final-t .w{opacity:1;transform:none;filter:none;transition:none}
+}
 
 </style>
 </head>
@@ -1619,12 +1641,19 @@ const Home = {
   final() {
     const lines = L(['شفت الرحلة.', 'شفت التجربة.', 'قابلت المدرّبين.', 'شفت المجتمع.'], ['You saw the journey.', 'You saw how we learn.', 'You met the people.', 'You saw the community.']);
     return sec('final', 'ink', `<div class="wrap final-in">
-      <h2 id="final-t" class="display final-t"><span class="fl-pre">${lines.map((l, i) => `<span class="fl rv" style="--i:${i}">${l}</span>`).join(' ')}</span> <span class="fl-main">${L('دلوقتي خد أول خطوة.', 'Now take your first step.')}</span></h2>
-      <div class="hello">
+      <div class="final-head">
+        <ul class="recap">${lines.map((l, i) => `<li class="rv" style="--i:${i}">${l}</li>`).join('')}</ul>
+        <h2 id="final-t" class="display final-t">${L('دلوقتي خد أول خطوة.', 'Now take your first step.').split(' ').map((w, i) => `<span class="w rv" style="--i:${i + 4}">${w}</span>`).join(' ')}</h2>
+      </div>
+            <div class="hello">
         <label for="hello-in" class="lbl">${L('اكتب اسمك وشوف أول سطر ليك', 'Type your name and see your first line')}</label>
         <div class="hello-row">
           <input id="hello-in" class="in" type="text" maxlength="40" autocomplete="given-name" placeholder="${esc(L('اسمك', 'Your name'))}" value="${esc(S.draftName)}">
           <pre class="mono hello-code" aria-hidden="true"><span class="t">&lt;h1&gt;</span>Hello, <bdi id="hello-name">${esc(S.draftName || 'Codera')}</bdi><span class="t">&lt;/h1&gt;</span><span class="caret"></span></pre>
+        </div>
+        <div class="hello-out" aria-live="polite">
+          <span class="lbl muted">${L('النتيجة', 'Result')}</span>
+          <div class="hello-page">Hello, <bdi id="hello-out-name">${esc(S.draftName || 'Codera')}</bdi></div>
         </div>
       </div>
       <div class="final-cta"><button class="btn btn-solid lg" type="button" data-book>${BOOK()}</button>
@@ -1643,6 +1672,23 @@ const ctaBand = (title) => `<section class="sec tone-ink cta-band" aria-label="$
 const empty = (title, text, extra = '') => `<div class="empty empty-big"><span class="empty-ic" aria-hidden="true">${ico('sparkle')}</span><h2 class="h2">${title}</h2><p class="lead">${text}</p>${extra}</div>`;
 const bulletList = arr => arr && arr.length ? `<ul class="checks">${arr.map(x => `<li>${ico('check')}<span>${T(x)}</span></li>`).join('')}</ul>` : '';
 
+function mountFinal() {
+  const box = $('.hello'); if (!box || reduceMotion || S.draftName) return;
+  const a = $('#hello-name'), b = $('#hello-out-name'), word = 'Codera';
+  a.textContent = ''; b.textContent = '';
+  const io2 = new IntersectionObserver(([en]) => {
+    if (!en.isIntersecting) return; io2.disconnect();
+    let i = 0;
+    const tick = () => {
+      if (S.draftName) return;                       // الزائر بدأ يكتب اسمه، سيبه
+      i++; a.textContent = b.textContent = word.slice(0, i);
+      if (i < word.length) setTimeout(tick, 110);
+    };
+    setTimeout(tick, 900);
+  }, { threshold: .6 });
+  io2.observe(box); onLeave(() => io2.disconnect());
+}
+
 /* ---------- HOME ---------- */
 function pageHome() {
   const parts = vis(CMS.sections).map(s => ({ s, h: (Home[s.id] && Home[s.id](s)) || '' })).filter(x => x.h);
@@ -1651,6 +1697,7 @@ function pageHome() {
     meta: { home: true, path: '/', title: '', jsonld: orgLD() },
     after() {
       const sig = $('#sig'); if (sig) { const m = mountSignature(sig); onLeave(() => m.destroy()); }
+      mountFinal();
     }
   };
 }
@@ -2150,9 +2197,9 @@ function updateUI() {
 }
 let io = null;
 function bindReveal() {
-  const els = $$('.rv:not(.in)');
-  if (reduceMotion || !('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('in')); return; }
-  io = io || new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -12% 0px', threshold: .15 });
+  const els = $$('.rv:not(.is-in)');
+  if (reduceMotion || !('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('is-in')); return; }
+  io = io || new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); } }), { rootMargin: '0px 0px -12% 0px', threshold: .15 });
   els.forEach(e => io.observe(e));
 }
 
@@ -2193,7 +2240,12 @@ document.addEventListener('click', e => {
   }
 });
 document.addEventListener('input', e => {
-  if (e.target.id === 'hello-in') { S.draftName = e.target.value.trim(); const n = $('#hello-name'); if (n) n.textContent = S.draftName || 'Codera'; }
+  if (e.target.id === 'hello-in') {
+    S.draftName = e.target.value.trim();
+    const v = S.draftName || 'Codera';
+    const n = $('#hello-name'), o = $('#hello-out-name');
+    if (n) n.textContent = v; if (o) o.textContent = v;
+  }
 });
 document.addEventListener('change', e => { if (e.target.id === 'celPick') applyCelebration(e.target.value); renderChromeKeepFocus(e.target); });
 function renderChromeKeepFocus(t0) { if (t0 && t0.id === 'celPick') { renderChrome(); const s = $('#celPick'); s && s.focus(); } }
