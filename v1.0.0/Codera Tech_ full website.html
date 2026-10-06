@@ -59,6 +59,8 @@
   --line:color-mix(in oklab,var(--fg) 16%,var(--bg));
   --win:color-mix(in oklab,var(--fg) 5%,var(--bg));
 }
+:root[data-theme="dark"] .tone-paper .err-msg,
+:root[data-theme="dark"] .tone-paper2 .err-msg{color:#FF8F86}
 
 /* ---- tones: every chapter picks one, so rhythm is controlled by content, not by CSS order ---- */
 .tone-paper{--bg:var(--paper);--fg:var(--paper-fg);--accent:var(--paper-accent)}
@@ -778,7 +780,7 @@ legend{padding:0;margin-bottom:18px;width:100%}
 /* P14 · UX: أهداف لمس أكبر، سطور أجمل، وستايل الـ fallback اللي بيقراه الكراولر */
 .chip{min-height:44px}
 .crumbs a{display:inline-block;padding-block:.45em}
-.foot-col a{display:inline-block;padding-block:.2em}
+.foot-col .social a{display:inline-grid;place-items:center;padding:0}
 .modal,.sheet{overscroll-behavior:contain}
 .lead,.statement,.st-desc,.book-info p{text-wrap:pretty}
 @media (hover:none){.btn:hover,.node a:hover{transform:none}}
@@ -1362,7 +1364,7 @@ function mountSignature(root) {
   const HINT_OK = L('تم الإصلاح. الصفحة تعمل الآن.', 'Fixed. The page works now.');
 
   function render(p, intro) {
-    const d = ss(.18, .55, p), s1 = ss(.06, .24, p), s3 = ss(.48, .62, p), s4 = ss(.76, .88, p);
+    const d = ss(.14, .27, p), s1 = ss(.06, .24, p), s3 = ss(.48, .62, p), s4 = ss(.76, .88, p);
     const chrome = ss(.08, .22, p), frac = 1 - .44 * s1 - .30 * s3 - .26 * s4, term = ss(.82, .88, p), url = ss(.78, .86, p);
     const vars = { '--d': d, '--chrome': chrome, '--frac': frac, '--prev': ss(.10, .22, p), '--site': ss(.50, .58, p), '--tabs': ss(.50, .58, p),
       '--url': url, '--term': term, '--t1': ss(.58, .62, p), '--t2': ss(.63, .67, p), '--t3': ss(.68, .72, p),'--skill': ss(.82, .88, p)  };
