@@ -814,6 +814,16 @@ legend{padding:0;margin-bottom:18px;width:100%}
   .final-t .w{opacity:1;transform:none;filter:none;transition:none}
 }
 
+/* FINAL · nudge on the booking button */
+.btn.nudge{animation:nudge 1.1s var(--ease) 2}
+@keyframes nudge{
+  0%{box-shadow:0 0 0 0 color-mix(in oklab,var(--brand) 60%,transparent);transform:scale(1)}
+  35%{transform:scale(1.04)}
+  70%{box-shadow:0 0 0 18px transparent;transform:scale(1)}
+  100%{box-shadow:0 0 0 0 transparent}
+}
+@media (prefers-reduced-motion:reduce){.btn.nudge{animation:none}}
+
 </style>
 </head>
 <body>
@@ -1101,7 +1111,7 @@ const CMS = {
    ===================================================================== */
 let LANG = 'ar';
 let THEME = 'light';
-const S = { draftName: '', cat: 'all', level: 'all', story: 0, evTab: 'all' };   // small UI state
+const S = { draftName: '', cat: 'all', level: 'all', story: 0, evTab: 'all', nudged: false };   // small UI state
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const L = (a, e) => (LANG === 'ar' ? a : e);                                  // translate inline
@@ -2239,13 +2249,25 @@ document.addEventListener('click', e => {
     const b = $(`#course-filters [data-act="${act}"][data-v="${a.dataset.v}"]`); b && b.focus();
   }
 });
+let nudgeTimer = 0;
+function nudgeBook() {
+  if (S.nudged || reduceMotion || S.draftName.length < 2) return;
+  const b = $('.final-cta [data-book]'); if (!b) return;
+  S.nudged = true;
+  b.classList.add('nudge');
+  b.addEventListener('animationend', () => b.classList.remove('nudge'), { once: true });
+}
 document.addEventListener('input', e => {
-  if (e.target.id === 'hello-in') {
-    S.draftName = e.target.value.trim();
-    const v = S.draftName || 'Codera';
-    const n = $('#hello-name'), o = $('#hello-out-name');
-    if (n) n.textContent = v; if (o) o.textContent = v;
-  }
+  if (e.target.id !== 'hello-in') return;
+  S.draftName = e.target.value.trim();
+  const v = S.draftName || 'Codera';
+  const n = $('#hello-name'), o = $('#hello-out-name');
+  if (n) n.textContent = v; if (o) o.textContent = v;
+  clearTimeout(nudgeTimer);
+  nudgeTimer = setTimeout(nudgeBook, 900);      // بعد ما يوقف كتابة قرابة ثانية
+});
+document.addEventListener('keydown', e => {
+  if (e.target.id === 'hello-in' && e.key === 'Enter') { e.preventDefault(); clearTimeout(nudgeTimer); nudgeBook(); }
 });
 document.addEventListener('change', e => { if (e.target.id === 'celPick') applyCelebration(e.target.value); renderChromeKeepFocus(e.target); });
 function renderChromeKeepFocus(t0) { if (t0 && t0.id === 'celPick') { renderChrome(); const s = $('#celPick'); s && s.focus(); } }
